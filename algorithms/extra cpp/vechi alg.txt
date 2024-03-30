@@ -1,0 +1,163 @@
+void commands()
+{
+    int last_button=nr_buttons;
+    struct point{
+        int x, y;
+    } mouse;
+    while(1)///GLOBAL
+    {
+        /**
+        asteapta input mouse si verifica daca:
+        1. se inchide programul
+        2. face ceva la fisierele deja selectate
+        3. go back sau noua comanda (if(nu sunt fisiere selectate))
+
+        DE AICI SE DECIDE CE FACE PROGRAMUL!
+        */
+        while(command[how_far]==0)
+        {
+            /*
+            while(1)
+            {
+                int x, y, ok=0;
+                getmouseclick(WM_MOUSEMOVE, x, y);
+                if(x!=-1 && y!=-1)
+                {
+                    for(int i=0;i<last_button;i++)
+                    {
+                        if(click_on_button(x, y, i))
+                        {
+                            setcolor(15);
+                            bar(coordo[i][0], coordo[i][1], coordo[i][2], coordo[i][3]);
+                            //graphic_button(coordo[i][0], coordo[i][1], coordo[i][2], coordo[i][3]);
+                            ok=1;
+                            break;
+                        }
+                    }
+                }
+                if(ok)
+                    break;
+            }
+            */
+
+            getmouseclick(WM_LBUTTONDOWN, mouse.x, mouse.y);
+            if(mouse.x!=-1 && mouse.y!=-1)
+            {
+                //1. ESC
+                if(mouse.x>=1350 && mouse.x<=1500)
+                    if(mouse.y>=40 && mouse.y<=100)
+                    {
+                        closegraph();
+                        exit(0);
+                    }
+                //2. go_back
+                if(how_far)
+                    if(mouse.x>=30 && mouse.x<=130)
+                        if(mouse.y>=880 && mouse.y<=930)
+                        {
+                            command[--how_far]=0;
+                            break;
+                        }
+                //3. buton
+                if(last_button==0)
+                    break;
+                for(int i=0; i<last_button; i++)
+                    if(click_on_button(mouse.x, mouse.y, i))
+                    {
+                        command[how_far++]=1+i;
+                        break;
+                    }
+                if(command[how_far-1])
+                {
+                    command[how_far-1]--;
+                    break;
+                }
+            }
+        }
+
+        ///analiza pasului
+        switch(how_far)
+        {
+        case 0: //se intoarce la meniul principal
+            start_graphics();
+            graphics_for_functional_buttons();
+            last_button=nr_buttons;
+            break;
+        case 1:
+            start_graphics();
+            switch(command[0])
+            {
+            case 0://comprimi
+                delay(200);
+                setcolor(9);
+                settextstyle(DEFAULT_FONT, HORIZ_DIR, 4);
+
+                graphic_button(coordo[0][0], coordo[0][1], coordo[0][2], coordo[0][3]);
+                outtextxy(coordo[0][0] + 15, coordo[0][1] + 15, "Huffman");
+                graphic_button(coordo[1][0], coordo[1][1], coordo[1][2], coordo[1][3]);
+                outtextxy(coordo[1][0] + 15, coordo[1][1] + 15, "L-Z-W");
+                last_button=2;//cate butoane apar
+                break;
+            case 1://decomprimi
+                delay(200);
+                file_explorer();///selectare
+                ///aleg plasarea
+                ///denumesc folder
+                ///intelege cum e codat, alege decomprimarea
+                ///decodeaza cu ce trebuie
+                ///decompose_tar();
+                last_button=0;
+                break;
+            case 2://info
+                delay(200);
+                setcolor(9);
+                settextstyle(DEFAULT_FONT, HORIZ_DIR, 4);
+                outtextxy(coordo[0][0] + 15, coordo[0][1] + 15, "Infoooooo");
+                last_button=0;
+                break;
+            default:
+                break;
+            }
+            break;
+        case 2:
+            start_graphics();
+            switch(command[0])
+            {
+            case 0://arhivare
+                if(command[1]==0)//huffman
+                {
+                    file_explorer();///selectare
+                    ///build_tar();
+                    ///huffman();
+                    ///nume arhiva
+                    ///gata, sterg toate comenzile, poate afisez ceva
+                }
+                else///lempel
+                {
+                    file_explorer();///selectare
+                    ///build_tar();
+                    ///lempel();
+                    ///nume arhiva
+                    //gata, sterg toate comenzile, poate afisez ceva
+                }
+                break;
+            case 2://info
+                //deschizi un fisier
+                break;
+            default:
+                break;
+            }
+            break;
+        default:
+            ///actualizez stringul cu path
+            break;
+        }
+        if(how_far)
+        {
+            setcolor(9);
+            settextstyle(DEFAULT_FONT, 0, 2);
+            graphic_button(30, 880, 130, 930);
+            outtextxy(36, 895, "inapoi");
+        }
+    }
+}

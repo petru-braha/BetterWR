@@ -1,0 +1,10 @@
+#include <iostream>
+#include <graphics.h>
+#include <winbgim.h>
+#include <cstring>
+#include <fstream>
+#include <cstdio>
+#include <stdio.h>
+#include <stdlib.h>
+#include <filesystem>
+#include <direct.h>
