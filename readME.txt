@@ -1,6 +1,5 @@
 ! Disclaimer: in the following document we will refer to the Huffman trees functions as "HUF"; analogous Lempel-Ziv-Welch functions will be categorized as "LZW".
-# Archive file viewer 
-
+### Archive file viewer 
 
 # Simplified: main components of the project:
 - algorithm: HUF 
@@ -63,31 +62,31 @@ I. Algorithms
 II. Packaging
 
 # Tar format
-    Un format de fișier TAR (tape archive) este o arhivă creată de tar, un utilitar bazat pe UNIX, folosit pentru a împacheta fișierele împreună , în scopuri de backup sau distribuție. Acesta conține mai multe fișiere (cunoscutIe și sub numele de tarball) stocate într-un format necomprimat, împreună cu metadate despre arhivă. Fișierele TAR nu sunt fișiere de arhivă comprimate. Acestea sunt adesea comprimate cu utilitare de compresie a fișierelor, cum ar fi gzip sau bzip2.
-    Fiecare obiect fișier include orice date de fișier și este precedat de o înregistrare-antet de 512 octeți. Datele fișierului sunt scrise nemodificate, cu excepția faptului că lungimea lor este rotunjită la un multiplu de 512 octeți. La sfârșitul fișierului arhivă există două blocuri de 512 octeți, umplute cu zerouri binare, pentru a marca sfârșitul de fișier. Înregistrarea-antet fișier conține metadate despre un fișier. Pentru a asigura portabilitatea între diferite arhitecturi cu diferite ordonari de octeți, informațiile din înregistrarea-antet sunt codificate în ASCII. Arhivele TAR sunt pe deplin compatibile între sistemele UNIX și Windows, deoarece toate informațiile antetului sunt reprezentate în ASCII.
-    Formatul de fișier TAR s-a schimbat în timp, deoarece au fost dezvoltate funcționalități suplimentare pentru utilitarul tar UNIX, ceea ce a dus la extensii de format care includ informații suplimentare pentru implementările necesare, începând cu anii 1980. Versiunile timpurii ale formatelor TAR au fost inconsecvente în modul în care au fost construite câmpurile numerice, care au fost corectate în implementările ulterioare, pentru a îmbunătăți portabilitatea formatului, începând cu primul standard POSIX pentru formatele de fișiere tar în 1988.
-    Formatul de fișier tar nu conține compresie nativă a datelor, astfel încât arhivele tar sunt adesea comprimate cu un utilitar extern, cum ar fi; gzip, bzip2, XZ (folosind algoritmi de compresie 7-Zip / p7zip LZMA / LZMA2), Brotli, Zstandard și instrumente similare pentru a reduce dimensiunea arhivei pentru portabilitate și backup de date. Fișierele comprimate rezultate pot fi găsite numite cu extensie unică, de ex. tgz, tbz, txz, tzst, sau cu extensie de fișier dublu, de exemplu tar.gz, tar.br, tar.bz2, tar.xz, tar.zst.
+   A TAR (tape archive) file format is an archive created by tar, a UNIX-based utility used to package files together for backup or distribution purposes. It contains multiple files (tarballs) stored in an uncompressed format, along with metadata about the archive. TAR files are not compressed archive files. They are often compressed with file compression utilities such as gzip or bzip2.
+   Each file object includes any file data and is preceded by a 512-byte record-anthet. File data is written unmodified, except that its length is rounded to a multiple of 512 bytes. At the end of the archive file there are two 512-byte blocks, filled with binary zeros, to mark the end of the file. The record-antet file contains metadata about a file. To ensure portability between different architectures with different byte orderings, the information in the header record is encoded in ASCII. TAR files are fully compatible between UNIX and Windows systems because all header information is represented in ASCII.
+   The TAR file format has changed over time as additional functionality has been developed for the UNIX tar utility, leading to format extensions that include additional information for required implementations, starting in the 1980s. Early versions of TAR formats were inconsistent in the way numeric fields were constructed, which were corrected in later implementations to improve the portability of the format, starting with the first POSIX standard for tar file formats in 1988.
+   The tar file format does not contain native data compression, so tar archives are often compressed with an external utility such as; gzip, bzip2, XZ (using 7-Zip / p7zip LZMA / LZMA2 compression algorithms), Brotli, Zstandard and similar tools to reduce archive size for portability and data backup. The resulting compressed files can be found named with single extension, e.g. tgz, tbz, txz, tzst, or with double file extension, e.g. tar.gz, tar.br, tar.bz2, tar.xz, tar.zst.
 
-- linux
+On short terms:
 - connects files without compression
-- within the same window size, for exemple: one of the 2 files w the same info can be eliminated to save 50% space 
 - the information is encoded in in ASCII
 - the order of events: first is the unification of files then we should apply the compression technique
-
-+ ca e poti folosi oricare algoritm de compresie dupa
-+ elimina informatie dubla
-- metadata in the end (posibil sa pierzi index fiecarui fisier -> indexed_tar_files)
+Pros and cons:
++ we can use any compression algorithm after the unification
++ deletes doubled information
+- can lose metadata of files (index of files)
 
 # Zip format
-    Un fișier cu extensia .zip este o arhivă care poate deține unul sau mai multe fișiere sau directoare. Arhiva poate avea compresie aplicată fișierelor incluse pentru a reduce dimensiunea fișierului ZIP. Formatul fișierului ZIP a fost făcut public încă din februarie 1989 de Phil Katz pentru a realiza arhivarea fișierelor și folderelor. Formatul a fost făcut parte din utilitarul PKZIP, creat de PKWARE, Inc. Imediat ce specificațiile existente în momentul respectiv au fost făcute disponibile, multe companii au făcut ca formatul de fișier ZIP să facă parte din utilitățile lor software, inclusiv Microsoft (din Windows 7), Apple (Mac OS X) și multe altele.
-    Fișierul este o arhivă comprimată care suportă compresia fără pierderi a datelor. Este adesea utilizat pentru a trimite atasamente de e-mail, cu fermoar; în acest fel mesajul nu poate fi blocat de filtrele de server de e-mail. Acesta poate fi, de asemenea, utilizat pentru ascunderea unui tip de fișier sau pentru a preveni deschiderea acestuia.
-    Există numeroase alte standarde și formate care folosesc “zip” ca parte din numele lor. Phil Katz a declarat că a vrut să permită numele “zip” pentru orice tip de arhivă. De exemplu, zip este diferit de gzip, iar acesta din urmă este definit într -un IETF RFC (RFC 1952). Atât zip cât şi gzip folosesc în primul rând algoritmul DEFLATE pentru compresie. De asemenea, formatul ZLIB (IETF RFC 1950), de asemenea, foloseşte algoritmul de compresie DEFLATE, dar precizează diferite anteturi de eroare și verificarea consistenței. Alte formate şi programe comune denumite similar, cu diferite formate native, includ 7-Zip, bzip2, și rzip.
+   A file with a .zip extension is an archive that can hold one or more files or directories. The archive may have compression applied to the included files to reduce the size of the ZIP file. The ZIP file format was made public as early as February 1989 by Phil Katz to achieve archiving of files and folders. The format was made part of the PKZIP utility, created by PKWARE, Inc. As soon as the then existing specifications were made available, many companies made the ZIP file format part of their software utilities, including Microsoft (since Windows 7), Apple (Mac OS X) and many others.
+   The file is a compressed archive that supports lossless data compression. It is often used to send zipped email attachments; this way the message cannot be blocked by email server filters. It can also be used to hide a file type or prevent it from being opened.
+    There are numerous other standards and formats that use "zip" as part of their name. Phil Katz stated that he wanted to allow the name "zip" for any type of archive. For example, zip is different from gzip, and the latter is defined in an IETF RFC (RFC 1952). Both zip and gzip primarily use the DEFLATE algorithm for compression. Likewise, the ZLIB format (IETF RFC 1950) also uses the DEFLATE compression algorithm, but specifies different error headers and consistency checking. Other similarly named formats and common programs with different native formats include 7-Zip, bzip2, and rzip.
 
+On short terms:
 - the order of events: firstly individual compression of the files then the unification
-
-+ poti vizualiza si dezarhiva doar un singur element al arhivei
-+ paraleliza procesul de arhivare pe CPU -> mai rapid
-- compresion ratio -- (unesti dubluri, ceva ce este redundant)
+Pros and cons:
++ you can view and unarchive only one archive item
++ parallelize the archiving process on the CPU -> faster
+- compression ratio -- (join duplicates, something that is redundant)
 
 III. Usages
 
