@@ -655,8 +655,9 @@ change_MYMIND:
 
 
 
-int main()
+int main(int argc, char** argv)
 {
+    ///i'll make 2 exe: gui vs cmd
     initwindow(width, height, "", -3, -3);
     start_graphics(1);
     graphics_MENUbuttons();
