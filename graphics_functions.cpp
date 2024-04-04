@@ -6,6 +6,20 @@ short int coordo[13][4];
 short int file_coordo[MAX][4];
 short int unit=0;
 
+#include "wtypes.h"
+#include <iostream>
+void define_fullscreen(short& x, short& y)
+{
+    RECT desktop;
+    // Get a handle to the desktop window
+    const HWND hDesktop = GetDesktopWindow();
+    // Get the size of screen to the variable desktop
+    GetWindowRect(hDesktop, &desktop);
+    x = desktop.right;
+    y = desktop.bottom;
+    //16 inch my pc
+}
+
 void highlight(int x1, int y1, int x2, int y2)
 {
     setcolor(15);

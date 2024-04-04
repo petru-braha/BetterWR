@@ -38,7 +38,6 @@
 		<Unit filename="algorithms/huffmanFunctions.cpp" />
 		<Unit filename="algorithms/lzw.h" />
 		<Unit filename="algorithms/lzwFunctions.cpp" />
-		<Unit filename="explorer/explorer.h" />
 		<Unit filename="global_variables.h" />
 		<Unit filename="graphics_functions.cpp" />
 		<Unit filename="graphics_functions.h" />
@@ -46,7 +45,9 @@
 		<Unit filename="main.cpp" />
 		<Unit filename="packing_functions.cpp" />
 		<Unit filename="packing_functions.h" />
-		<Unit filename="usages/cmd_exe.h" />
+		<Unit filename="usages/cmd.cpp" />
+		<Unit filename="usages/cmd.h" />
+		<Unit filename="usages/explorer.h" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>

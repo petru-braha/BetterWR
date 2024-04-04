@@ -126,3 +126,79 @@
 
 1711305491 a:\portfolio\betterwr\explorer\explorer.h
 
+1705476727 source:a:\projects\done\portfolio\betterwr\algorithms\huffmanfunctions.cpp
+	<iostream>
+	<string>
+	<unordered_map>
+	<queue>
+	<vector>
+	<bitset>
+	"huffman.h"
+
+1705476727 a:\projects\done\portfolio\betterwr\algorithms\huffman.h
+	<iostream>
+	<string>
+	<unordered_map>
+	<queue>
+	<vector>
+
+1705476727 source:a:\projects\done\portfolio\betterwr\algorithms\lzwfunctions.cpp
+	<iostream>
+	<cstring>
+	"lzw.h"
+
+1705476727 a:\projects\done\portfolio\betterwr\algorithms\lzw.h
+	<iostream>
+	<cstring>
+
+1712232051 source:a:\projects\done\portfolio\betterwr\graphics_functions.cpp
+	<graphics.h>
+
+1711308041 source:a:\projects\done\portfolio\betterwr\packing_functions.cpp
+	<stdio.h>
+	<string.h>
+	<filesystem>
+	<direct.h>
+
+1711491638 source:a:\projects\done\portfolio\betterwr\algorithms\gui-commands.cpp
+	<graphics.h>
+	"../graphics_functions.h"
+	"../global_variables.h"
+
+1712231995 a:\projects\done\portfolio\betterwr\graphics_functions.h
+
+1710693207 a:\projects\done\portfolio\betterwr\global_variables.h
+
+1712216285 source:a:\projects\done\portfolio\betterwr\main.cpp
+	"libraries.h"
+	"algorithms/huffman.h"
+	"algorithms/lzw.h"
+	"global_variables.h"
+	"packing_functions.h"
+	"graphics_functions.h"
+	"usages/explorer.h"
+	"usages/cmd.h"
+
+1710534269 a:\projects\done\portfolio\betterwr\libraries.h
+	<iostream>
+	<graphics.h>
+	<winbgim.h>
+	<cstring>
+	<fstream>
+	<cstdio>
+	<stdio.h>
+	<stdlib.h>
+	<filesystem>
+	<direct.h>
+
+1710694774 a:\projects\done\portfolio\betterwr\packing_functions.h
+
+1711309091 a:\projects\done\portfolio\betterwr\usages\explorer.h
+
+1712231610 a:\projects\done\portfolio\betterwr\usages\cmd.h
+
+1712232097 source:a:\projects\done\portfolio\betterwr\usages\cmd.cpp
+	<iostream>
+	<graphics.h>
+	"../graphics_functions.h"
+

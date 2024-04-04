@@ -1,3 +1,4 @@
+void define_fullscreen(short& x, short& y);
 void highlight(int x1, int y1, int x2, int y2);
 void graphic_button(int x1, int y1, int x2, int y2);
 void graphic_x(int x1, int y1, int x2, int y2);

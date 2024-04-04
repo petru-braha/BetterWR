@@ -1,5 +1,5 @@
 ! Disclaimer: in the following document we will refer to the Huffman trees functions as "HUF"; analogous Lempel-Ziv-Welch functions will be categorized as "LZW".
-### Archive file viewer 
+# Archive file viewer 
 
 # Simplified: main components of the project:
 - algorithm: HUF 

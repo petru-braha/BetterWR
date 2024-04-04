@@ -7,7 +7,7 @@
 #include "packing_functions.h"
 #include "graphics_functions.h"
 
-#include "explorer/explorer.h"
+#include "usages/explorer.h"
 
 ///COMMANDS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 extern struct point{
@@ -652,17 +652,10 @@ change_MYMIND:
 
 
 
-
-
-
+#include "usages/cmd.h"
 int main(int argc, char** argv)
 {
-    ///i'll make 2 exe: gui vs cmd
-    initwindow(width, height, "", -3, -3);
-    start_graphics(1);
-    graphics_MENUbuttons();
-    commands();
-    closegraph();
+    decide_boot(argc, argv);
     return 0;
 }
 
@@ -934,10 +927,3 @@ void decompose_tar()
     */
     fclose(p_bar);
 }
-
-/**
-to do:
--dezarhivare
--mkdir, fopen
--ce se intampla dupa gata(se inchide, afisare pe desktop)
-*/
