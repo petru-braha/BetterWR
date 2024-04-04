@@ -45,8 +45,10 @@
 		<Unit filename="main.cpp" />
 		<Unit filename="packing_functions.cpp" />
 		<Unit filename="packing_functions.h" />
-		<Unit filename="usages/cmd.cpp" />
-		<Unit filename="usages/cmd.h" />
+		<Unit filename="usages/cmd/cmd.cpp" />
+		<Unit filename="usages/cmd/cmd.h" />
+		<Unit filename="usages/cmd/help_cmd.cpp" />
+		<Unit filename="usages/cmd/help_cmd.h" />
 		<Unit filename="usages/explorer.h" />
 		<Extensions>
 			<lib_finder disable_auto="1" />

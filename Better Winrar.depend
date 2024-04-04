@@ -151,8 +151,10 @@
 	<iostream>
 	<cstring>
 
-1712232051 source:a:\projects\done\portfolio\betterwr\graphics_functions.cpp
+1712235002 source:a:\projects\done\portfolio\betterwr\graphics_functions.cpp
 	<graphics.h>
+	"wtypes.h"
+	<iostream>
 
 1711308041 source:a:\projects\done\portfolio\betterwr\packing_functions.cpp
 	<stdio.h>
@@ -169,7 +171,7 @@
 
 1710693207 a:\projects\done\portfolio\betterwr\global_variables.h
 
-1712216285 source:a:\projects\done\portfolio\betterwr\main.cpp
+1712258447 source:a:\projects\done\portfolio\betterwr\main.cpp
 	"libraries.h"
 	"algorithms/huffman.h"
 	"algorithms/lzw.h"
@@ -177,7 +179,7 @@
 	"packing_functions.h"
 	"graphics_functions.h"
 	"usages/explorer.h"
-	"usages/cmd.h"
+	"usages/cmd/cmd.h"
 
 1710534269 a:\projects\done\portfolio\betterwr\libraries.h
 	<iostream>
@@ -195,10 +197,21 @@
 
 1711309091 a:\projects\done\portfolio\betterwr\usages\explorer.h
 
-1712231610 a:\projects\done\portfolio\betterwr\usages\cmd.h
+1712257231 a:\projects\done\portfolio\betterwr\usages\cmd.h
 
 1712232097 source:a:\projects\done\portfolio\betterwr\usages\cmd.cpp
 	<iostream>
 	<graphics.h>
 	"../graphics_functions.h"
+
+1712257231 a:\projects\done\portfolio\betterwr\usages\cmd\cmd.h
+
+1712258556 source:a:\projects\done\portfolio\betterwr\usages\cmd\help_cmd.cpp
+	"help_cmd.h"
+
+1712258586 a:\projects\done\portfolio\betterwr\usages\cmd\help_cmd.h
+	<iostream>
+	<cstring>
+	<graphics.h>
+	"../../graphics_functions.h"
 

@@ -9,7 +9,7 @@
 
 #include "usages/explorer.h"
 
-///COMMANDS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+///gui commands!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 extern struct point{
     int x, y;
 } mouse;
@@ -651,8 +651,8 @@ change_MYMIND:
 }
 
 
-
-#include "usages/cmd.h"
+/// g++ -std=c++17 main.cpp huffmanFunctions.cpp lzwFunctions.cpp -o "exe_name"
+#include "usages/cmd/cmd.h"
 int main(int argc, char** argv)
 {
     decide_boot(argc, argv);

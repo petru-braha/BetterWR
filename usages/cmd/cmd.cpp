@@ -1,39 +1,28 @@
-#include <iostream>
-#include <graphics.h>
-#include "../graphics_functions.h"
+//ilovemygirlfriend
+#include "help_cmd.h"
 
-void commands();
 void decide_boot(int argc, char** argv)
 {
+    ///GUI
+    if(argc == 1)
+    {
+        etern_gui();
+        return;
+    }
+
     FILE* input = nullptr, * output = nullptr;
     char* optionSelect, * algSelect;
 
-    ///graphics?
-    if(argc == 1)
+    /// operations: 1 - compression, 2 - decompression, 3 - folder compression, 4 - folder decompression;
+    if (argc < 3 && strcmp(argv[1],"compresie_folder") != 0 && strcmp(argv[1], "decompresie_folder") != 0)
     {
-        short screen_x = 0, screen_y = 0;
-        define_fullscreen(screen_x, screen_y);
-        if(screen_x==0 || screen_y==0)
-            exit(1);
-
-        initwindow(screen_x, screen_y, "", -3, -3);
-        start_graphics(1);
-        graphics_MENUbuttons();
-        commands();
-        closegraph();
-        exit(0);
+        std::cout << "Usage: " << argv[0] << " <operation> <algorithm> <input_file> <output_file>" << '\n';
+        exit(1);
     }
 
-    ///cmd?
-    /*
-    // Verificam daca exista destule argumente pentru linia de comanda
-    if (argc < 3 && strcmp(argv[1],"compresie_folder") != 0 && strcmp(argv[1], "decompresie_folder") != 0) {
-        cout << "Usage: " << argv[0] << " <operation> <algorithm> <input_file> <output_file>" << endl;
-        return 1;
-    }
 
     optionSelect = argv[1];
-
+/*
     if (strcmp(optionSelect, "compresie") == 0)
     {
         if (argc < 5) {
@@ -43,10 +32,6 @@ void decide_boot(int argc, char** argv)
         algSelect = argv[2];
         const char* inputFile = argv[3];
         const char* outputFile = argv[4];
-
-        // Alternativ:
-        //cout << "Introduceti algoritmul utilizat pentru comprimare: 1 - HUF , 2 - LZW" << endl;
-        //cin >> algSelect;
 
         if (strcmp(algSelect, "HUF") == 0)
         {
@@ -66,7 +51,7 @@ void decide_boot(int argc, char** argv)
             }
 
             // Citim datele din input si le punem intr-un buffer
-            const int BUFFER_SIZE = 30000;  // adjustare manuala
+            const int BUFFER_SIZE = 30000;
             char buffer[BUFFER_SIZE];
             size_t bytesRead = fread(buffer, sizeof(char), BUFFER_SIZE, input);
             if (bytesRead <= 0) {
