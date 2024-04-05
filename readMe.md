@@ -60,7 +60,7 @@ Index 		Name
 
 - encoding/decoding:
 ```
-    Pseudocode:
+    - Pseudocode:
     Creation of a Priority Queue Q, which contains each character
     Sorting in ascending order of their frequencies 
     For all unique characters:
