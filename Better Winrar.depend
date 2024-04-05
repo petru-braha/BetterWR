@@ -171,7 +171,7 @@
 
 1710693207 a:\projects\done\portfolio\betterwr\global_variables.h
 
-1712258447 source:a:\projects\done\portfolio\betterwr\main.cpp
+1712323386 source:a:\projects\done\portfolio\betterwr\main.cpp
 	"libraries.h"
 	"algorithms/huffman.h"
 	"algorithms/lzw.h"
@@ -204,14 +204,18 @@
 	<graphics.h>
 	"../graphics_functions.h"
 
-1712257231 a:\projects\done\portfolio\betterwr\usages\cmd\cmd.h
+1712321548 a:\projects\done\portfolio\betterwr\usages\cmd\cmd.h
 
-1712258556 source:a:\projects\done\portfolio\betterwr\usages\cmd\help_cmd.cpp
+1712332952 source:a:\projects\done\portfolio\betterwr\usages\cmd\help_cmd.cpp
 	"help_cmd.h"
+	<filesystem>
 
-1712258586 a:\projects\done\portfolio\betterwr\usages\cmd\help_cmd.h
+1712321787 a:\projects\done\portfolio\betterwr\usages\cmd\help_cmd.h
 	<iostream>
 	<cstring>
 	<graphics.h>
 	"../../graphics_functions.h"
+
+1712329703 source:a:\projects\done\portfolio\betterwr\usages\cmd\cmd.cpp
+	"help_cmd.h"
 

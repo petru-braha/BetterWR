@@ -1,7 +1,9 @@
-//ilovemygirlfriend
 #include "help_cmd.h"
 
-void decide_boot(int argc, char** argv)
+// operations: compress, decompress || it detects if the paths are folders or not
+// algorithms: HUF, LZW
+
+void boot(int argc, char** argv)
 {
     ///GUI
     if(argc == 1)
@@ -10,46 +12,23 @@ void decide_boot(int argc, char** argv)
         return;
     }
 
-    FILE* input = nullptr, * output = nullptr;
-    char* optionSelect, * algSelect;
+    if(verification(argc, argv) == false) //checks if the arguments are valid
+        return;
 
-    /// operations: 1 - compression, 2 - decompression, 3 - folder compression, 4 - folder decompression;
-    if (argc < 3 && strcmp(argv[1],"compresie_folder") != 0 && strcmp(argv[1], "decompresie_folder") != 0)
+    ///complex bash commands
+    //initialisations
+    char* cmd_operation = argv[1], * cmd_algorithm = argv[2], * nr_paths = argv[3];
+    FILE** paths_input = nullptr, * path_output = nullptr;
+
+    for(int i=0; i< nr_paths[0]-'0'; i++)
+        paths_input[i] = fopen(argv[i+4], "rb"); //verification not necessary <= verification function does it
+    path_output = fopen(argv[argc-1], "wb");
+
+    //actual verifications
+    if (strcmp(cmd_operation, "compress") == 0)
     {
-        std::cout << "Usage: " << argv[0] << " <operation> <algorithm> <input_file> <output_file>" << '\n';
-        exit(1);
-    }
-
-
-    optionSelect = argv[1];
-/*
-    if (strcmp(optionSelect, "compresie") == 0)
-    {
-        if (argc < 5) {
-            cout << "Usage: " << argv[0] << " 1 <algorithm> <input_file> <output_file>" << endl;
-            return 1;
-        }
-        algSelect = argv[2];
-        const char* inputFile = argv[3];
-        const char* outputFile = argv[4];
-
-        if (strcmp(algSelect, "HUF") == 0)
+        if (strcmp(cmd_algorithm, "HUF") == 0)
         {
-            // Deschidem fisierul de input pentru citire
-            input = fopen(inputFile, "rb");
-            if (input == NULL) {
-                printf("Error opening input file\n");
-                exit(1);
-            }
-
-            // Deschidem fisierul de output pentru a scrie datele codate
-            output = fopen(outputFile, "wb");
-            if (output == NULL) {
-                printf("Error opening output file\n");
-                fclose(input);
-                exit(1);
-            }
-
             // Citim datele din input si le punem intr-un buffer
             const int BUFFER_SIZE = 30000;
             char buffer[BUFFER_SIZE];
@@ -100,81 +79,57 @@ void decide_boot(int argc, char** argv)
             fclose(input);
             fclose(output);
         }
-        else
+
+        if (strcmp(algSelect, "LZW") == 0)
         {
-            if (strcmp(algSelect, "LZW") == 0)
-            {
-                int* encoded_text;
-                encoded_text = new int[MAX];
-                memset(encoded_text, 0, MAX * sizeof(int));
+            int* encoded_text;
+            encoded_text = new int[MAX];
+            memset(encoded_text, 0, MAX * sizeof(int));
 
-                // Deschidem fisierul de input pentru citire
-                input = fopen(inputFile, "rb");
-                if (input == NULL) {
-                    printf("Error opening input file\n");
-                    exit(1);
-                }
-
-                // Deschidem fisierul de output pentru a scrie datele codate
-                output = fopen(outputFile, "wb");
-                if (output == NULL) {
-                    printf("Error opening output file\n");
-                    fclose(input);
-                    exit(1);
-                }
-
-                // Citim datele din input si le punem intr-un buffer
-                const int BUFFER_SIZE = 30000;  // adjustare manuala
-                char buffer[BUFFER_SIZE];
-                for (int i = 0; i < BUFFER_SIZE; ++i)
-                    buffer[i] = 0;
-                size_t bytesRead = fread(buffer, sizeof(char), BUFFER_SIZE, input);
-                if (bytesRead <= 0) {
-                    printf("Error reading input file\n");
-                    fclose(input);
-                    exit(1);
-                }
-
-                // Realizarea encodarii LZW
-                lzw_encode(buffer,sizeof(buffer), encoded_text);
-                int n = Len(encoded_text, MAX);
-
-                // Convertire int to string pentru a scrie mai usor textul encodat in fisier
-                string encoded_text_char = {};
-                for (int x = 0; x < n; x++)
-                {
-                    encoded_text_char += to_string(encoded_text[x]) + ' ';
-                }
-
-                // Calculam dimensiunea datelor
-                size_t originalSize = bytesRead * 8;
-                size_t encodedSize = encoded_text_char.size() * 8;
-
-                for (size_t i = 0; i < n; ++i) {
-                    fprintf(output, "%d ", static_cast<int>(encoded_text[i]));      // scriem in fisier textul encodat
-                }
-
-                // Afisam diferentele de marime a fisierelor
-                savedSize(originalSize, encodedSize);
-
-                delete[]encoded_text;
-
+            // Citim datele din input si le punem intr-un buffer
+            const int BUFFER_SIZE = 30000;  // adjustare manuala
+            char buffer[BUFFER_SIZE];
+            for (int i = 0; i < BUFFER_SIZE; ++i)
+                buffer[i] = 0;
+            size_t bytesRead = fread(buffer, sizeof(char), BUFFER_SIZE, input);
+            if (bytesRead <= 0) {
+                printf("Error reading input file\n");
                 fclose(input);
-                fclose(output);
-                return 0;
+                exit(1);
             }
-            else
+
+            // Realizarea encodarii LZW
+            lzw_encode(buffer,sizeof(buffer), encoded_text);
+            int n = Len(encoded_text, MAX);
+
+            // Convertire int to string pentru a scrie mai usor textul encodat in fisier
+            string encoded_text_char = {};
+            for (int x = 0; x < n; x++)
             {
-                cout << "EROARE!" << endl;
-                return 0;
+                encoded_text_char += to_string(encoded_text[x]) + ' ';
             }
+
+            // Calculam dimensiunea datelor
+            size_t originalSize = bytesRead * 8;
+            size_t encodedSize = encoded_text_char.size() * 8;
+
+            for (size_t i = 0; i < n; ++i) {
+                fprintf(output, "%d ", static_cast<int>(encoded_text[i]));      // scriem in fisier textul encodat
+            }
+
+            // Afisam diferentele de marime a fisierelor
+            savedSize(originalSize, encodedSize);
+
+            delete[]encoded_text;
+
+            fclose(input);
+            fclose(output);
+            return 0;
         }
     }
-    else
+    /*
+    if (strcmp(optionSelect, "decompresie") == 0)
     {
-        if (strcmp(optionSelect, "decompresie") == 0)
-        {
-
            if (argc < 4) {
                 cout << "Usage: " << argv[0] << " 2 <input_file> <output_file>" << endl;
                 return 1;

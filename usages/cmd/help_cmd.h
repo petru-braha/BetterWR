@@ -6,3 +6,4 @@
 #include "../../graphics_functions.h"
 void commands();
 void etern_gui();
+bool verification(int argc, char** argv);

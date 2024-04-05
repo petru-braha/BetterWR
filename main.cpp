@@ -655,7 +655,7 @@ change_MYMIND:
 #include "usages/cmd/cmd.h"
 int main(int argc, char** argv)
 {
-    decide_boot(argc, argv);
+    boot(argc, argv);
     return 0;
 }
 
