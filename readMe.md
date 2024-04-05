@@ -14,12 +14,12 @@
 
 ! Data structures: Binary trees, Priority Queue, Heap, Dictionary, Stack, Hash Table
 
-## I. **Boot**:
+## I. ***Boot***:
 
 - two ways of running the program: 
 	1. double-click on ".boot." => opens GUI
 	2. openning the folder in command prompt
-		- type `./name_of_executable arguments` **[arguments]** 
+		- type `./name_of_executable arguments` * *[arguments]* * 
 		- if no arguments provided => opens GUI
 
 ### 1. GUI
