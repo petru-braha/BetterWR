@@ -11,7 +11,7 @@
 2. decide_option
 3. decide_paths
 
-! Components: //simplified
+! Components: > simplified
 - usage: GUI (graphics)
 - usage: CMD (complex bash commands)
 - algorithm: HUF 
