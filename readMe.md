@@ -11,7 +11,7 @@
 2. decide_option
 3. decide_paths
 
-! Components: > simplified
+! Components:
 - usage: GUI (graphics)
 - usage: CMD (complex bash commands)
 - algorithm: HUF 
@@ -25,7 +25,7 @@
 - two ways of running the program: 
 	- double-click on ".boot." => opens GUI
 	- openning the folder in command prompt
-		- how to run from command prompt: type `.name_of_executable arguments`
+		- how to run from command prompt: type `./name_of_executable arguments`
 		- no arguments provided => opens GUI
 
 ### 1. GUI
@@ -51,7 +51,7 @@ Index 		Name
 
 ### 2. CMD
 
-- Usage: `/.name_of_executable <operation> <algorithm> <nr_input_files> <input_file_paths> <output_path>`
+- Usage: `./name_of_executable <operation> <algorithm> <nr_input_files> <input_file_paths> <output_path>`
 - multiple files can be selectected to be encoded and decoded in one step
 
 ## II. Algorithms
@@ -72,13 +72,13 @@ Index 		Name
     return root
 ```
 
-Huffman encoding involves computing the frequency for each unique character that appears in the initial string. Once we obtain the necessary information (each character and its corresponding frequency), we will store it in a map that will be used to build the Huffman tree, necessary for both encoding and decoding. Based on the tree, we convert the initial string into a string of binary values, which will then be grouped in groups of 8 to form a byte and converted into the corresponding ASCII character. Finally, the resulting string is encoded and ready to be written to the output file. Also in this file we will keep the information needed to reconstruct the tree, i.e. each character together with its frequency plus the size of the tree. When we read the contents of the file to perform the decoding, we make sure that we first read the tree data correctly and then read the encoded string. Decoding will be done by traversing the reconstructed tree, and when the encoded value corresponding to a character is found, we will write it to our created decoding string.
+   Huffman encoding involves computing the frequency for each unique character that appears in the initial string. Once we obtain the necessary information (each character and its corresponding frequency), we will store it in a map that will be used to build the Huffman tree, necessary for both encoding and decoding. Based on the tree, we convert the initial string into a string of binary values, which will then be grouped in groups of 8 to form a byte and converted into the corresponding ASCII character. Finally, the resulting string is encoded and ready to be written to the output file. Also in this file we will keep the information needed to reconstruct the tree, i.e. each character together with its frequency plus the size of the tree. When we read the contents of the file to perform the decoding, we make sure that we first read the tree data correctly and then read the encoded string. Decoding will be done by traversing the reconstructed tree, and when the encoded value corresponding to a character is found, we will write it to our created decoding string.
 
 ### 2. LZW algorithm (dictionary based)
 
 - the dictinonary is initialised with all the char elements from 0 to 255. 
 - enconding:
-	```
+```
     - Pseudocode:
     	repeat
 	    repeat
@@ -89,11 +89,11 @@ Huffman encoding involves computing the frequency for each unique character that
 	    output the part that was already in the dictionary //((strlen(temp)>1) means it is in the dictionary - memory saving method)
 	    reset variables 
     	until they reach the end of the input
-    ```
+```
 
 - basic principle: the first character is always in the dictionary and the second character if it is not, means it is a copy of the previous one
 - decode:
-	```
+```
     - Pseudocode:
 	repeat
 	    if not in dictionary next
@@ -103,20 +103,21 @@ Huffman encoding involves computing the frequency for each unique character that
 	    output<<temp
 	    add to dictionary(previous, current)
 	    until final input
-    ```
+```
 
-	The Lempel-Ziv-Welch (LZW) algorithm is a lossless data, compression algorithm. Abraham Lempel, Jakob Ziv and Terry Welch are the scientists who developed it. Procedure: it scans a file for data patterns that occur multiple times, which are saved later in a dictionary and their references are placed in a compressed file whenever repetitive data occurs. In hardware implementations, the algorithm is simple and has the potential for very high throughput. Other usages: GIF image format, Unix file compression utility.
+   The Lempel-Ziv-Welch (LZW) algorithm is a lossless data, compression algorithm. Abraham Lempel, Jakob Ziv and Terry Welch are the scientists who developed it. Procedure: it scans a file for data patterns that occur multiple times, which are saved later in a dictionary and their references are placed in a compressed file whenever repetitive data occurs. In hardware implementations, the algorithm is simple and has the potential for very high throughput. Other usages: GIF image format, Unix file compression utility.
 
-    - dictionary's memory + compressed message's memory < uncompressed message's memory
-    - dictionary is not send with the compressed message - you build the dictionary along the way (the receiver will constructor decoder alone)
-    - ideal for repetitive and long strings
-    - no prior information about the input data stream
-    - compress the input stream in one single step
-    - fast execution
+- dictionary's memory + compressed message's memory < uncompressed message's memory
+- dictionary is not send with the compressed message - you build the dictionary along the way (the receiver will constructor decoder alone)
+- ideal for repetitive and long strings
+- no prior information about the input data stream
+- compress the input stream in one single step
+- fast execution
 
 ## III. Packaging
 
 ### 1. Tar format
+
    A TAR (tape archive) file format is an archive created by tar, a UNIX-based utility used to package files together for backup or distribution purposes. It contains multiple files (tarballs) stored in an uncompressed format, along with metadata about the archive. TAR files are not compressed archive files. They are often compressed with file compression utilities such as gzip or bzip2.
    Each file object includes any file data and is preceded by a 512-byte record-anthet. File data is written unmodified, except that its length is rounded to a multiple of 512 bytes. At the end of the archive file there are two 512-byte blocks, filled with binary zeros, to mark the end of the file. The record-antet file contains metadata about a file. To ensure portability between different architectures with different byte orderings, the information in the header record is encoded in ASCII. TAR files are fully compatible between UNIX and Windows systems because all header information is represented in ASCII.
    The TAR file format has changed over time as additional functionality has been developed for the UNIX tar utility, leading to format extensions that include additional information for required implementations, starting in the 1980s. Early versions of TAR formats were inconsistent in the way numeric fields were constructed, which were corrected in later implementations to improve the portability of the format, starting with the first POSIX standard for tar file formats in 1988.
