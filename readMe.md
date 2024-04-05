@@ -14,17 +14,18 @@
 
 ! Data structures: Binary trees, Priority Queue, Heap, Dictionary, Stack, Hash Table
 
-## I. ***Boot***:
+## I. **Boot**:
 
 - two ways of running the program: 
 	1. double-click on ".boot." => opens GUI
 	2. openning the folder in command prompt
-		- type `./name_of_executable arguments` * *[arguments]* * 
+		- type `./name_of_executable arguments` *[arguments]* 
 		- if no arguments provided => opens GUI
 
 ### 1. GUI
 
 - buttons:
+```
 Index 		Name
 0 		compress
 1 		decompress
@@ -39,6 +40,7 @@ Index 		Name
 10 		HUF
 11 		LZW
 12		announcement_box //to_be_reviewed
+```
 
 - file_coordo[0...10] == selected files
 - file_coordo[11...infinity] == visible_files
