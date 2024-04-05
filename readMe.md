@@ -7,26 +7,20 @@
 - LZW = Lempel-Ziv-Welch functions
 
 ! Map:
-1. decide_boot
-2. decide_option
-3. decide_paths
-
-! Components:
-- usage: GUI (graphics)
-- usage: CMD (complex bash commands)
-- algorithm: HUF 
-- algorithm: LZW 
-- packaging functions (Tar format)
+1. boot
+2. option (compress / decompress)
+3. algorithm (HUF / LZW)
+4. packaging (Tar format , validate paths)
 
 ! Data structures: Binary trees, Priority Queue, Heap, Dictionary, Stack, Hash Table
 
-## I. Boot:
+## I. **Boot**:
 
 - two ways of running the program: 
-	- double-click on ".boot." => opens GUI
-	- openning the folder in command prompt
-		- how to run from command prompt: type `./name_of_executable arguments`
-		- no arguments provided => opens GUI
+	1. double-click on ".boot." => opens GUI
+	2. openning the folder in command prompt
+		- type `./name_of_executable arguments` **[arguments]** 
+		- if no arguments provided => opens GUI
 
 ### 1. GUI
 
@@ -54,7 +48,7 @@ Index 		Name
 - Usage: `./name_of_executable <operation> <algorithm> <nr_input_files> <input_file_paths> <output_path>`
 - multiple files can be selectected to be encoded and decoded in one step
 
-## II. Algorithms:
+## II. **Algorithms**:
 
 ### 1. HUF algorithm
 
@@ -105,7 +99,7 @@ repeat
 	    we put it in the analysis on next
 	output<<temp
     add to dictionary(previous, current)
-	until final input
+until final input
 ```
 
    The Lempel-Ziv-Welch (LZW) algorithm is a lossless data, compression algorithm. Abraham Lempel, Jakob Ziv and Terry Welch are the scientists who developed it. Procedure: it scans a file for data patterns that occur multiple times, which are saved later in a dictionary and their references are placed in a compressed file whenever repetitive data occurs. In hardware implementations, the algorithm is simple and has the potential for very high throughput. Other usages: GIF image format, Unix file compression utility.
@@ -117,7 +111,7 @@ repeat
 - compress the input stream in one single step
 - fast execution
 
-## III. Packaging:
+## III. **Packaging**:
 
 ### 1. Tar format
 
@@ -148,5 +142,5 @@ Pros and cons:
 - compression ratio -- (join duplicates, something that is redundant)
 
 
-## IV Limitations:
-## V Future improvements:
+## IV **Limitations**:
+## V **Future improvements**:
