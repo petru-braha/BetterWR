@@ -47,8 +47,17 @@ void graphic_button(int x1, int y1, int x2, int y2)
 void graphic_x(int x1, int y1, int x2, int y2)
 {
     setcolor(4);
-    line(x1, y2, x2, y1);
-    line(x1, y1, x2, y2);
+    for(int i=0; i<10; i++)
+    {
+        x1++;
+        y1++;
+        x2--;
+        y2--;
+        line(x1, y1, x2, y1);
+        line(x1, y1, x1, y2);
+        line(x1, y2, x2, y2);
+        line(x2, y1, x2, y2);
+    }
 }
 
 void graphics_MENUbuttons()

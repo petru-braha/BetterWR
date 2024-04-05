@@ -33,7 +33,6 @@
 			<Add option="-std=gnu++17" />
 			<Add option="-fexceptions" />
 		</Compiler>
-		<Unit filename="algorithms/GUI-commands.cpp" />
 		<Unit filename="algorithms/huffman.h" />
 		<Unit filename="algorithms/huffmanFunctions.cpp" />
 		<Unit filename="algorithms/lzw.h" />
@@ -50,6 +49,8 @@
 		<Unit filename="usages/cmd/help_cmd.cpp" />
 		<Unit filename="usages/cmd/help_cmd.h" />
 		<Unit filename="usages/explorer.h" />
+		<Unit filename="usages/gui/gui-commands.cpp" />
+		<Unit filename="usages/gui/gui-commands.h" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>

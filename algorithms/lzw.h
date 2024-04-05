@@ -1,6 +1,5 @@
 #pragma once
 #pragma warning(disable:4996)
-
 #include <iostream>
 #include <cstring>
 #define MAX 30000
@@ -21,4 +20,3 @@ bool is_in_dictionaryENCODED(int next);
 void build_decoded(char s[],char text[]);
 void lzw_encode(char input[], int size, int*& encoded_text);
 void lzw_decode(int input[], char*& decoded_text);
-

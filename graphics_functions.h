@@ -9,7 +9,6 @@ void graphics_GLOBALbuttons(int value);
 void graphics_EXPLbuttons();
 void graphics_ALGbuttons();
 
-//short int unit=0;
 void graphics_selected(char file_name[], int nr_files_for_tar);
 
 bool click_on_button(int x, int y, int which_button);

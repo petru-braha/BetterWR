@@ -27,8 +27,17 @@ void boot(int argc, char** argv)
     //actual verifications
     if (strcmp(cmd_operation, "compress") == 0)
     {
+        ///detect if folder or not
+        ///iterez sursele
+        ///creez un fisier temporar cu toata informatia
+        ///encode informatie
+        ///creez fisier final, sterg fisier temporar
+
         if (strcmp(cmd_algorithm, "HUF") == 0)
         {
+        }}
+
+            /*
             // Citim datele din input si le punem intr-un buffer
             const int BUFFER_SIZE = 30000;
             char buffer[BUFFER_SIZE];

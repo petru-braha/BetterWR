@@ -17,7 +17,7 @@
 ## I. **Boot**:
 
 - two ways of running the program: 
-	1. double-click on ".boot." => opens GUI
+	1. double-click on ".boot.exe" => opens GUI
 	2. openning the folder in command prompt
 		- type `./name_of_executable arguments` *[arguments]* 
 		- if no arguments provided => opens GUI
@@ -84,7 +84,9 @@ repeat
 		    add the following character
 	until it is no longer in the dictionary
 	add it to the dictionary
-	output the part that was already in the dictionary //((strlen(temp)>1) means it is in the dictionary - memory saving method)
+	output the part that was already in the dictionary 
+	//((strlen(temp)>1) means it is in the dictionary - memory saving method)
+	
 	reset variables 
 until they reach the end of the input
 ```
@@ -153,7 +155,7 @@ Pros and cons:
 ## V **Future improvements**:
 
 1. Add more languages:
-- [x] english (main languages)
+- [x] english
 - [ ] romanian
 - [ ] french
 - [ ] german

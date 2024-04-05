@@ -147,11 +147,11 @@
 	<cstring>
 	"lzw.h"
 
-1705476727 a:\projects\done\portfolio\betterwr\algorithms\lzw.h
+1712341720 a:\projects\done\portfolio\betterwr\algorithms\lzw.h
 	<iostream>
 	<cstring>
 
-1712235002 source:a:\projects\done\portfolio\betterwr\graphics_functions.cpp
+1712341370 source:a:\projects\done\portfolio\betterwr\graphics_functions.cpp
 	<graphics.h>
 	"wtypes.h"
 	<iostream>
@@ -162,16 +162,18 @@
 	<filesystem>
 	<direct.h>
 
-1711491638 source:a:\projects\done\portfolio\betterwr\algorithms\gui-commands.cpp
+1712344624 source:a:\projects\done\portfolio\betterwr\algorithms\gui-commands.cpp
 	<graphics.h>
 	"../graphics_functions.h"
 	"../global_variables.h"
+	<windows.h>
+	"../graphics_functions.h"
 
-1712231995 a:\projects\done\portfolio\betterwr\graphics_functions.h
+1712343957 a:\projects\done\portfolio\betterwr\graphics_functions.h
 
 1710693207 a:\projects\done\portfolio\betterwr\global_variables.h
 
-1712323386 source:a:\projects\done\portfolio\betterwr\main.cpp
+1712347669 source:a:\projects\done\portfolio\betterwr\main.cpp
 	"libraries.h"
 	"algorithms/huffman.h"
 	"algorithms/lzw.h"
@@ -179,6 +181,7 @@
 	"packing_functions.h"
 	"graphics_functions.h"
 	"usages/explorer.h"
+	"usages/gui/gui-commands.h"
 	"usages/cmd/cmd.h"
 
 1710534269 a:\projects\done\portfolio\betterwr\libraries.h
@@ -216,6 +219,14 @@
 	<graphics.h>
 	"../../graphics_functions.h"
 
-1712329703 source:a:\projects\done\portfolio\betterwr\usages\cmd\cmd.cpp
+1712344359 source:a:\projects\done\portfolio\betterwr\usages\cmd\cmd.cpp
 	"help_cmd.h"
+
+1712347417 source:a:\projects\done\portfolio\betterwr\usages\gui\gui-commands.cpp
+	<graphics.h>
+	"../../graphics_functions.h"
+	"../../global_variables.h"
+	<windows.h>
+
+1712346687 a:\projects\done\portfolio\betterwr\usages\gui\gui-commands.h
 
