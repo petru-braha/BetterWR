@@ -148,12 +148,12 @@ Pros and cons:
 
 1. Small number for input paths
 2. From the graphical point of view:
-- graphics.h is a primitive library
+- graphics.h is a primitive library [Additional documentation](https://www.programmingsimplified.com/c/graphics.h)
 
 ## V **Future improvements**:
 
 1. Add more languages:
-- english (main languages)
-- romanian
-- french
-- german
+- [x] english (main languages)
+- [ ] romanian
+- [ ] french
+- [ ] german
