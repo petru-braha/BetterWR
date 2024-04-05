@@ -145,4 +145,15 @@ Pros and cons:
 
 
 ## IV **Limitations**:
+
+1. Small number for input paths
+2. From the graphical point of view:
+- graphics.h is a primitive library
+
 ## V **Future improvements**:
+
+1. Add more languages:
+- english (main languages)
+- romanian
+- french
+- german
