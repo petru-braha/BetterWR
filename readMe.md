@@ -20,7 +20,7 @@
 
 ! Data structures: Binary trees, Priority Queue, Heap, Dictionary, Stack, Hash Table
 
-## I. Boot 
+## I. Boot:
 
 - two ways of running the program: 
 	- double-click on ".boot." => opens GUI
@@ -54,22 +54,23 @@ Index 		Name
 - Usage: `./name_of_executable <operation> <algorithm> <nr_input_files> <input_file_paths> <output_path>`
 - multiple files can be selectected to be encoded and decoded in one step
 
-## II. Algorithms
+## II. Algorithms:
 
 ### 1. HUF algorithm
 
 - encoding/decoding:
 ```
-    - Pseudocode:
-    Creation of a Priority Queue Q, which contains each character
-    Sorting in ascending order of their frequencies 
-    For all unique characters:
-        Create a newNode
-        Extraction of the minimum value from Q and assigning it to the leftChild of the newNode 
-        Retrieving the minimum value from Q and assigning it to the right child rightChild of newNode
-        Computing the sum of the two minimum values and assigning this value to the newNode
-        Inserting the newNode into the tree
-    return root
+Pseudocode:
+
+Creation of a Priority Queue Q, which contains each character
+Sorting in ascending order of their frequencies 
+For all unique characters:
+    Create a newNode
+    Extraction of the minimum value from Q and assigning it to the leftChild of the newNode 
+    Retrieving the minimum value from Q and assigning it to the right child rightChild of newNode
+    Computing the sum of the two minimum values and assigning this value to the newNode
+    Inserting the newNode into the tree
+return root
 ```
 
    Huffman encoding involves computing the frequency for each unique character that appears in the initial string. Once we obtain the necessary information (each character and its corresponding frequency), we will store it in a map that will be used to build the Huffman tree, necessary for both encoding and decoding. Based on the tree, we convert the initial string into a string of binary values, which will then be grouped in groups of 8 to form a byte and converted into the corresponding ASCII character. Finally, the resulting string is encoded and ready to be written to the output file. Also in this file we will keep the information needed to reconstruct the tree, i.e. each character together with its frequency plus the size of the tree. When we read the contents of the file to perform the decoding, we make sure that we first read the tree data correctly and then read the encoded string. Decoding will be done by traversing the reconstructed tree, and when the encoded value corresponding to a character is found, we will write it to our created decoding string.
@@ -79,30 +80,32 @@ Index 		Name
 - the dictinonary is initialised with all the char elements from 0 to 255. 
 - enconding:
 ```
-    - Pseudocode:
-    	repeat
-	    repeat
-		    if temp is in dictionary
-			    add the following character
-	    until it is no longer in the dictionary
-	    add it to the dictionary
-	    output the part that was already in the dictionary //((strlen(temp)>1) means it is in the dictionary - memory saving method)
-	    reset variables 
-    	until they reach the end of the input
+Pseudocode:
+
+repeat
+	repeat
+		if temp is in dictionary
+		    add the following character
+	until it is no longer in the dictionary
+	add it to the dictionary
+	output the part that was already in the dictionary //((strlen(temp)>1) means it is in the dictionary - memory saving method)
+	reset variables 
+until they reach the end of the input
 ```
 
 - basic principle: the first character is always in the dictionary and the second character if it is not, means it is a copy of the previous one
 - decode:
 ```
-    - Pseudocode:
-	repeat
-	    if not in dictionary next
-		    copy previous
-	    else
-		    we put it in the analysis on next
-	    output<<temp
-	    add to dictionary(previous, current)
-	    until final input
+Pseudocode:
+
+repeat
+    if not in dictionary next
+	    copy previous
+    else
+	    we put it in the analysis on next
+	output<<temp
+    add to dictionary(previous, current)
+	until final input
 ```
 
    The Lempel-Ziv-Welch (LZW) algorithm is a lossless data, compression algorithm. Abraham Lempel, Jakob Ziv and Terry Welch are the scientists who developed it. Procedure: it scans a file for data patterns that occur multiple times, which are saved later in a dictionary and their references are placed in a compressed file whenever repetitive data occurs. In hardware implementations, the algorithm is simple and has the potential for very high throughput. Other usages: GIF image format, Unix file compression utility.
@@ -114,7 +117,7 @@ Index 		Name
 - compress the input stream in one single step
 - fast execution
 
-## III. Packaging
+## III. Packaging:
 
 ### 1. Tar format
 
