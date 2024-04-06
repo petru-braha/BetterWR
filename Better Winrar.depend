@@ -147,7 +147,7 @@
 	<cstring>
 	"lzw.h"
 
-1712341720 a:\projects\done\portfolio\betterwr\algorithms\lzw.h
+1712360663 a:\projects\done\portfolio\betterwr\algorithms\lzw.h
 	<iostream>
 	<cstring>
 
@@ -156,7 +156,9 @@
 	"wtypes.h"
 	<iostream>
 
-1711308041 source:a:\projects\done\portfolio\betterwr\packing_functions.cpp
+1712360137 source:a:\projects\done\portfolio\betterwr\packing_functions.cpp
+	<iostream>
+	<cstring>
 	<stdio.h>
 	<string.h>
 	<filesystem>
@@ -196,7 +198,7 @@
 	<filesystem>
 	<direct.h>
 
-1710694774 a:\projects\done\portfolio\betterwr\packing_functions.h
+1712359758 a:\projects\done\portfolio\betterwr\packing_functions.h
 
 1711309091 a:\projects\done\portfolio\betterwr\usages\explorer.h
 
@@ -229,4 +231,15 @@
 	<windows.h>
 
 1712346687 a:\projects\done\portfolio\betterwr\usages\gui\gui-commands.h
+
+1712360530 source:a:\projects\done\portfolio\betterwr\usage\cmd\cmd.cpp
+	<iostream>
+	<cstring>
+	<graphics.h>
+	"../../graphics_functions.h"
+	"../../packing_functions.h"
+	"../final stage/middle.h"
+	<filesystem>
+
+1712360706 a:\projects\done\portfolio\betterwr\usage\final stage\middle.h
 

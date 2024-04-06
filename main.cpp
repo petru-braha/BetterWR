@@ -1,13 +1,18 @@
+#define nr_buttons 13
+#define MAX 300
+extern short int width, height;
+extern short int coordo[13][4];
+extern short int file_coordo[MAX][4];
+extern int unit;
+
 #include "libraries.h"
 
 #include "algorithms/huffman.h"
 #include "algorithms/lzw.h"
-
-#include "global_variables.h"
 #include "packing_functions.h"
 #include "graphics_functions.h"
 
-#include "usages/explorer.h"
+#include "usage/explorer.h"
 
 ///gui commands!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 extern struct point
@@ -16,15 +21,15 @@ extern struct point
 } mouse;
 
 //void define_announcement(bool mode);
-void change_extension(char type[]) //are ca input un fisier tar corect
+void change_extension(char type[], char path_output[]) //are ca input un fisier tar corect
 {
-    if(std::filesystem::path(path_of_tar).extension()==".txt")
-        strcpy(strstr(path_of_tar, ".txt"), type);
+    if(std::filesystem::path(path_output).extension()==".txt")
+        strcpy(strstr(path_output, ".txt"), type);
     else
-        strcpy(strchr(path_of_tar, '.'), ".txt");
+        strcpy(strchr(path_output, '.'), ".txt");
 }
 
-
+//to be moved
 void commands_STOP()
 {
     if(click_on_button(mouse.x, mouse.y, 3))
@@ -179,269 +184,7 @@ void commands_ready(int& which_button)/// este de fapt ce se intampla la boot!!!
             std::cout<<"error: please choose an algorithm";
         }
         else
-        {
-            FILE *input=nullptr, *output=nullptr;
-            if(which_button==1)
-            {
-                build_tar();
-                if(alg=='H')
-                {
-                    input = fopen(path_of_tar, "rb+");
-                    if (input == NULL)
-                    {
-                        printf("Error opening input file\n");
-                        exit(1);
-                    }
-
-                    // Citim datele din input si le punem intr-un buffer
-                    const int BUFFER_SIZE = 30000;  // adjustare manuala
-                    char buffer[BUFFER_SIZE];
-                    size_t bytesRead = fread(buffer, sizeof(char), BUFFER_SIZE, input);
-                    if (bytesRead <= 0)
-                    {
-                        printf("Error reading input file\n");
-                        fclose(input);
-                        exit(1);
-                    }
-
-                    // Crearea unui string din bufferul citit din fisier
-                    string binaryData(buffer, bytesRead);
-                    cout << binaryData << endl << endl;
-
-                    // Realizarea codarii Huffman
-                    node* root = buildHuffmanTree(binaryData);
-                    string encodedString = "";
-                    HuffmanEncode(root, binaryData, encodedString);
-
-                    // Convertim string-ul binar in simboluri ASCII
-                    string textToOutput = writeEncodedDataToFile(encodedString);
-
-                    //Salvam informatiile despre arborele Huffman, care vor fi stocate la inceputul fisierului encodat
-                    char treeInfo[MAX];
-                    int treeFreq[MAX];
-                    int treeSize = 0;
-                    createTreeString(root, 1, treeInfo, treeFreq, treeSize);
-
-
-                    //Dupa ce am obtinut informatiile din fisierul nostru text si am encodat-o folosind Huffman, redeschidem acelasi fisier pentru a scrie informatia encodata
-                    change_extension(".huf");
-                    output = fopen(path_of_tar, "wb+");
-                    if (output == NULL)
-                    {
-                        printf("Error opening output file\n");
-                        exit(1);
-                    }
-
-                    // Scriem in fisier toate informatiile care trebuie salvate, pentru a putea fi utilizate ulterior la reconstruirea folderelor
-                    fwrite(&treeSize, sizeof(int), 1, output);
-
-                    for (int i = 1; i <= treeSize; ++i)
-                        fwrite(&treeFreq[i], sizeof(int), 1, output);
-
-                    for (int i = 1; i <= treeSize; ++i)
-                        fwrite(&treeInfo[i], sizeof(char), 1, output);
-
-                    int bitlength = encodedString.size();
-                    fwrite(&bitlength, sizeof(int), 1, output);
-
-                    fwrite(textToOutput.c_str(), sizeof(char), textToOutput.size(), output);    // scriem in fisier textul encodat
-
-                    change_extension(".txt");
-
-                    fclose(input);
-                    fclose(output);
-                    remove(path_of_tar);
-                    //UNDE VREI SA O PUI, CUM SA SE NUMEASCA ARHIVA?
-
-                }
-                if(alg=='L')
-                {
-                    int* encoded_text;
-                    encoded_text = new int[MAX];
-                    memset(encoded_text, 0, MAX * sizeof(int));
-
-                    input = fopen(path_of_tar, "rb");
-                    if (input == NULL)
-                    {
-                        printf("Error opening input file\n");
-                        exit(1);
-                    }
-
-                    change_extension(".lzw");
-                    output = fopen(path_of_tar, "wb");
-                    if (output == NULL)
-                    {
-                        printf("Error opening output file\n");
-                        fclose(input);
-                        exit(1);
-                    }
-
-                    // Citim datele din input si le punem intr-un buffer
-                    const int BUFFER_SIZE = 30000;  // adjustare manuala
-                    char buffer[BUFFER_SIZE];
-                    for (int i = 0; i < BUFFER_SIZE; ++i)
-                        buffer[i] = 0;
-                    size_t bytesRead = fread(buffer, sizeof(char), BUFFER_SIZE, input);
-                    if (bytesRead <= 0)
-                    {
-                        printf("Error reading input file\n");
-                        fclose(input);
-                        exit(1);
-                    }
-
-                    // Realizarea encodarii LZW
-                    lzw_encode(buffer,sizeof(buffer), encoded_text);
-                    int n = Len(encoded_text, MAX);
-
-                    // Convertire int to string pentru a scrie mai usor textul encodat in fisier
-                    string encoded_text_char = {};
-                    for (int x = 0; x < n; x++)
-                        encoded_text_char += to_string(encoded_text[x]) + ' ';
-
-                    // Calculam dimensiunea datelor
-                    size_t originalSize = bytesRead * 8;
-                    size_t encodedSize = encoded_text_char.size() * 8;
-
-                    for (size_t i = 0; i < n; ++i)
-                        fprintf(output, "%d ", static_cast<int>(encoded_text[i]));      // scriem in fisier textul encodat
-
-                    delete[]encoded_text;
-                    change_extension(".txt");
-                    fclose(input);
-                    fclose(output);
-                    remove(path_of_tar);
-                    //UNDE VREI SA O PUI, CUM SA SE NUMEASCA ARHIVA
-                }
-            }
-            else
-            {
-                if(strcmp(std::filesystem::path(input_for_paths[0]).extension().string().c_str(), ".huf")==0)
-                {
-                    // Deschidem fisierul de input pentru citire
-                    input = fopen(input_for_paths[0], "rb+");
-                    if (input == NULL)
-                    {
-                        printf("Error opening input file\n");
-                        exit(1);
-                    }
-
-                    // Citim datele din input si le punem intr-un buffer
-                    const int BUFFER_SIZE = 30000;  // adjustare manuala
-                    char buffer[BUFFER_SIZE];
-
-                    // recuperam informatiile despre arborele Huffman
-                    char treeInfo[MAX];
-                    int treeFreq[MAX];
-                    int treeSize = 1;
-
-                    fread(&treeSize, sizeof(int), 1, input);
-
-                    for (int i = 1; i <= treeSize; ++i)
-                        fread(&treeFreq[i], sizeof(int), 1, input);
-
-                    for (int i = 1; i <= treeSize; ++i)
-                        fread(&treeInfo[i], sizeof(char), 1, input);
-
-                    int bitlength;
-                    fread(&bitlength, sizeof(int), 1, input);
-
-                    size_t bytesRead = fread(buffer, sizeof(char), BUFFER_SIZE, input);
-                    if (bytesRead <= 0)
-                    {
-                        printf("Error reading input file\n");
-                        fclose(input);
-                        exit(1);
-                    }
-
-                    // Crearea unui string din bufferul citit din fisier
-                    string binaryData(buffer, bytesRead);
-
-                    // Reconstruim arborele Huffman
-                    node* rootNode = reconstructTree(treeSize, 1, treeInfo, treeFreq);
-
-                    // Convertim simbolurile ASCII citite din fisier intr un sir de biti, care urmeaza a fi folosit in functia de decodare
-                    string codes = ASCIIToBinary(binaryData, bitlength);
-
-                    // Realizarea decodarii Huffman si scrierea textului decodat in fisier
-                    string decodedOutput = "";
-                    HuffmanDecode(rootNode, codes, decodedOutput);
-
-                    // Pentru ca restabilirea folderelor sa functioneze corect, intai am decodat textul din fisierul text ce contine informatia necesara
-                    // Rescriem in acelasi fisier informatia decodata, pentru ca restabilirea se face pe baza textului initial, nu cel encodat
-                    output = fopen(path_of_tar, "wb+");
-                    if (output == NULL)
-                    {
-                        printf("Error opening input file\n");
-                        exit(1);
-                    }
-
-                    fwrite(decodedOutput.c_str(), sizeof(char), decodedOutput.size(), output);
-
-                    fclose(input);
-                    fclose(output);
-                }
-                else
-                {
-                    if(strcmp(filesystem::path(input_for_paths[0]).extension().string().c_str(), ".lzw")==0)
-                    {
-                        int* decoded_text;
-                        decoded_text = new int[MAX];
-                        memset(decoded_text, 0, MAX * sizeof(int));
-
-                        char* output_text;
-                        output_text = new char[MAX];
-                        memset(output_text, 0, MAX * sizeof(char));
-
-                        // Deschidem fisierul de input pentru citire
-                        input = fopen(input_for_paths[0], "rb");
-                        if (input == NULL)
-                        {
-                            printf("Error opening input file\n");
-                            exit(1);
-                        }
-
-                        // Deschidem fisierul de output pentru a scrie datele codate
-                        output = fopen(path_of_tar, "wb");
-                        if (output == NULL)
-                        {
-                            printf("Error opening output file\n");
-                            fclose(input);
-                            exit(1);
-                        }
-
-                        // Citim datele din input si le punem intr-un buffer
-                        const int BUFFER_SIZE = 30000;
-                        char buffer[BUFFER_SIZE];
-                        for (int i = 0; i < BUFFER_SIZE; ++i)
-                            buffer[i] = 0;
-                        size_t bytesRead = fread(buffer, sizeof(char), BUFFER_SIZE, input);
-                        if (bytesRead <= 0)
-                        {
-                            printf("Error reading input file\n");
-                            fclose(input);
-                            exit(1);
-                        }
-
-                        int n = Len(decoded_text, MAX);
-
-                        // Convertim sirul de caractere citit din fisier intr un vector de intregi, pentru a putea fi folosit la decodare
-                        bufferToIntArray(buffer, strlen(buffer), decoded_text, n);
-
-                        // Realizarea decodarii LZW si scrierea textului decodat in fisier
-                        lzw_decode(decoded_text, output_text);
-                        fwrite(output_text, sizeof(char), strlen(output_text), output);
-
-                        delete[]decoded_text;
-                        delete[]output_text;
-
-                        fclose(input);
-                        fclose(output);
-
-                    }
-                }
-                decompose_tar();
-            }
-        }
+        //
         last_step=1;
     }
 }
@@ -596,7 +339,7 @@ change_MYMIND:
 }
 
 
-#include "usages/gui/gui-commands.h"
+#include "usage/gui/gui-commands.h"
 void command_thirdStep(int& which_button, bool& first_command)
 {
     while(last_step == false)
@@ -630,10 +373,10 @@ void commands()
 
 
 /// g++ -std=c++17 main.cpp huffmanFunctions.cpp lzwFunctions.cpp -o "exe_name"
-#include "usages/cmd/cmd.h"
+void boot(int argc, char** argv);
 int main(int argc, char** argv)
 {
-    boot(argc, argv);
+    //boot(argc, argv);
     return 0;
 }
 
@@ -728,180 +471,4 @@ void file_explorer()
     graphics_EXPLbuttons();
     explorer("partitive");
     graphics_GLOBALbuttons(3);
-}
-
-
-
-///pack
-void help_build(char path_of_file[], FILE * p_bar, FILE * p_components)
-{
-    if(is_folder(path_of_file))//folder
-    {
-        //pun in stack
-        strcpy(S.folder_names[++S.nr_elem], get_FILEname(path_of_file));
-        //pun in fisier numele folderului
-        fputs(identation, p_bar);
-        fputs(get_FILEname(path_of_file), p_bar);
-        fputs("/\n", p_bar);
-        strcat(identation, "\t\0");
-
-        for(auto & p : std::filesystem::directory_iterator(path_of_file))//ia fisierele alfabetic
-        {
-            if(p.path().empty()==false)
-            {
-                //transformare din string in char(BUGS!)
-                char IN_folder[MAX];
-                strcpy(IN_folder, p.path().string().c_str());
-                for(int i=0; i<strlen(IN_folder); i++)
-                    if(IN_folder[i]==92)
-                        IN_folder[i]='/';
-                IN_folder[strlen(IN_folder)]='\0';
-
-                help_build(IN_folder, p_bar, p_components);
-                memset(IN_folder, 0, sizeof IN_folder);
-            }
-        }
-
-        //END
-        strcpy(S.folder_names[S.nr_elem--], "\0");
-        identation[strlen(identation)-1]='\0';
-        fputs(identation, p_bar);
-        fputs("end_oF_", p_bar);
-        fputs(get_FILEname(path_of_file), p_bar);
-        fputs("/\n", p_bar);
-    }
-    else//normal file
-    {
-        p_components=fopen(path_of_file, "r");
-        if(p_components == NULL) ///i love my girlfriend!!!
-        {
-            std::cout<<"error - composition: missing/corrupted file";
-            return;
-        }
-
-        fputs(identation, p_bar);
-        fputs(get_FILEname(path_of_file), p_bar);
-        fputs("\n\n", p_bar);
-
-        //copierea informatiei
-        char temp;
-        while((temp=fgetc(p_components))!=EOF)
-            fputc(temp, p_bar);
-
-        fputs("\n\n", p_bar);
-        fputs(file_separator, p_bar);
-        fputs("\n\n", p_bar);
-
-        fclose(p_components);
-    }
-}
-void build_tar()
-{
-    char path_of_file[MAX];
-    FILE *p_bar, *p_components;
-    p_bar=fopen(path_of_tar, "w");
-    if(p_bar == NULL)
-    {
-        std::cout<<"error - composition: the requested file is missing\n";
-        return;
-    }
-
-    int index=0, k=nr_files_for_tar;
-    while(index<k)
-    {
-        strcpy(path_of_file, input_for_paths[index]);
-        help_build(path_of_file, p_bar, p_components);
-        index++;
-    }
-
-    fclose(p_bar);
-}
-
-void help_decompose(char line[], char destination[], FILE * p_bar, FILE * p_components, bool condition)
-{
-    if(condition==0)
-    {
-        line[strlen(line)-1]='\0';
-        while(line[0]=='\t')
-            strcpy(line, line+1);
-        if(line[strlen(line)-1]=='/')//NUME FOLDER
-        {
-            char previous_line[MAX];
-            strcpy(previous_line, line);
-
-            char new_destination[MAX];
-            strcpy(new_destination, destination);
-            //creare folder
-            strcat(new_destination, line);
-            mkdir(new_destination);
-            strcpy(S.folder_names[++S.nr_elem], new_destination);
-
-            fgets(line, MAX, p_bar);
-            while(strstr(line, "end_oF_")==NULL && strstr(line, previous_line)==NULL)
-            {
-                help_decompose(line, new_destination, p_bar, p_components, 0);
-                fgets(line, MAX, p_bar);
-            }
-
-            strcpy(S.folder_names[S.nr_elem--], "\0");
-            return;
-        }
-        else//NUME FISIER
-        {
-            char new_destination[MAX];
-            strcpy(new_destination, destination);
-            strcat(new_destination, line);
-            condition=1;
-            fgets(line, MAX, p_bar);
-            help_decompose(line, new_destination, p_bar, p_bar, 1);
-        }
-    }
-    else///content
-    {
-        p_components=fopen(destination, "w");
-        if(p_components)
-        {
-            while(1)//adauga la final de fisier "\n\n"
-            {
-                fgets(line, MAX, p_bar);
-                if(strstr(line, file_separator))
-                {
-                    fgets(line, MAX, p_bar);
-                    break;
-                }
-                fputs(line, p_components);
-            }
-        }
-        else
-        {
-            std::cout<<"error - decomposition: can not write the files\n";
-            return;
-        }
-        condition=0;
-        fclose(p_components);
-    }
-}
-void decompose_tar()
-{
-    FILE *p_bar, *p_components;
-    p_bar=fopen(path_of_tar, "r");
-    if(p_bar == NULL)
-    {
-        std::cout<<"error - decomposition: the requested file is missing\n";
-        return;
-    }
-
-    char path[MAX];
-    strcpy(path, path_decompose);
-    strcat(path, decompose_name);
-    mkdir(path);
-    //prima oara citesteste calea, afisarea pana la intalnirea file_separator
-    char line[MAX];
-    while(fgets(line, MAX, p_bar))
-        help_decompose(line, path, p_bar, p_components, 0);
-    /*
-    0-NU STIU, prima linie
-    1-DACA FIX INAINTE A FOST ANUNTAT NUME DE CEVA
-    */
-    fclose(p_bar);
 }

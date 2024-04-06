@@ -3,8 +3,6 @@
 #include <iostream>
 #include <cstring>
 #define MAX 30000
-using namespace std;
-
 struct line {
     char stored_value[MAX];
     int new_value;  //ASCII incepand de la 256 inclusiv

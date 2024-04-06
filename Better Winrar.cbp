@@ -37,20 +37,15 @@
 		<Unit filename="algorithms/huffmanFunctions.cpp" />
 		<Unit filename="algorithms/lzw.h" />
 		<Unit filename="algorithms/lzwFunctions.cpp" />
-		<Unit filename="global_variables.h" />
 		<Unit filename="graphics_functions.cpp" />
 		<Unit filename="graphics_functions.h" />
 		<Unit filename="libraries.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="packing_functions.cpp" />
 		<Unit filename="packing_functions.h" />
-		<Unit filename="usages/cmd/cmd.cpp" />
-		<Unit filename="usages/cmd/cmd.h" />
-		<Unit filename="usages/cmd/help_cmd.cpp" />
-		<Unit filename="usages/cmd/help_cmd.h" />
-		<Unit filename="usages/explorer.h" />
-		<Unit filename="usages/gui/gui-commands.cpp" />
-		<Unit filename="usages/gui/gui-commands.h" />
+		<Unit filename="usage/cmd/cmd.cpp" />
+		<Unit filename="usage/explorer.h" />
+		<Unit filename="usage/final stage/middle.h" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>
