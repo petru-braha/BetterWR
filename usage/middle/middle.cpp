@@ -1,8 +1,9 @@
-#include "middle.h"
 #include <stdio.h>
 
-#include "huffman.h"
-#include "lzw.h
+#include "middle.h"
+#include "../../admin/packing_functions.h"
+#include "../../algorithms/huffman.h"
+#include "../../algorithms/lzw.h"
 
 void savedSize(size_t originalSize, size_t encodedSize)
 {
@@ -91,4 +92,30 @@ bool compressLzw_paste(char* path_output, char* output_name)
     fclose(input);
     fclose(output);
     return true;
+}
+
+
+
+
+
+void last_step(char* operation, char* algorithm, short nr_paths, char** paths_input, char* path_output, char* output_name)
+{
+    if (strcmp(operation, "compress") == 0)
+    {
+        build_tar(nr_paths, paths_input); //path iterator
+        if (strcmp(algorithm, "HUF") == 0)
+            compressHuf_paste(path_output, output_name);
+        if (strcmp(algorithm, "LZW") == 0)
+            compressLzw_paste(path_output, output_name);
+    }
+    else
+    {
+        if (strcmp(algorithm, "HUF") == 0)
+            decompressHuf(path_output, output_name);
+        if (strcmp(algorithm, "LZW") == 0)
+            decompressLzw(path_output, output_name);
+        decompose_tar(path_output);//input va fi de la fisierul temporar
+    }
+    if(remove("files/temp.txt"))
+        std::cout<<"error: temporary file not deleted.\n";
 }

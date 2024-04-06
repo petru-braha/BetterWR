@@ -44,8 +44,8 @@
 		<Unit filename="usage/gui/explorer.h" />
 		<Unit filename="usage/gui/graphics_functions.cpp" />
 		<Unit filename="usage/gui/graphics_functions.h" />
-		<Unit filename="usage/gui/gui-commands.cpp" />
-		<Unit filename="usage/gui/gui-commands.h" />
+		<Unit filename="usage/gui/main_gui.cpp" />
+		<Unit filename="usage/gui/main_gui.h" />
 		<Unit filename="usage/main_cmd.cpp" />
 		<Unit filename="usage/middle/middle.cpp" />
 		<Unit filename="usage/middle/middle.h" />

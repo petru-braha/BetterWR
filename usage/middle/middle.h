@@ -1,8 +1,8 @@
 #pragma once
 #define K 1000 //one etern buffer
 char* temp_location = "files/temp.txt";
-//i want these values to be accessible from both gui and cmd
 
+//accessible from both gui and cmd
 char* operation, * algorithm;
 short nr_paths;
 char** paths_input, * path_output;
@@ -14,3 +14,5 @@ bool compressLzw_paste(char* path_output, char* output_name);
 
 bool decompressHuf(char* path_output, char* output_name);
 bool decompressLzw(char* path_output, char* output_name);
+
+void last_step(char* operation, char* algorithm, short nr_paths, char** paths_input, char* path_output, char* output_name);

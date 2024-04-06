@@ -6,7 +6,7 @@
 #include "../admin/packing_functions.h"
 
 #include "middle/middle.h"
-#include "gui/gui-commands.h"
+#include "gui/main_gui.h"
 
 void display_instructions_bash() {
     std::cout << "Usage: " << "<operation> <algorithm> <nr_input_files> <input_file_paths> <output_path>\n";
@@ -71,7 +71,7 @@ bool verification(int argc, char** argv){
     return true;
 }
 
-int main(int argc, char** argv)
+void main(int argc, char** argv)
 {
     ///GUI
     if(argc == 1)
@@ -97,25 +97,6 @@ int main(int argc, char** argv)
     path_output = argv[argc - 2];
     output_name = argv[argc - 1];
 
-    //actual work
-    if (strcmp(operation, "compress") == 0)
-    {
-        build_tar(nr_paths, paths_input); //path iterator
-        if (strcmp(algorithm, "HUF") == 0)
-            compressHuf_paste(path_output, output_name);
-        if (strcmp(algorithm, "LZW") == 0)
-            compressLzw_paste(path_output, output_name);
-    }
-    else
-    {
-        if (strcmp(algorithm, "HUF") == 0)
-            decompressHuf(path_output, output_name);
-        if (strcmp(algorithm, "LZW") == 0)
-            decompressLzw(path_output, output_name);
-        decompose_tar(path_output);//input va fi de la fisierul temporar
-    }
-    if(remove("files/temp.txt"))
-        std::cout<<"error: temporary file not deleted.\n";
-
-    return 0;
+    last_step(operation, algorithm, nr_paths, paths_input, path_output, output_name);
+    return;
 }

@@ -1,15 +1,11 @@
 #include <graphics.h>
-#include "../../graphics_functions.h"
 
-#include "libraries.h"
-
-#include "algorithms/huffman.h"
-#include "algorithms/lzw.h"
+#include "../../admin/libraries.h"
+#include "../middle/middle.h"
 #include "packing_functions.h"
+
 #include "graphics_functions.h"
-
 #include "usage/explorer.h"
-
 
 struct point{
     int x, y;
@@ -437,6 +433,6 @@ void graphical_user_interface(){
     initwindow(screen_x, screen_y, "", -3, -3);
     start_graphics(1);
     graphics_MENUbuttons();
-    commands();
+    gui_commands();
     closegraph();
 }
