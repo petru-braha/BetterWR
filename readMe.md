@@ -1,26 +1,46 @@
 # Archive file viewer
 
-! Shortcuts:
-- GUI = graphical user interface 
-- CMD = bash commands
-- HUF = Huffaman trees functions
-- LZW = Lempel-Ziv-Welch functions
+### Administrative:
+1. Shortcuts:
+   - GUI = graphical user interface 
+   - CMD = bash commands
+   - HUF = Huffaman trees functions
+   - LZW = Lempel-Ziv-Welch functions
 
-! Map:
-1. boot
-2. option (compress / decompress)
-3. algorithm (HUF / LZW)
-4. packaging (Tar format , validate paths)
+2. Map:
+   - boot
+   - option (compress / decompress)
+   - algorithm (HUF / LZW)
+   - packaging (Tar format , validate paths)
 
-! Data structures: Binary trees, Priority Queue, Heap, Dictionary, Stack, Hash Table
+3. Data structures: 
+   - Binary trees 
+   - Priority Queue
+   - Heap
+   - Dictionary
+   - Hash Table
+
+4. Folder structure:
+   - workspaces:
+     - `admin`
+     - `algorithms`
+     - `usage`
+   - exemples: `files`
+   - execution:
+     - `bin`
+     - `obj`
+     - `photos`
+
+5. Principles:
+   - gui-function has two components: graphic method, backend method
 
 ## I. **Boot**:
 
 - two ways of running the program: 
-	1. double-click on ".boot.exe" => opens GUI
-	2. openning the folder in command prompt
-		- type `./name_of_executable arguments` *[arguments]* 
-		- if no arguments provided => opens GUI
+  - double-click on ".boot.exe" => opens GUI
+  - openning the folder in command prompt
+    - type `./name_of_executable arguments` *[arguments]*
+    - if no arguments provided => opens GUI
 
 ### 1. GUI
 
