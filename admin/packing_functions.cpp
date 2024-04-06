@@ -6,6 +6,14 @@
 #include <direct.h>
 #define MAX 300
 
+void change_extension(char type[], char path_output[]) //are ca input un fisier tar corect
+{
+    if(std::filesystem::path(path_output).extension()==".txt")
+        strcpy(strstr(path_output, ".txt"), type);
+    else
+        strcpy(strchr(path_output, '.'), ".txt");
+}
+
 char* get_FILEname(char source_path[])
 {
     int length=strlen(source_path);

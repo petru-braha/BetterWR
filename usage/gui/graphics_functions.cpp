@@ -252,3 +252,6 @@ bool click_on_button(int x, int y, int which_button)
             return 1;
     return 0;
 }
+
+//void define_announcement(bool mode);
+

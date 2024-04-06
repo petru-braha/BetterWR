@@ -1,9 +1,9 @@
 #pragma once
-#define K 9223372036854775807 //one etern buffer
+#define K 1000 //one etern buffer
 char* temp_location = "files/temp.txt";
 //i want these values to be accessible from both gui and cmd
 
-char* operation, *algorithm;
+char* operation, * algorithm;
 short nr_paths;
 char** paths_input, * path_output;
 char* output_name; ////create the file on the output!

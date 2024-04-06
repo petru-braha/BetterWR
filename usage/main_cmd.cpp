@@ -1,23 +1,12 @@
+// g++ -std=c++17 main.cpp huffmanFunctions.cpp lzwFunctions.cpp -o "exe_name"
 #include <iostream>
 #include <cstring>
 #include <graphics.h>
-#include "../../graphics_functions.h"
-#include "../../packing_functions.h"
-#include "../final stage/middle.h"
+#include <filesystem>
+#include "../admin/packing_functions.h"
 
-void commands();
-void etern_gui(){
-    short screen_x = 0, screen_y = 0;
-    define_fullscreen(screen_x, screen_y);
-    if (screen_x == 0 || screen_y == 0)
-        exit(1);
-
-    initwindow(screen_x, screen_y, "", -3, -3);
-    start_graphics(1);
-    graphics_MENUbuttons();
-    commands();
-    closegraph();
-}
+#include "middle/middle.h"
+#include "gui/gui-commands.h"
 
 void display_instructions_bash() {
     std::cout << "Usage: " << "<operation> <algorithm> <nr_input_files> <input_file_paths> <output_path>\n";
@@ -26,7 +15,6 @@ void display_instructions_bash() {
     std::cout << "algorithms: 'HUF' / 'LZW'\n";
     std::cout << "check if the number of paths given is < 10 and is equal with nr_input_files.\ncheck if the paths are valid.\n\n";
 }
-#include <filesystem>
 bool verification(int argc, char** argv){
     if (argc < 7)
     {
@@ -83,12 +71,12 @@ bool verification(int argc, char** argv){
     return true;
 }
 
-void boot(int argc, char** argv)
+int main(int argc, char** argv)
 {
     ///GUI
     if(argc == 1)
     {
-        etern_gui();
+        graphical_user_interface();
         return;
     }
 
@@ -97,6 +85,7 @@ void boot(int argc, char** argv)
 
     ///complex bash commands
     //initialisations
+    //verification not necessary <= verification function does it
     operation = argv[1];
     algorithm = argv[2];
 
@@ -104,11 +93,11 @@ void boot(int argc, char** argv)
     else nr_paths = argv[3][0] - '0';
 
     for(int i=0; i< nr_paths; i++)
-        paths_input[i] = argv[i+4]; //verification not necessary <= verification function does it
+        paths_input[i] = argv[i+4];
     path_output = argv[argc - 2];
     output_name = argv[argc - 1];
 
-    //actual verifications
+    //actual work
     if (strcmp(operation, "compress") == 0)
     {
         build_tar(nr_paths, paths_input); //path iterator
@@ -127,4 +116,6 @@ void boot(int argc, char** argv)
     }
     if(remove("files/temp.txt"))
         std::cout<<"error: temporary file not deleted.\n";
+
+    return 0;
 }

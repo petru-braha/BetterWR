@@ -33,19 +33,22 @@
 			<Add option="-std=gnu++17" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="admin/libraries.h" />
+		<Unit filename="admin/packing_functions.cpp" />
+		<Unit filename="admin/packing_functions.h" />
 		<Unit filename="algorithms/huffman.h" />
 		<Unit filename="algorithms/huffmanFunctions.cpp" />
 		<Unit filename="algorithms/lzw.h" />
 		<Unit filename="algorithms/lzwFunctions.cpp" />
-		<Unit filename="graphics_functions.cpp" />
-		<Unit filename="graphics_functions.h" />
-		<Unit filename="libraries.h" />
-		<Unit filename="main.cpp" />
-		<Unit filename="packing_functions.cpp" />
-		<Unit filename="packing_functions.h" />
-		<Unit filename="usage/cmd/cmd.cpp" />
-		<Unit filename="usage/explorer.h" />
-		<Unit filename="usage/final stage/middle.h" />
+		<Unit filename="usage/gui/explorer.cpp" />
+		<Unit filename="usage/gui/explorer.h" />
+		<Unit filename="usage/gui/graphics_functions.cpp" />
+		<Unit filename="usage/gui/graphics_functions.h" />
+		<Unit filename="usage/gui/gui-commands.cpp" />
+		<Unit filename="usage/gui/gui-commands.h" />
+		<Unit filename="usage/main_cmd.cpp" />
+		<Unit filename="usage/middle/middle.cpp" />
+		<Unit filename="usage/middle/middle.h" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>
