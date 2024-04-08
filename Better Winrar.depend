@@ -142,12 +142,12 @@
 	<queue>
 	<vector>
 
-1705476727 source:a:\projects\done\portfolio\betterwr\algorithms\lzwfunctions.cpp
+1712360837 source:a:\projects\done\portfolio\betterwr\algorithms\lzwfunctions.cpp
 	<iostream>
 	<cstring>
 	"lzw.h"
 
-1712360663 a:\projects\done\portfolio\betterwr\algorithms\lzw.h
+1712360835 a:\projects\done\portfolio\betterwr\algorithms\lzw.h
 	<iostream>
 	<cstring>
 
@@ -242,4 +242,12 @@
 	<filesystem>
 
 1712360706 a:\projects\done\portfolio\betterwr\usage\final stage\middle.h
+
+1712399454 source:a:\projects\done\portfolio\betterwr\admin\packing_functions.cpp
+	<iostream>
+	<cstring>
+	<stdio.h>
+	<string.h>
+	<filesystem>
+	<direct.h>
 

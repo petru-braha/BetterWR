@@ -1,10 +1,32 @@
 #include <iostream>
-#include <graphics.h>
-#include <winbgim.h>
 #include <cstring>
 #include <fstream>
 #include <cstdio>
 #include <stdio.h>
 #include <stdlib.h>
+#include <graphics.h>
 #include <filesystem>
-#include <direct.h>
+
+enum //button index
+{
+    //menu
+    COMPRESS = 0,
+    DECOMPRESS,
+    MORE_INFO,
+    TEST,
+
+    //global
+    STOP,
+    BACK,
+    DONE,
+
+    //explorer
+    SELECT,
+    MKDIR,
+    FOPEN,
+    DELETE,
+
+    //algorithm
+    HUF,
+    LZW,
+};

@@ -1,3 +1,6 @@
+#include <graphics.h>
+//puntea dintre main_gui si foldere
+
 void explorer(char mode[])
 {
     //sterge highlight
@@ -5,7 +8,7 @@ void explorer(char mode[])
     bar(230, 143, 976, 920);
 
     int y=0;
-    file_nr_visible=0;
+    file_nr_visible = 0;
     settextstyle(SMALL_FONT, 0, 8);
     if(strcmp(mode, "partitive")==0)
     {
@@ -81,9 +84,9 @@ void explorer(char mode[])
         }
     }
 }
+
 void file_explorer()
 {
-    cleardevice();
     readimagefile("photos/file explorer.jpg", 0, 0, width, height);
     graphics_EXPLbuttons();
     explorer("partitive");

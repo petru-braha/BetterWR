@@ -2,25 +2,15 @@
 
 #include "../../admin/libraries.h"
 #include "../middle/middle.h"
-#include "packing_functions.h"
+#include "../../admin/packing_functions.h"
 
-#include "graphics_functions.h"
-#include "usage/explorer.h"
+#include "explorer.h"
+#include "button/button.h"
+
 
 struct point{
-    int x, y;
+    short x, y;
 } mouse;
-
-void gui_commands_STOP()
-{
-    if(click_on_button(mouse.x, mouse.y, 3))
-    {
-        highlight(coordo[3][0], coordo[3][1], coordo[3][2], coordo[3][3]);
-        delay(100);
-        closegraph();
-        exit(0);
-    }
-}
 
 void gui_commands_go_back(int& which_button, bool& first_command)
 {
@@ -92,28 +82,6 @@ void gui_commands_go_back(int& which_button, bool& first_command)
     }
 }
 
-void gui_commands_alg(int& which_button)
-{
-    if(which_button==1)
-    {
-        if(click_on_button(mouse.x, mouse.y, 10))
-        {
-            alg='H';
-            graphics_ALGbuttons();
-            highlight(coordo[10][0], coordo[10][1], coordo[10][2], coordo[10][3]);
-        }
-        else
-        {
-            if(click_on_button(mouse.x, mouse.y, 11))
-            {
-                alg='L';
-                graphics_ALGbuttons();
-                highlight(coordo[11][0], coordo[11][1], coordo[11][2], coordo[11][3]);
-            }
-        }
-    }
-}
-
 void gui_commands_deselect()
 {
     for(int i=0; i<11; i++)
@@ -155,6 +123,23 @@ void gui_commands_deselect()
             break;
         }
 }
+
+void build_arguments(int& arguments_k, char** & arguments_v)
+{
+    arguments_k = 6 + nr_paths;
+    strcpy(arguments_v[0], "000");
+    strcpy(arguments_v[1], operation);
+    strcpy(arguments_v[2], algorithm);
+
+    if(nr_paths < 10) arguments_v[3][0] = nr_paths + '0';
+    else strcpy(arguments_v[3], "10");
+
+    for(int i = 0; i < nr_paths; i++)
+        strcpy(arguments_v[4+i], paths_input[i]);
+
+    strcpy(arguments_v[arguments_k - 2], path_output);
+    strcpy(arguments_v[arguments_k - 1], output_name);
+}
 void gui_commands_ready(int& which_button)/// este de fapt ce se intampla la boot!!!! //trebuie impartita in functii mai mici
 {
     if(click_on_button(mouse.x, mouse.y, 5))
@@ -162,14 +147,14 @@ void gui_commands_ready(int& which_button)/// este de fapt ce se intampla la boo
         highlight(coordo[5][0], coordo[5][1], coordo[5][2], coordo[5][3]);
         delay(100);
         graphics_GLOBALbuttons(5);
-        if(nr_files_for_tar==0 && (alg!='H' && alg!='L'))
-        {
-            std::cout<<nr_files_for_tar;
-            std::cout<<"error: please choose an algorithm";
-        }
-        else
-        //
-        last_step=1;
+
+        int arguments_k = 0;
+        char** arguments_v = nullptr;
+        build_arguments(arguments_k, arguments_v);
+        if(verification(arguments_k, arguments_v) == 0)
+            exit(1);
+
+        very_last_step(operation, algorithm, nr_paths, paths_input, path_output, output_name);
     }
 }
 void gui_commands_sidebar()
@@ -324,36 +309,21 @@ change_MYMIND:
 }
 
 
-void gui_commands_firstStep_menu(int &which_button){
-    while(which_button==0)
+void gui_menu(int &which_button){
+    while(which_button == -1)
     {
         getmouseclick(WM_LBUTTONDOWN, mouse.x, mouse.y);
-        if(mouse.x!=-1 && mouse.y!=-1)
-        {
-            //1. ESC
-            if(click_on_button(mouse.x, mouse.y, 3))
-            {
-                highlight(coordo[3][0], coordo[3][1], coordo[3][2], coordo[3][3]);
-                delay(100);
-                closegraph();
-                exit(0);
-            }
-            //2. MENUbuton
-            for(int i=0; i<3; i++)
-                if(click_on_button(mouse.x, mouse.y, i))
-                {
-                    highlight(coordo[i][0], coordo[i][1], coordo[i][2], coordo[i][3]);
-                    delay(100);
-                    which_button=i+1;
-                    break;
-                }
-        }
+        stop_button.click(mouse.x, mouse.y);
+        if(compress_button.click(mouse.x, mouse.y))
+            which_button = compress_button.index;
+        if(decompress_button.click(mouse.x, mouse.y))
+            which_button = decompress_button.index;
+        if(more_info_button.click(mouse.x, mouse.y))
+            which_button = compress_button.index;
     }
 }
 
-#include <windows.h>
-void file_explorer();
-void gui_commands_secondStep_decideOperation(char file_accessedPATH[], int which_button, bool &first_command, char& alg){
+void gui_operation(char file_accessedPATH[], int which_button, bool &first_command, char& alg){
     if(file_accessedPATH[0] == 0 && which_button)
     {
         if(which_button==3)
@@ -363,7 +333,7 @@ void gui_commands_secondStep_decideOperation(char file_accessedPATH[], int which
             settextstyle(DEFAULT_FONT, 0, 2);
             outtextxy(coordo[0][0], coordo[0][1], "Cititi fisierul: readME.txt");
             delay(1500);
-            system("readME.txt");
+            system("readMe.md");
         }
         else
         {
@@ -395,44 +365,73 @@ void gui_commands_secondStep_decideOperation(char file_accessedPATH[], int which
     }
 }
 
-void gui_command_thirdStep(int& which_button, bool& first_command){
+void gui_run(int& which_button, bool& first_command){
     while(last_step == false)
     {
         getmouseclick(WM_LBUTTONDOWN, mouse.x, mouse.y);
-        if(mouse.x!=-1 && mouse.y!=-1)
-        {
-            commands_STOP();
-            commands_go_back(which_button, first_command);
-            commands_alg(which_button);
-            commands_deselect();
-            commands_ready(which_button);
-            commands_sidebar();
-            commands_folder_manipulation();
-        }
+        stop_button.click(mouse.x, mouse, y);
+
+        //commands_go_back(which_button, first_command);
+
+        huf_button.click(mouse.x, mouse.y);
+        lzw_button.click(mouse.x, mouse.y);
+
+        commands_deselect();
+        done_button.click()
+        commands_sidebar();
+        commands_folder_manipulation();
     }
 }
 
-void gui_commands(){
-    bool first_command = true, last_step = false;
-    int which_button = 0;
+#include <wtypes.h> //for full_screen_size
+void define_fullscreen(short& x, short& y){
+    RECT desktop;
+    // Get a handle to the desktop window
+    const HWND hDesktop = GetDesktopWindow();
 
-    while(last_step == false)
-    {
-        commands_firstStep_menu(which_button);
-        commands_secondStep_decideOperation(file_accessedPATH, which_button, first_command, alg);
-        command_thirdStep(which_button, first_command);
-    }
+    GetWindowRect(hDesktop, &desktop);
+    x = desktop.right;
+    y = desktop.bottom;
+    //16 inch my pc
 }
 
-void graphical_user_interface(){
+void start_graphics(bool first_exe){
+    short width = 0, height = 0;
+    define_fullscreen(width, height);
+    if(first_exe)
+        readimagefile("photos/1.jpg", 0, 0, width, height);
+    else
+        readimagefile("photos/2.jpg", 0, 0, width, height);
+
+    setcolor(9);
+    settextstyle(DEFAULT_FONT, HORIZ_DIR, 4);
+    outtextxy(1000, 200, "Algorithms:");
+    settextstyle(DEFAULT_FONT, HORIZ_DIR, 3);
+    outtextxy(1050, 250, "-Huffman trees");
+    outtextxy(1050, 270, "-Lempel-Ziv-Welch");
+
+
+    graphics_MENUbuttons();
+    graphics_GLOBALbuttons(3);
+}
+
+void graphical_user_interface()
+{
     short screen_x = 0, screen_y = 0;
     define_fullscreen(screen_x, screen_y);
     if (screen_x == 0 || screen_y == 0)
         exit(1);
-
     initwindow(screen_x, screen_y, "", -3, -3);
     start_graphics(1);
-    graphics_MENUbuttons();
-    gui_commands();
+
+    bool first_step = true, last_step = false;
+    short which_button = -1;
+    while(last_step == false)
+    {
+        gui_menu(which_button);
+        gui_operation(file_accessedPATH, which_button, first_command, alg);
+        gui_run(which_button, first_command);
+    }
+
     closegraph();
 }

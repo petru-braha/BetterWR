@@ -1,25 +1,7 @@
 #include <graphics.h>
-#define MAX 300
-#define nr_buttons 13
-short int width=1536, height=960;
-short int coordo[13][4];
-short int file_coordo[MAX][4];
-short int unit=0;
+#include "button.h"
 
-#include "wtypes.h"
-#include <iostream>
-void define_fullscreen(short& x, short& y)
-{
-    RECT desktop;
-    // Get a handle to the desktop window
-    const HWND hDesktop = GetDesktopWindow();
-    // Get the size of screen to the variable desktop
-    GetWindowRect(hDesktop, &desktop);
-    x = desktop.right;
-    y = desktop.bottom;
-    //16 inch my pc
-}
-
+#include <dos.h>    //for delay()
 void highlight(int x1, int y1, int x2, int y2)
 {
     setcolor(15);
@@ -34,31 +16,9 @@ void highlight(int x1, int y1, int x2, int y2)
         line(x1, y2, x2, y2);
         line(x2, y1, x2, y2);
     }
+    delay(100);
 }
 
-void graphic_button(int x1, int y1, int x2, int y2)
-{
-    setfillstyle(SOLID_FILL, 9); //the edge of rectangles
-    bar(x1, y1, x2, y2);
-    setfillstyle(SLASH_FILL, 1);
-    bar(x1+5, y1+5, x2-5, y2-5);
-}
-
-void graphic_x(int x1, int y1, int x2, int y2)
-{
-    setcolor(4);
-    for(int i=0; i<10; i++)
-    {
-        x1++;
-        y1++;
-        x2--;
-        y2--;
-        line(x1, y1, x2, y1);
-        line(x1, y1, x1, y2);
-        line(x1, y2, x2, y2);
-        line(x2, y1, x2, y2);
-    }
-}
 
 void graphics_MENUbuttons()
 {
@@ -139,26 +99,6 @@ void graphics_GLOBALbuttons(int value)
     }
 }
 
-void start_graphics(bool first_exe)
-{
-    //background
-    if(first_exe)
-        readimagefile("photos/1.jpg", 0, 0, width, height);
-    else
-        readimagefile("photos/2.jpg", 0, 0, width, height);
-    first_exe=1;
-    setcolor(9);
-
-    settextstyle(DEFAULT_FONT, HORIZ_DIR, 4);
-    outtextxy(1000, 200, "Algorithms:");
-    settextstyle(DEFAULT_FONT, HORIZ_DIR, 3);
-    outtextxy(1050, 250, "-Huffman trees");
-    outtextxy(1050, 270, "-Lempel-Ziv-Welch");
-
-    graphics_GLOBALbuttons(3);
-}
-
-
 void graphics_EXPLbuttons()
 {
     setcolor(9);
@@ -217,41 +157,79 @@ void graphics_ALGbuttons()
     coordo[11][3]=75;
 }
 
-void graphics_selected(char file_name[], int nr_files_for_tar)
+
+button::button()
 {
-    setcolor(15);
-    line(1040, 195+unit, 1440, 195+unit);
-    file_coordo[nr_files_for_tar-1][0]=1000;
-    file_coordo[nr_files_for_tar-1][1]=195+unit;
-    file_coordo[nr_files_for_tar-1][2]=1440;
-
-    settextstyle(SMALL_FONT, 0, 10);
-    outtextxy(1040, 200+unit, file_name);
-
-    if(strchr(file_name, '.')==NULL)
-        readimagefile("photos/folder2.jpg", 1010, 200+unit, 1035, 235+unit);
-    else
-        readimagefile("photos/txt2.jpg", 1010, 200+unit, 1035, 235+unit);
-    unit+=45;
-    line(1040, 195+unit, 1440, 195+unit);
-    file_coordo[nr_files_for_tar-1][3]=195+unit;
-    graphics_GLOBALbuttons(5);
+    top_left.x = 0;
+    top_left.y = 0;
+    define_fullscreen(bottom_right.x, bottom_right.y);
 }
 
-bool click_on_file(int x, int y, int which_button)
+button::button(short xx, short xy, short yx, short yy)
 {
-    if(x>=file_coordo[which_button][0] && x<=file_coordo[which_button][2])
-        if(y>=file_coordo[which_button][1] && y<=file_coordo[which_button][3])
-            return 1;
-    return 0;
-}
-bool click_on_button(int x, int y, int which_button)
-{
-    if(x>=coordo[which_button][0] && x<=coordo[which_button][2])
-        if(y>=coordo[which_button][1] && y<=coordo[which_button][3])
-            return 1;
-    return 0;
+    top_left.x = xx;
+    top_left.y = xy;
+    bottom_right.x = yx;
+    bottom_right.y = yy;
 }
 
-//void define_announcement(bool mode);
+point button::get_coordinates(bool which_one)
+{
+    if(which_one == 0)
+        return top_left;
+    return bottom_right;
+}
 
+void button::visual_appearance()
+{
+    ///rectangle
+    setfillstyle(SOLID_FILL, 9); //the edge of rectangles
+    bar(top_left.x, top_left.y, bottom_right.x, bottom_right.y);
+    setfillstyle(SOLID_FILL, 1);
+    bar(top_left.x + 5, top_left.y + 5, bottom_right.x - 5, bottom_right.y - 5);
+}
+
+void button::click(short mouse_x, short mouse_y)
+{
+    if(mouse_x >= top_left.x && mouse_x <= bottom_right.x)
+        if(mouse_y >= top_left.y && mouse_y <= bottom_right.y)
+        {
+            highlight(top_left.x, top_left.y, bottom_right.x, bottom_right.y);
+            visual_appearance();
+            execute();
+            return true;
+        }
+    return false;
+}
+
+//to be defined
+void button_00::execute() //compress
+{
+    //option is set to compress
+}
+
+void button_01::execute() //decompress
+{
+
+}
+
+void button_02::execute() //more info
+{
+
+}
+
+#include <graphics>
+void button_03::execute()
+{
+    //inchid graful
+    exit(0);
+}
+void button_04::execute();
+void button_05::execute();
+void button_06::execute();
+void button_07::execute();
+void button_08::execute();
+void button_09::execute();
+void button_10::execute();
+void button_11::execute();
+void button_12::execute();

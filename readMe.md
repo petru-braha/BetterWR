@@ -7,11 +7,31 @@
    - HUF = Huffaman trees functions
    - LZW = Lempel-Ziv-Welch functions
 
-2. Map:
-   - boot
-   - option (compress / decompress)
-   - algorithm (HUF / LZW)
-   - packaging (Tar format , validate paths)
+2. Map of execution:
+```
+Pseudocode:
+
+boot
+   gui
+      fullscreen window
+      gui_commands
+         menu
+            check_stop
+            option (compress/decompress)
+	 explorer
+         third_step
+	    commands_STOP();
+            commands_go_back(which_button, first_command);
+            commands_alg(which_button);
+            commands_deselect();
+            commands_ready(which_button);
+            commands_sidebar();
+            commands_folder_manipulation();
+   complex bash commands   
+      option (compress / decompress)
+      algorithm (HUF / LZW)
+      packaging (Tar format , paths validation)
+```
 
 3. Data structures: 
    - Binary trees 
@@ -33,13 +53,14 @@
 
 5. Principles:
    - gui-function has two components: graphic method, backend method
+   - object-oriented programming
 
 ## I. **Boot**:
 
 - two ways of running the program: 
   - double-click on ".boot.exe" => opens GUI
   - openning the folder in command prompt
-    - type `./name_of_executable arguments` *[arguments]*
+    - type `./name_of_executable *arguments*` 
     - if no arguments provided => opens GUI
 
 ### 1. GUI
@@ -49,17 +70,17 @@
 Index 		Name
 0 		compress
 1 		decompress
-2 		more informations
-3 		stop
-4 		go back
-5 		done
-6 		select
-7 		mkdir
-8 		fopen
-9 		delete
-10 		HUF
-11 		LZW
-12		announcement_box //to_be_reviewed
+2 		information
+3 		test_algorithm_string
+4 		stop
+5 		back
+6 		done
+7 		select
+8 		mkdir
+9 		fopen
+10 		delete
+11 		HUF
+12		LZW
 ```
 
 - file_coordo[0...10] == selected files
@@ -179,3 +200,5 @@ Pros and cons:
 - [ ] romanian
 - [ ] french
 - [ ] german
+
+2. announcement box
