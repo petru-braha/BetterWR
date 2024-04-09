@@ -28,9 +28,12 @@ boot
             commands_sidebar();
             commands_folder_manipulation();
    complex bash commands   
-      option (compress / decompress)
-      algorithm (HUF / LZW)
-      packaging (Tar format , paths validation)
+      decide_option (compress / decompress)
+      decide_algorithm (HUF / LZW)
+      paths validation
+      tar temp file
+      operation
+error
 ```
 
 3. Data structures: 
@@ -41,7 +44,7 @@ boot
    - Hash Table
 
 4. Folder structure:
-   - workspaces:
+   - workspaces (all my work):
      - `admin`
      - `algorithms`
      - `usage`
@@ -90,6 +93,11 @@ Index 		Name
 
 - Usage: `./name_of_executable <operation> <algorithm> <nr_input_files> <input_file_paths> <output_path>`
 - multiple files can be selectected to be encoded and decoded in one step
+- some exemples:
+```
+& '.\bin\Debug\Better Winrar.exe' compress HUF 1 files/to_encode/element_1/ files/encoded/ unpack
+```
+
 
 ## II. **Algorithms**:
 
@@ -158,7 +166,7 @@ until final input
 
 ## III. **Packaging**:
 
-### 1. Tar format
+### 1. Tar format (used in my case)
 
    A TAR (tape archive) file format is an archive created by tar, a UNIX-based utility used to package files together for backup or distribution purposes. It contains multiple files (tarballs) stored in an uncompressed format, along with metadata about the archive. TAR files are not compressed archive files. They are often compressed with file compression utilities such as gzip or bzip2.
    Each file object includes any file data and is preceded by a 512-byte record-anthet. File data is written unmodified, except that its length is rounded to a multiple of 512 bytes. At the end of the archive file there are two 512-byte blocks, filled with binary zeros, to mark the end of the file. The record-antet file contains metadata about a file. To ensure portability between different architectures with different byte orderings, the information in the header record is encoded in ASCII. TAR files are fully compatible between UNIX and Windows systems because all header information is represented in ASCII.
@@ -173,6 +181,61 @@ Pros and cons:
 + we can use any compression algorithm after the unification
 + deletes doubled information
 - can lose metadata of files (index of files)
+
+how content of the tar file will look like:
+```
+element_1//
+	dir-3/
+		fifty/
+		end_oF_fifty/
+		four/
+		end_oF_four/
+		one/
+		end_oF_one/
+	end_oF_dir-3/
+	emp.txt
+
+
+
+*5EPArAToR*
+
+	empty/
+	end_oF_empty/
+	forth.txt
+
+patru s-a luat
+cuci s-au aruncat
+hahalero, kokos s-a diluat
+am ster so mor decaptat
+
+*5EPArAToR*
+
+	lyrics/
+		1.txt
+
+hello world
+pleasure to meet youu
+
+*5EPArAToR*
+
+		2.txt
+
+2 bananas are wating
+for you...
+
+*5EPArAToR*
+
+		3.txt
+
+trei lupt doar duminica
+sa te supui si tai limba
+
+*5EPArAToR*
+
+	end_oF_lyrics/
+end_oF_element_1//
+
+```
 
 ### 2. Zip format
    A file with a .zip extension is an archive that can hold one or more files or directories. The archive may have compression applied to the included files to reduce the size of the ZIP file. The ZIP file format was made public as early as February 1989 by Phil Katz to achieve archiving of files and folders. The format was made part of the PKZIP utility, created by PKWARE, Inc. As soon as the then existing specifications were made available, many companies made the ZIP file format part of their software utilities, including Microsoft (since Windows 7), Apple (Mac OS X) and many others.

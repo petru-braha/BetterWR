@@ -44,7 +44,7 @@ void help_build(char path_of_file[], FILE* p_bar, FILE* p_components, char ident
                 //transformare din string in char(BUGS!)
                 char IN_folder[MAX];
                 strcpy(IN_folder, p.path().string().c_str());
-                for (int i = 0; i < strlen(IN_folder); i++)
+                for (size_t i = 0; i < strlen(IN_folder); i++)
                     if (IN_folder[i] == 92)
                         IN_folder[i] = '/';
                 IN_folder[strlen(IN_folder)] = '\0';

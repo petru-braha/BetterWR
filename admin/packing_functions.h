@@ -1,3 +1,4 @@
+#include <stdio.h>
 void change_extension(char type[], char path_output[]);
 char* get_FILEname(char source_path[]);
 

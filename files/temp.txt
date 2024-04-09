@@ -1,0 +1,50 @@
+element_1//
+	dir-3/
+		fifty/
+		end_oF_fifty/
+		four/
+		end_oF_four/
+		one/
+		end_oF_one/
+	end_oF_dir-3/
+	emp.txt
+
+
+
+*5EPArAToR*
+
+	empty/
+	end_oF_empty/
+	forth.txt
+
+patru s-a luat
+cuci s-au aruncat
+hahalero, kokos s-a diluat
+am ster so mor decaptat
+
+*5EPArAToR*
+
+	lyrics/
+		1.txt
+
+hello world
+pleasure to meet youu
+
+*5EPArAToR*
+
+		2.txt
+
+2 bananas are wating
+for you...
+
+*5EPArAToR*
+
+		3.txt
+
+trei lupt doar duminica
+sa te supui si tai limba
+
+*5EPArAToR*
+
+	end_oF_lyrics/
+end_oF_element_1//

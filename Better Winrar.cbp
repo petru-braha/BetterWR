@@ -40,14 +40,8 @@
 		<Unit filename="algorithms/huffmanFunctions.cpp" />
 		<Unit filename="algorithms/lzw.h" />
 		<Unit filename="algorithms/lzwFunctions.cpp" />
-		<Unit filename="usage/gui/button/button.cpp" />
-		<Unit filename="usage/gui/button/button.h" />
-		<Unit filename="usage/gui/explorer.cpp" />
-		<Unit filename="usage/gui/explorer.h" />
-		<Unit filename="usage/gui/file/file.cpp" />
-		<Unit filename="usage/gui/file/file.h" />
-		<Unit filename="usage/gui/main_gui.cpp" />
-		<Unit filename="usage/main_cmd.cpp" />
+		<Unit filename="usage/main cmd.cpp" />
+		<Unit filename="usage/main gui/main gui.cpp" />
 		<Unit filename="usage/middle/middle.cpp" />
 		<Unit filename="usage/middle/middle.h" />
 		<Extensions>

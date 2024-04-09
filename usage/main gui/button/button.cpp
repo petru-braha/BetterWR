@@ -1,6 +1,5 @@
 #include <graphics.h>
 #include "button.h"
-
 #include <dos.h>    //for delay()
 void highlight(int x1, int y1, int x2, int y2)
 {
@@ -18,6 +17,82 @@ void highlight(int x1, int y1, int x2, int y2)
     }
     delay(100);
 }
+
+button::button()
+{
+    top_left.x = 0;
+    top_left.y = 0;
+    define_fullscreen(bottom_right.x, bottom_right.y);
+}
+
+button::button(short xx, short xy, short yx, short yy)
+{
+    top_left.x = xx;
+    top_left.y = xy;
+    bottom_right.x = yx;
+    bottom_right.y = yy;
+}
+
+point button::get_coordinates(bool which_one)
+{
+    if(which_one == 0)
+        return top_left;
+    return bottom_right;
+}
+
+void button::visual_appearance()
+{
+    ///rectangle
+    setfillstyle(SOLID_FILL, 9); //the edge of rectangles
+    bar(top_left.x, top_left.y, bottom_right.x, bottom_right.y);
+    setfillstyle(SOLID_FILL, 1);
+    bar(top_left.x + 5, top_left.y + 5, bottom_right.x - 5, bottom_right.y - 5);
+}
+
+void button::click(short mouse_x, short mouse_y)
+{
+    if(mouse_x >= top_left.x && mouse_x <= bottom_right.x)
+        if(mouse_y >= top_left.y && mouse_y <= bottom_right.y)
+        {
+            highlight(top_left.x, top_left.y, bottom_right.x, bottom_right.y);
+            visual_appearance();
+            execute();
+            return true;
+        }
+    return false;
+}
+
+//to be defined
+void button_00::execute() //compress
+{
+    //option is set to compress
+    //opens explorer
+}
+
+void button_01::execute() //decompress
+{
+    //option is set to decompress
+}
+
+void button_02::execute() //more info
+{
+
+}
+
+void button_03::execute()
+{
+    //inchid graful
+    exit(0);
+}
+void button_04::execute();
+void button_05::execute();
+void button_06::execute();
+void button_07::execute();
+void button_08::execute();
+void button_09::execute();
+void button_10::execute();
+void button_11::execute();
+void button_12::execute();
 
 
 void graphics_MENUbuttons()
@@ -157,79 +232,3 @@ void graphics_ALGbuttons()
     coordo[11][3]=75;
 }
 
-
-button::button()
-{
-    top_left.x = 0;
-    top_left.y = 0;
-    define_fullscreen(bottom_right.x, bottom_right.y);
-}
-
-button::button(short xx, short xy, short yx, short yy)
-{
-    top_left.x = xx;
-    top_left.y = xy;
-    bottom_right.x = yx;
-    bottom_right.y = yy;
-}
-
-point button::get_coordinates(bool which_one)
-{
-    if(which_one == 0)
-        return top_left;
-    return bottom_right;
-}
-
-void button::visual_appearance()
-{
-    ///rectangle
-    setfillstyle(SOLID_FILL, 9); //the edge of rectangles
-    bar(top_left.x, top_left.y, bottom_right.x, bottom_right.y);
-    setfillstyle(SOLID_FILL, 1);
-    bar(top_left.x + 5, top_left.y + 5, bottom_right.x - 5, bottom_right.y - 5);
-}
-
-void button::click(short mouse_x, short mouse_y)
-{
-    if(mouse_x >= top_left.x && mouse_x <= bottom_right.x)
-        if(mouse_y >= top_left.y && mouse_y <= bottom_right.y)
-        {
-            highlight(top_left.x, top_left.y, bottom_right.x, bottom_right.y);
-            visual_appearance();
-            execute();
-            return true;
-        }
-    return false;
-}
-
-//to be defined
-void button_00::execute() //compress
-{
-    //option is set to compress
-}
-
-void button_01::execute() //decompress
-{
-
-}
-
-void button_02::execute() //more info
-{
-
-}
-
-#include <graphics>
-void button_03::execute()
-{
-    //inchid graful
-    exit(0);
-}
-void button_04::execute();
-void button_05::execute();
-void button_06::execute();
-void button_07::execute();
-void button_08::execute();
-void button_09::execute();
-void button_10::execute();
-void button_11::execute();
-void button_12::execute();

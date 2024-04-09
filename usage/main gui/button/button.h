@@ -3,7 +3,7 @@
 class button{
     point top_left;
     point bottom_right;
-    virtual void execute() {}
+    virtual void execute() {} // if = 0 then it would have been an abstract class can i couldn't make 'button' instances
 public:
     short index;
     button();

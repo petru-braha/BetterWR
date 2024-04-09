@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cstring>
 #include <filesystem>
 
 #include "middle.h"
@@ -15,17 +16,18 @@ void savedSize(size_t originalSize, size_t encodedSize){
     std::cout << "Bits saved: " << bytesSaved << " bits" << " (" << bytesSaved / 8 << " bytes).\n";
     std::cout << endl;
 }
-bool compressHuf_paste(char* path_output, char* output_name) //the temp file is built, ik its location => encoding, final output
+
+bool compress_huf(char* path_output, char* output_name) //the temp file is built, ik its location => encoding, final output
 {
-    FILE* input = fopen("../../files/temp.txt", "rb");
+    FILE* input = fopen(temp_location, "rb");
     FILE* output = fopen(strcat(path_output, output_name), "wb");
     char buffer[K * K];
-    for (int i = 0; i < BUFFER_SIZE; ++i)
+    for (int i = 0; i < K * K; ++i)
         buffer[i] = 0;
     size_t bytesRead = fread(buffer, sizeof(char), K * K, input);
     if (input == nullptr || output == nullptr)
     {
-        printf("error: missing file.\n");
+        printf("error - compress_huf : missing file(s).\n");
         fclose(input);
         return false;
     }
@@ -38,7 +40,7 @@ bool compressHuf_paste(char* path_output, char* output_name) //the temp file is 
     string textToOutput = writeEncodedDataToFile(encodedString);
 
     char treeInfo[MAX];
-    int treeFreq[MAX], int treeSize = 0;
+    int treeFreq[MAX], treeSize = 0;
     createTreeString(root, 1, treeInfo, treeFreq, treeSize);
 
     fwrite(&treeSize, sizeof(int), 1, output);
@@ -60,12 +62,12 @@ bool compressHuf_paste(char* path_output, char* output_name) //the temp file is 
     return true;
 }
 
-bool compressLzw_paste(char* path_output, char* output_name)
+bool compress_lzw(char* path_output, char* output_name)
 {
     FILE* input = fopen("../../files/temp.txt", "rb");
     FILE* output = fopen(strcat(path_output, output_name), "wb");
     char buffer[K * K];
-    for (int i = 0; i < BUFFER_SIZE; ++i)
+    for (int i = 0; i < K * K; ++i)
         buffer[i] = 0;
     size_t bytesRead = fread(buffer, sizeof(char), K * K, input);
     if (input == nullptr || output == nullptr)
@@ -76,6 +78,7 @@ bool compressLzw_paste(char* path_output, char* output_name)
     }
 
     // Realizarea encodarii LZW
+    int* encoded_text;
     lzw_encode(buffer, sizeof(buffer), encoded_text);
     int n = Len(encoded_text, MAX);
 
@@ -86,7 +89,7 @@ bool compressLzw_paste(char* path_output, char* output_name)
 
     size_t originalSize = bytesRead * 8;
     size_t encodedSize = encoded_text_char.size() * 8;
-    for (size_t i = 0; i < n; ++i)
+    for (int i = 0; i < n; ++i)
         fprintf(output, "%d ", static_cast<int>(encoded_text[i]));
     savedSize(originalSize, encodedSize);
 
@@ -96,9 +99,9 @@ bool compressLzw_paste(char* path_output, char* output_name)
     return true;
 }
 
-bool decompressHuf(char* path_input, char* path_output, char* output_name)
+bool decompress_huf(char* path_input, char* path_output, char* output_name)
 {
-    std::filesystem::path p_path(path_input);
+/*    std::filesystem::path p_path(path_input);
     std::error_code ec;
     if (std::filesystem::path(p_path, ec).extension().string().c_str() != "huf"){
         std::cout<<"error - decompression: wrong file extension / selected algorithm.\n";
@@ -106,11 +109,11 @@ bool decompressHuf(char* path_input, char* path_output, char* output_name)
     }
 
     FILE* input  = fopen(path_input, "rb");
-    FILE* output = fopen(strcat(), "wb");
+    FILE* output = fopen(strcat(path_output, output_name), "wb");
     if (output == nullptr || input == nullptr) {
         printf("error - decompression: invalid file paths.\n");
         fclose(input); fclose(output);
-        return false
+        return false;
     }
 
     // Citim datele din input si le punem intr-un buffer
@@ -156,11 +159,13 @@ bool decompressHuf(char* path_input, char* path_output, char* output_name)
     fwrite(decodedOutput.c_str(), sizeof(char), decodedOutput.size(), output);
 
     fclose(input);
-    fclose(output);
+    fclose(output);*/
+    return false;
 }
 
-bool decompressLzw(char* path_output, char* output_name)
+bool decompress_lzw(char* path_input, char* path_output, char* output_name)
 {
+    /*
     if (isFileExtension(inputFile, "lzw"));
     int* decoded_text;
     decoded_text = new int[MAX];
@@ -210,7 +215,8 @@ bool decompressLzw(char* path_output, char* output_name)
     delete[]output_text;
 
     fclose(input);
-    fclose(output);
+    fclose(output);*/
+    return false;
 }
 
 
@@ -245,9 +251,9 @@ bool verification(int argc, char** argv){
     int nr = 0;
     for (int i = 0; argv[3][i]; i++)
         nr = nr * 10 + (argv[3][i] - '0');
-    if (nr + 5 != argc || nr <= 0 || nr > 10)
+    if (nr + 6 != argc || nr <= 0 || nr > 10)
     {
-        std::cout << "error: invalid third argument.\n\n";
+        std::cout << argc << nr << "error: invalid third argument.\n\n";
         display_instructions_bash();
         return false;
     }
@@ -268,8 +274,8 @@ bool verification(int argc, char** argv){
         return false;
     }
 
-    for (int i = 0; i < strlen(argv[argc - 1]); i++)
-        if (argv[argc - 1][i] < 'A' || argv[argc - 1][i] > 'Z' || (argv[argc - 1][i] > 'Z' && argv[argc - 1][i] < 'a'))
+    for (size_t i = 0; i < strlen(argv[argc - 1]); i++)
+        if (argv[argc - 1][i] < 'A' || argv[argc - 1][i] > 'z' || (argv[argc - 1][i] > 'Z' && argv[argc - 1][i] < 'a'))
         {
             std::cout << "error: invaid name.\n\n";
             return false;
@@ -284,23 +290,22 @@ void very_last_step(char* operation, char* algorithm, short nr_paths, char** pat
     {
         build_tar(nr_paths, paths_input); //path iterator
         if (strcmp(algorithm, "HUF") == 0)
-            compressHuf_paste(path_output, output_name);
+            compress_huf(path_output, output_name);
         if (strcmp(algorithm, "LZW") == 0)
-            compressLzw_paste(path_output, output_name);
+            compress_lzw(path_output, output_name);
     }
     else
     {
         for(int i=0; i < nr_paths; i++)
         {
             if (strcmp(algorithm, "HUF") == 0)
-                decompressHuf(paths_input[i], path_output, output_name);
+                decompress_huf(paths_input[i], path_output, output_name);
             if (strcmp(algorithm, "LZW") == 0)
-                decompressLzw(paths_input[i], path_output, output_name);
-            //delete content of temp.txt
-            decompose_tar(path_output); //input temp.txt
+                decompress_lzw(paths_input[i], path_output, output_name);
+            decompose_tar(path_output);
         }
-
     }
-    if(remove("files/temp.txt"))
-        std::cout<<"error: temporary file not deleted.\n";
+
+    //if(remove("files/temp.txt"))
+        //std::cout<<"error: temporary file not deleted.\n";
 }

@@ -142,14 +142,12 @@
 	<queue>
 	<vector>
 
-1712360837 source:a:\projects\done\portfolio\betterwr\algorithms\lzwfunctions.cpp
+1712641370 source:a:\projects\done\portfolio\betterwr\algorithms\lzwfunctions.cpp
 	<iostream>
 	<cstring>
 	"lzw.h"
 
-1712360835 a:\projects\done\portfolio\betterwr\algorithms\lzw.h
-	<iostream>
-	<cstring>
+1712641370 a:\projects\done\portfolio\betterwr\algorithms\lzw.h
 
 1712341370 source:a:\projects\done\portfolio\betterwr\graphics_functions.cpp
 	<graphics.h>
@@ -243,11 +241,35 @@
 
 1712360706 a:\projects\done\portfolio\betterwr\usage\final stage\middle.h
 
-1712399454 source:a:\projects\done\portfolio\betterwr\admin\packing_functions.cpp
+1712606335 source:a:\projects\done\portfolio\betterwr\admin\packing_functions.cpp
 	<iostream>
 	<cstring>
 	<stdio.h>
 	<string.h>
 	<filesystem>
 	<direct.h>
+
+1712593107 source:a:\projects\done\portfolio\betterwr\usage\gui\file\file.cpp
+
+1712641464 source:a:\projects\done\portfolio\betterwr\usage\main gui\main gui.cpp
+	"../middle/middle.h"
+
+1712641584 a:\projects\done\portfolio\betterwr\usage\middle\middle.h
+
+1712604792 source:a:\projects\done\portfolio\betterwr\usage\main cmd.cpp
+	"middle/middle.h"
+	<iostream>
+	<cstring>
+
+1712641515 source:a:\projects\done\portfolio\betterwr\usage\middle\middle.cpp
+	<iostream>
+	<cstring>
+	<filesystem>
+	"middle.h"
+	"../../admin/packing_functions.h"
+	"../../algorithms/huffman.h"
+	"../../algorithms/lzw.h"
+
+1712593122 a:\projects\done\portfolio\betterwr\admin\packing_functions.h
+	<stdio.h>
 
