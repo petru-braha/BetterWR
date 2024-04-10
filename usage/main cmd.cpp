@@ -11,7 +11,7 @@ int main(int argc, char** argv)
         return 0;
     }
 
-    if(verification(argc, argv) == false) //checks if the arguments are valid
+    if(argument_verification(argc, argv) == false) //checks if the arguments are valid
         return 1;
 
     char* operation = argv[1];

@@ -227,7 +227,7 @@ void display_instructions_bash() {
     std::cout << "algorithms: 'HUF' / 'LZW'\n";
     std::cout << "check if the number of paths given is < 10 and is equal with nr_input_files.\ncheck if the paths are valid.\n\n";
 }
-bool verification(int argc, char** argv){
+bool verify_options(int argc, char** argv, int& nr){
     if (argc < 7)
     {
         std::cout << "Usage: " << "<operation> <algorithm> <nr_input_files> <input_file_paths> <output_path> <output_name>\n";
@@ -248,18 +248,20 @@ bool verification(int argc, char** argv){
         return false;
     }
 
-    int nr = 0;
+    nr = 0;
     for (int i = 0; argv[3][i]; i++)
         nr = nr * 10 + (argv[3][i] - '0');
     if (nr + 6 != argc || nr <= 0 || nr > 10)
     {
-        std::cout << argc << nr << "error: invalid third argument.\n\n";
+        std::cout << "error: invalid third argument.\n\n";
         display_instructions_bash();
         return false;
     }
-
-    //validation of paths
+    return true;
+}
+bool verify_paths(int argc, char** argv, int& nr){
     for (int i = 0; i < nr; i++)
+    {
         if (std::filesystem::exists(argv[i + 4]) == 0)
         {
             std::cout << "error: invalid input_path argument.\n\n";
@@ -267,20 +269,51 @@ bool verification(int argc, char** argv){
             return false;
         }
 
-    if (std::filesystem::exists(argv[argc - 2]) == 0)
+        //make sure that the paths of folders are correctly written
+        size_t last_index_path = strlen(argv[i + 4]) - 1;
+        //std::filesystem::path temp_path = argv[i + 4];
+        if(std::filesystem::is_directory(argv[i + 4]) && argv[i + 4][last_index_path] != '/')
+        {
+            argv[i + 4][++last_index_path] = '/';
+            argv[i + 4][++last_index_path] = '\0';
+        }
+    }
+
+
+    if (std::filesystem::exists(argv[argc - 2]) == 0) //has to be a folder
     {
         std::cout << "error: invalid output_path argument.\n\n";
         display_instructions_bash();
         return false;
     }
+    size_t last_index_path = strlen(argv[argc - 2]) - 1;
+    if(argv[argc - 2][last_index_path] != '/')
+    {
+        argv[argc - 2][++last_index_path] = '/';
+        argv[argc - 2][++last_index_path] = '\0';
+    }
 
     for (size_t i = 0; i < strlen(argv[argc - 1]); i++)
+    {
         if (argv[argc - 1][i] < 'A' || argv[argc - 1][i] > 'z' || (argv[argc - 1][i] > 'Z' && argv[argc - 1][i] < 'a'))
         {
             std::cout << "error: invaid name.\n\n";
             return false;
         }
+    }
+    last_index_path = strlen(argv[argc - 1]) - 1;
+    if(argv[argc - 1][last_index_path] != '/')
+    {
+        argv[argc - 1][++last_index_path] = '/';
+        argv[argc - 1][++last_index_path] = '\0';
+    }
     return true;
+}
+bool argument_verification(int argc, char** argv){
+    int nr = 0;
+    if(verify_options(argc, argv, nr) && verify_paths(argc, argv, nr))
+        return true;
+    return false;
 }
 
 
@@ -302,7 +335,7 @@ void very_last_step(char* operation, char* algorithm, short nr_paths, char** pat
                 decompress_huf(paths_input[i], path_output, output_name);
             if (strcmp(algorithm, "LZW") == 0)
                 decompress_lzw(paths_input[i], path_output, output_name);
-            decompose_tar(path_output);
+            decompose_tar(path_output, output_name);
         }
     }
 

@@ -55,6 +55,7 @@ error
      - `photos`
 
 5. Principles:
+   - the path to a folder always contains at the end of the string "/"
    - gui-function has two components: graphic method, backend method
    - object-oriented programming
 

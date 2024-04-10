@@ -1,0 +1,45 @@
+element_1/
+	dir-3
+		fifty
+		EOD_no_more_files_to_be_analysed_fifty/
+		four
+		EOD_no_more_files_to_be_analysed_four/
+		one
+		EOD_no_more_files_to_be_analysed_one/
+	EOD_no_more_files_to_be_analysed_dir-3/
+	emp.txt
+
+
+*EOF_no_more_content_to_be_displayed;*
+
+	empty
+	EOD_no_more_files_to_be_analysed_empty/
+	forth.txt
+
+patru s-a luat
+cuci s-au aruncat
+hahalero, kokos s-a diluat
+am ster so mor decaptat
+*EOF_no_more_content_to_be_displayed;*
+
+	lyrics
+		1.txt
+
+hello world
+pleasure to meet youu
+*EOF_no_more_content_to_be_displayed;*
+
+		2.txt
+
+2 bananas are wating
+for you...
+*EOF_no_more_content_to_be_displayed;*
+
+		3.txt
+
+trei lupt doar duminica
+sa te supui si tai limba
+*EOF_no_more_content_to_be_displayed;*
+
+	EOD_no_more_files_to_be_analysed_lyrics/
+EOD_no_more_files_to_be_analysed_element_1//

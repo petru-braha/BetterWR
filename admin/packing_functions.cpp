@@ -6,6 +6,9 @@
 #include <direct.h>
 #define MAX 300
 
+const char typed_end_of_file[] = "\n\n*EOF_no_more_content_to_be_displayed*\n\n";
+const char typed_end_of_directory[] = "EOD_no_more_files_to_be_analysed_";
+
 void change_extension(char type[], char path_output[]) //are ca input un fisier tar corect
 {
     if(std::filesystem::path(path_output).extension()==".txt")
@@ -16,25 +19,23 @@ void change_extension(char type[], char path_output[]) //are ca input un fisier 
 
 char* get_FILEname(char source_path[])
 {
-    int length=strlen(source_path);
-    int index_context=0;
-    for(int i=0; i<length-1; i++)
+    size_t length = strlen(source_path), index_context = 0;
+    for(size_t i = 0; i < length - 1; i++)
         if(source_path[i]=='/')
-            index_context=i;
-    return source_path+index_context+1;
+            index_context = i;
+    return source_path + index_context + 1;
 }
 
 //output is in temp
 void help_build(char path_of_file[], FILE* p_bar, FILE* p_components, char identation[])
 {
-    char file_separator[MAX] = "*5EPArAToR*";
     const std::filesystem::path path(path_of_file); std::error_code ec;
     if (std::filesystem::is_directory(path, ec))//folder
     {
         //pun in fisier numele folderului
         fputs(identation, p_bar);
         fputs(get_FILEname(path_of_file), p_bar);
-        fputs("/\n", p_bar);
+        fputs("\n", p_bar);
         strcat(identation, "\t\0");
 
         for (auto& p : std::filesystem::directory_iterator(path_of_file))//ia fisierele alfabetic
@@ -42,29 +43,29 @@ void help_build(char path_of_file[], FILE* p_bar, FILE* p_components, char ident
             if (p.path().empty() == false)
             {
                 //transformare din string in char(BUGS!)
-                char IN_folder[MAX];
-                strcpy(IN_folder, p.path().string().c_str());
-                for (size_t i = 0; i < strlen(IN_folder); i++)
-                    if (IN_folder[i] == 92)
-                        IN_folder[i] = '/';
-                IN_folder[strlen(IN_folder)] = '\0';
+                char file_name_from_folder[MAX];
+                strcpy(file_name_from_folder, p.path().string().c_str());
+                for (size_t i = 0; i < strlen(file_name_from_folder); i++)
+                    if (file_name_from_folder[i] == 92)
+                        file_name_from_folder[i] = '/';
+                file_name_from_folder[strlen(file_name_from_folder)] = '\0';
 
-                help_build(IN_folder, p_bar, p_components, identation);
-                memset(IN_folder, 0, sizeof IN_folder);
+                help_build(file_name_from_folder, p_bar, p_components, identation);
+                memset(file_name_from_folder, 0, sizeof(file_name_from_folder));
             }
         }
 
         //END
         identation[strlen(identation) - 1] = '\0';
         fputs(identation, p_bar);
-        fputs("end_oF_", p_bar);
+        fputs(typed_end_of_directory, p_bar);
         fputs(get_FILEname(path_of_file), p_bar);
         fputs("/\n", p_bar);
     }
-    else//normal file
+    else //normal file
     {
-        p_components = fopen(path_of_file, "r");
-        if (p_components == NULL) ///i love my girlfriend!!!
+        p_components = fopen(path_of_file, "rb");
+        if (p_components == nullptr)
         {
             std::cout << "error - composition: missing/corrupted file";
             return;
@@ -74,14 +75,10 @@ void help_build(char path_of_file[], FILE* p_bar, FILE* p_components, char ident
         fputs(get_FILEname(path_of_file), p_bar);
         fputs("\n\n", p_bar);
 
-        //copierea informatiei
         char temp;
         while ((temp = fgetc(p_components)) != EOF)
             fputc(temp, p_bar);
-
-        fputs("\n\n", p_bar);
-        fputs(file_separator, p_bar);
-        fputs("\n\n", p_bar);
+        fputs(typed_end_of_file, p_bar);
 
         fclose(p_components);
     }
@@ -89,27 +86,20 @@ void help_build(char path_of_file[], FILE* p_bar, FILE* p_components, char ident
 void build_tar(short nr_paths, char** paths_input)
 {
     char identation[MAX] = { 0 };
-    char path_of_file[MAX];
     FILE* p_bar = nullptr, * p_components = nullptr;
-    p_bar = fopen("files/temp.txt", "wb");
+    p_bar = fopen("files/temp.bin", "wb");
     if (p_bar == nullptr)
     {
         std::cout << "error - composition: the requested file is missing.\n";
         return;
     }
 
-    int index = 0, k = nr_paths;
-    while (index < k)
-    {
-        strcpy(path_of_file, paths_input[index]);
-        help_build(path_of_file, p_bar, p_components, identation);
-        index++;
-    }
+    for(int i=0; i < nr_paths; i++)
+        help_build(paths_input[i], p_bar, p_components, identation);
 
     fclose(p_bar);
 }
 
-//input is in temp
 void help_decompose(char line[], char destination[], FILE* p_bar, FILE* p_components, bool condition)
 {
     char file_separator[MAX] = "*5EPArAToR*";
@@ -172,24 +162,24 @@ void help_decompose(char line[], char destination[], FILE* p_bar, FILE* p_compon
         fclose(p_components);
     }
 }
-void decompose_tar(char* path_input)
+void decompose_tar(char* path_output, char* output_name)
 {
+    char* path_input = "files/temp.txt";
     FILE* p_bar = nullptr, * p_components = nullptr;
-    p_bar = fopen(path_input, "r");
+    p_bar = fopen(path_input, "rb");
     if (p_bar == nullptr)
     {
         std::cout << "error - decomposition: the requested file is missing.\n";
         return;
     }
 
-    char path[MAX];
-    strcpy(path, "/files/decoded/unpack");
-    mkdir(path);
+    path_output = strcat(path_output, output_name); //revision please
+    mkdir(path_output);
 
     //prima oara citesteste calea, afisarea pana la intalnirea file_separator
     char line[MAX];
     while (fgets(line, MAX, p_bar))
-        help_decompose(line, path, p_bar, p_components, 0);
+        help_decompose(line, path_output, p_bar, p_components, 0);
     /*
     0-NU STIU, prima linie
     1-DACA FIX INAINTE A FOST ANUNTAT NUME DE CEVA
