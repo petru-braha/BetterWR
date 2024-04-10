@@ -7,9 +7,7 @@
 #include "../../algorithms/huffman.h"
 #include "../../algorithms/lzw.h"
 
-#define K 1000 //one etern buffer
-
-void savedSize(size_t originalSize, size_t encodedSize){
+void show_saved_size(size_t originalSize, size_t encodedSize){
     size_t bytesSaved = originalSize - encodedSize;
     std::cout << "Original size: " << originalSize << " bits" << " (" << originalSize / 8 << " bytes).\n";
     std::cout << "Encoded size: " << encodedSize << " bits" << " (" << encodedSize / 8 << " bytes).\n";
@@ -64,38 +62,38 @@ bool compress_huf(char* path_output, char* output_name) //the temp file is built
 
 bool compress_lzw(char* path_output, char* output_name)
 {
-    FILE* input = fopen("../../files/temp.txt", "rb");
-    FILE* output = fopen(strcat(path_output, output_name), "wb");
-    char buffer[K * K];
-    for (int i = 0; i < K * K; ++i)
-        buffer[i] = 0;
-    size_t bytesRead = fread(buffer, sizeof(char), K * K, input);
+    FILE* input = fopen(temp_location, "rb"),* output = fopen(strcat(path_output, output_name), "wb");
     if (input == nullptr || output == nullptr)
     {
-        printf("error: missing file.\n");
-        fclose(input);
+        printf("error - compress_lzw: missing file.\n");
+        fclose(input); fclose(output);
         return false;
     }
 
-    // Realizarea encodarii LZW
-    int* encoded_text;
-    lzw_encode(buffer, sizeof(buffer), encoded_text);
-    int n = Len(encoded_text, MAX);
+    ///let's assume that everything is in ASCII
+    char to_be_encoded[MAX] = { 0 };
+    size_t bytes_read = 0;
+    bool first_exe = true;
+    int* encoded_text = nullptr;
 
-    // Convertire int to string pentru a scrie mai usor textul encodat in fisier
-    string encoded_text_char = {};
-    for (int x = 0; x < n; x++)
-        encoded_text_char += to_string(encoded_text[x]) + ' ';
+    while (bytes_read == MAX - 1 || first_exe == true)
+    {
+        first_exe = false;
+        memset(to_be_encoded, 0, MAX);
+        bytes_read += fread(to_be_encoded, sizeof(char), MAX - 1, input);
 
-    size_t originalSize = bytesRead * 8;
-    size_t encodedSize = encoded_text_char.size() * 8;
-    for (int i = 0; i < n; ++i)
-        fprintf(output, "%d ", static_cast<int>(encoded_text[i]));
-    savedSize(originalSize, encodedSize);
+        encoded_text = lzw_encode(to_be_encoded, sizeof(to_be_encoded));
+        fwrite(encoded_text, sizeof(int*), MAX, output);
+        delete[] encoded_text;
+    }
 
+    bytes_read += fread(to_be_encoded, sizeof(char), MAX - 1, input);
+    encoded_text = lzw_encode(to_be_encoded, sizeof(to_be_encoded));
+    fwrite(encoded_text, sizeof(int*), MAX, output);
     delete[] encoded_text;
-    fclose(input);
-    fclose(output);
+    show_saved_size(bytes_read * 8, encoded_text_char.size() * 8;);
+
+    fclose(input); fclose(output);
     return true;
 }
 

@@ -8,12 +8,13 @@
 const char typed_end_of_file[] = "\n\n*EOF_no_more_content_to_be_displayed*\n\n";
 const char typed_end_of_directory[] = "EOD_no_more_files_to_be_analysed_";
 
-void change_extension(char type[], char path_output[]) //are ca input un fisier tar corect
+
+
+void change_extension(char* file_path, const char* to_change) //are ca input un fisier tar corect
 {
-    if(std::filesystem::path(path_output).extension()==".txt")
-        strcpy(strstr(path_output, ".txt"), type);
-    else
-        strcpy(strchr(path_output, '.'), ".txt");
+    std::filesystem::path f_p(file_path);
+    if(std::filesystem::is_directory(f_p) && to_change[0] == '.')
+        strcpy(strstr(path_output, "."), to_change);
 }
 
 char* get_FILEname(char source_path[])
@@ -67,7 +68,7 @@ void build_tar(short nr_paths, char** paths_input)
 {
     char identation[MAX] = { 0 };
     FILE* p_bar = nullptr, * p_components = nullptr;
-    p_bar = fopen("files/temp.bin", "wb");
+    p_bar = fopen("files/temp.tar", "wb");
     if (p_bar == nullptr)
     {
         std::cout << "error - composition: can not create temp file.\n";

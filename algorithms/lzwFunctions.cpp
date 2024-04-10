@@ -1,10 +1,7 @@
 #include <iostream>
 #include <cstring>
 #include "lzw.h"
-#define MAX 30000
-
-using namespace std;
-
+#define MAX 300
 
 struct line {
     char stored_value[MAX];
@@ -107,13 +104,14 @@ void build_decoded(char s[],char text[])
     text[strlen(text)] = '\0';
 }
 
-void lzw_encode(char input[], int size, int*& encoded_text)
+unsigned int* lzw_encode_string(char input[], int size)
 {
     /*
     - temp_before_LASTbuild mereu trebuie sa intre in output la codare
     - current <- ultima litera a cuvantului adaugat in dic
     - i -> current
     */
+    unsigned int* encoded_text = new int[MAX]{ 0 };
     char temp[MAX], temp_before_LASTbuild[MAX], current;
     int ASCII_value = 256, i = 0;
 
@@ -177,10 +175,12 @@ void lzw_encode(char input[], int size, int*& encoded_text)
         D.element[i].new_value = 0;
     }
     D.index = 0;
+    return encoded_text;
 }
 
-void lzw_decode(int input[],char*& decoded_text)
+char* lzw_decode_string(int* input)
 {
+    char* decoded_text = new char[MAX]{0};
     initialize_dictionary();
     int current = input[0], next, n = Len(input,MAX) - 1;
     char temp[MAX], previous_temp[MAX];
@@ -223,4 +223,5 @@ void lzw_decode(int input[],char*& decoded_text)
         D.element[i].new_value = 0;
     }
     D.index = 0;
+    return decoded_text;
 }

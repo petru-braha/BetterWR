@@ -171,10 +171,8 @@ until final input
 
 ### 1. Tar format (used in my case)
 
-   A TAR (tape archive) file format is an archive created by tar, a UNIX-based utility used to package files together for backup or distribution purposes. It contains multiple files (tarballs) stored in an uncompressed format, along with metadata about the archive. TAR files are not compressed archive files. They are often compressed with file compression utilities such as gzip or bzip2.
-   Each file object includes any file data and is preceded by a 512-byte record-anthet. File data is written unmodified, except that its length is rounded to a multiple of 512 bytes. At the end of the archive file there are two 512-byte blocks, filled with binary zeros, to mark the end of the file. The record-antet file contains metadata about a file. To ensure portability between different architectures with different byte orderings, the information in the header record is encoded in ASCII. TAR files are fully compatible between UNIX and Windows systems because all header information is represented in ASCII.
-   The TAR file format has changed over time as additional functionality has been developed for the UNIX tar utility, leading to format extensions that include additional information for required implementations, starting in the 1980s. Early versions of TAR formats were inconsistent in the way numeric fields were constructed, which were corrected in later implementations to improve the portability of the format, starting with the first POSIX standard for tar file formats in 1988.
-   The tar file format does not contain native data compression, so tar archives are often compressed with an external utility such as; gzip, bzip2, XZ (using 7-Zip / p7zip LZMA / LZMA2 compression algorithms), Brotli, Zstandard and similar tools to reduce archive size for portability and data backup. The resulting compressed files can be found named with single extension, e.g. tgz, tbz, txz, tzst, or with double file extension, e.g. tar.gz, tar.br, tar.bz2, tar.xz, tar.zst.
+   A tape archive file format is an UNIX-based utility used to package files together. It contains multiple files (tarballs) stored in an uncompressed format. They are often compressed with file compression utilities such as gzip or bzip2.
+   Each file object includes its data and a 512-byte record-anthet. Files' data is written unmodified, except that its length is rounded to a multiple of 512 bytes. At the end of the archive file there are two 512-byte blocks, filled with binary zeros, to mark the end of the file. To ensure portability between different architectures with different byte orderings, the information in the header record is encoded in ASCII. TAR files are fully compatible between UNIX and Windows systems because all header information is represented in ASCII.	
 
 On short terms:
 - connects files without compression
@@ -224,13 +222,13 @@ Pros and cons:
 
 ### 3. Binary files 
 
-Images: jpg, png, gif, bmp, tiff, psd, ...
-Videos: mp4, mkv, avi, mov, mpg, vob, ...
-Audio: mp3, aac, wav, flac, ogg, mka, wma, ...
-Documents: pdf, doc, xls, ppt, docx, odt, ...
-Archive: zip, rar, 7z, tar, iso, ...
-Database: mdb, accde, frm, sqlite, ...
-Executable: exe, dll, so, class, ...
+Images: jpg, png, gif, bmp.
+Videos: mp4, mkv, avi, mov.
+Audio: mp3, aac, wav, flac.
+Documents: pdf, doc, xls.
+Archive: zip, rar, 7z, tar.
+Database: mdb, sqlite.
+Executable: exe, dll, so.
 
 ### 4. Text files
 
@@ -259,6 +257,8 @@ Tabular data: csv, tsv, ...
 - [ ] german
 
 2. announcement box
+
+3. use `temp.tar` as a binary file s. t. binary files coud be read. !!!
 
 ## VI **How to set up this project**
 
