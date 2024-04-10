@@ -97,6 +97,8 @@ Index 		Name
 - some exemples:
 ```
 & '.\bin\Debug\Better Winrar.exe' compress HUF 1 files/to_encode/element_1/ files/encoded/ unpack
+
+& '.\bin\Debug\Better Winrar.exe' compress HUF 2 files/to_encode/element_1/ files/to_encode/element_2/ files/encoded/ unpack
 ```
 
 
@@ -186,22 +188,6 @@ Pros and cons:
 how content of the tar file will look like:
 ```
 element_1//
-	dir-3/
-		fifty/
-		end_oF_fifty/
-		four/
-		end_oF_four/
-		one/
-		end_oF_one/
-	end_oF_dir-3/
-	emp.txt
-
-
-
-*5EPArAToR*
-
-	empty/
-	end_oF_empty/
 	forth.txt
 
 patru s-a luat
@@ -216,20 +202,6 @@ am ster so mor decaptat
 
 hello world
 pleasure to meet youu
-
-*5EPArAToR*
-
-		2.txt
-
-2 bananas are wating
-for you...
-
-*5EPArAToR*
-
-		3.txt
-
-trei lupt doar duminica
-sa te supui si tai limba
 
 *5EPArAToR*
 
@@ -250,12 +222,33 @@ Pros and cons:
 + parallelize the archiving process on the CPU -> faster
 - compression ratio -- (join duplicates, something that is redundant)
 
+### 3. Binary files 
+
+Images: jpg, png, gif, bmp, tiff, psd, ...
+Videos: mp4, mkv, avi, mov, mpg, vob, ...
+Audio: mp3, aac, wav, flac, ogg, mka, wma, ...
+Documents: pdf, doc, xls, ppt, docx, odt, ...
+Archive: zip, rar, 7z, tar, iso, ...
+Database: mdb, accde, frm, sqlite, ...
+Executable: exe, dll, so, class, ...
+
+### 4. Text files
+
+Web standards: html, xml, css, svg, json, ...
+Source code: c, cpp, h, cs, js, py, java, rb, pl, php, sh, ...
+Documents: txt, tex, markdown, asciidoc, rtf, ps, ...
+Configuration: ini, cfg, rc, reg, ...
+Tabular data: csv, tsv, ...
+
+[Source] (https://www.nayuki.io/page/what-are-binary-and-text-files)
 
 ## IV **Limitations**:
 
 1. Small number for input paths
 2. From the graphical point of view:
 - graphics.h is a primitive library [Additional documentation](https://www.programmingsimplified.com/c/graphics.h)
+
+3. 32-bit compiler - it was used such that the project could support graphics.h
 
 ## V **Future improvements**:
 
@@ -266,3 +259,13 @@ Pros and cons:
 - [ ] german
 
 2. announcement box
+
+## VI **How to set up this project**
+
+1. Have g++ follow al least the C++17 GNU C++ language standard (ISO C++ plus GNU extensions)
+
+2. Install a 32-bit compiler and set it up in your IDE as default
+
+3. Install graphics.h
+
+- set up linker settings: `-lbgi -lgdi32 -lcomdlg32 -luuid -loleaut32 -lole32`

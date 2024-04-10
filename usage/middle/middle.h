@@ -1,7 +1,7 @@
 #pragma once
 #define MAX 500
 #define nr_input_paths 10
-const char temp_location[] = "files/temp.txt";
+const char temp_location[] = "files/temp.bin";
 
 //everything is accessible from both gui and cmd
 void display_instructions_bash();

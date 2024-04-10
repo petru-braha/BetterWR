@@ -25,9 +25,9 @@ bool compress_huf(char* path_output, char* output_name) //the temp file is built
     for (int i = 0; i < K * K; ++i)
         buffer[i] = 0;
     size_t bytesRead = fread(buffer, sizeof(char), K * K, input);
-    if (input == nullptr || output == nullptr)
+    if (input == nullptr)
     {
-        printf("error - compress_huf : missing file(s).\n");
+        printf("error - compress_huf : missing temp file.\n");
         fclose(input);
         return false;
     }
@@ -321,7 +321,7 @@ void very_last_step(char* operation, char* algorithm, short nr_paths, char** pat
 {
     if (strcmp(operation, "compress") == 0)
     {
-        build_tar(nr_paths, paths_input); //path iterator
+        build_tar(nr_paths, paths_input);
         if (strcmp(algorithm, "HUF") == 0)
             compress_huf(path_output, output_name);
         if (strcmp(algorithm, "LZW") == 0)

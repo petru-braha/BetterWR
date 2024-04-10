@@ -1,7 +1,6 @@
 #include <iostream>
 #include <cstring>
 #include <stdio.h>
-#include <string.h>
 #include <filesystem>
 #include <direct.h>
 #define MAX 300
@@ -21,59 +20,40 @@ char* get_FILEname(char source_path[])
 {
     size_t length = strlen(source_path), index_context = 0;
     for(size_t i = 0; i < length - 1; i++)
-        if(source_path[i]=='/')
+        if(source_path[i]=='/' || source_path[i] == 92)
             index_context = i;
     return source_path + index_context + 1;
 }
 
 //output is in temp
-void help_build(char path_of_file[], FILE* p_bar, FILE* p_components, char identation[])
+void help_build(FILE* p_bar, FILE* p_components, char path_of_file[], char identation[])
 {
-    const std::filesystem::path path(path_of_file); std::error_code ec;
-    if (std::filesystem::is_directory(path, ec))//folder
+    const std::filesystem::path file_path(path_of_file); std::error_code ec;
+    if (std::filesystem::is_directory(file_path, ec)) //directory
     {
-        //pun in fisier numele folderului
-        fputs(identation, p_bar);
-        fputs(get_FILEname(path_of_file), p_bar);
-        fputs("\n", p_bar);
+        if(identation[0])
+            strcat(path_of_file, "/\0");
+
+        fprintf(p_bar, "%s%s\n", identation, get_FILEname(path_of_file));
         strcat(identation, "\t\0");
 
-        for (auto& p : std::filesystem::directory_iterator(path_of_file))//ia fisierele alfabetic
-        {
+        for (auto& p : std::filesystem::directory_iterator(file_path)) //alphabetical order
             if (p.path().empty() == false)
-            {
-                //transformare din string in char(BUGS!)
-                char file_name_from_folder[MAX];
-                strcpy(file_name_from_folder, p.path().string().c_str());
-                for (size_t i = 0; i < strlen(file_name_from_folder); i++)
-                    if (file_name_from_folder[i] == 92)
-                        file_name_from_folder[i] = '/';
-                file_name_from_folder[strlen(file_name_from_folder)] = '\0';
+                help_build(p_bar, p_components, (char*)p.path().string().c_str(), identation);
 
-                help_build(file_name_from_folder, p_bar, p_components, identation);
-                memset(file_name_from_folder, 0, sizeof(file_name_from_folder));
-            }
-        }
-
-        //END
         identation[strlen(identation) - 1] = '\0';
-        fputs(identation, p_bar);
-        fputs(typed_end_of_directory, p_bar);
-        fputs(get_FILEname(path_of_file), p_bar);
-        fputs("/\n", p_bar);
+        fprintf(p_bar, "%s%s%s\n", identation, typed_end_of_directory, get_FILEname(path_of_file));
     }
     else //normal file
     {
         p_components = fopen(path_of_file, "rb");
         if (p_components == nullptr)
         {
-            std::cout << "error - composition: missing/corrupted file";
+            std::cout << "error - composition: can not open:" << path_of_file <<" .\n";
             return;
         }
 
-        fputs(identation, p_bar);
-        fputs(get_FILEname(path_of_file), p_bar);
-        fputs("\n\n", p_bar);
+        fprintf(p_bar, "%s%s\n\n", identation, get_FILEname(path_of_file));
 
         char temp;
         while ((temp = fgetc(p_components)) != EOF)
@@ -90,12 +70,12 @@ void build_tar(short nr_paths, char** paths_input)
     p_bar = fopen("files/temp.bin", "wb");
     if (p_bar == nullptr)
     {
-        std::cout << "error - composition: the requested file is missing.\n";
+        std::cout << "error - composition: can not create temp file.\n";
         return;
     }
 
     for(int i=0; i < nr_paths; i++)
-        help_build(paths_input[i], p_bar, p_components, identation);
+        help_build(p_bar, p_components, paths_input[i], identation);
 
     fclose(p_bar);
 }
