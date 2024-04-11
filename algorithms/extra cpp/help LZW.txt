@@ -1,0 +1,16 @@
+String  Output_Code     Addition
+a       97              ab      256
+b       98              ba      257
+ab      256             aba     258
+ab      256             abc     259
+c       99              ca      260
+aba     258             abab    261
+b       98              bc      262
+ca      260             cab     263
+ba      257
+Output Codes are: 
+97 98 256 256 99 258 98 260 257
+
+
+Decoding
+abababcababcaba
