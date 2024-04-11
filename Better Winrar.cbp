@@ -34,14 +34,14 @@
 			<Add option="-fexceptions" />
 		</Compiler>
 		<Unit filename="admin/libraries.h" />
-		<Unit filename="admin/packing_functions.cpp" />
-		<Unit filename="admin/packing_functions.h" />
-		<Unit filename="algorithms/huffman.h" />
-		<Unit filename="algorithms/huffmanFunctions.cpp" />
+		<Unit filename="admin/pack.cpp" />
+		<Unit filename="admin/pack.h" />
+		<Unit filename="algorithms/huf.cpp" />
+		<Unit filename="algorithms/huf.h" />
+		<Unit filename="algorithms/lzw.cpp" />
 		<Unit filename="algorithms/lzw.h" />
-		<Unit filename="algorithms/lzwFunctions.cpp" />
 		<Unit filename="usage/main cmd.cpp" />
-		<Unit filename="usage/main gui/main gui.cpp" />
+		<Unit filename="usage/main gui.cpp" />
 		<Unit filename="usage/middle/middle.cpp" />
 		<Unit filename="usage/middle/middle.h" />
 		<Extensions>
