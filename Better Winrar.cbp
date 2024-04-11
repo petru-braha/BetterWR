@@ -33,13 +33,13 @@
 			<Add option="-std=gnu++17" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="admin/algorithms/huf.cpp" />
+		<Unit filename="admin/algorithms/huf.h" />
+		<Unit filename="admin/algorithms/lzw.cpp" />
+		<Unit filename="admin/algorithms/lzw.h" />
 		<Unit filename="admin/libraries.h" />
 		<Unit filename="admin/pack.cpp" />
 		<Unit filename="admin/pack.h" />
-		<Unit filename="algorithms/huf.cpp" />
-		<Unit filename="algorithms/huf.h" />
-		<Unit filename="algorithms/lzw.cpp" />
-		<Unit filename="algorithms/lzw.h" />
 		<Unit filename="usage/main cmd.cpp" />
 		<Unit filename="usage/main gui.cpp" />
 		<Unit filename="usage/middle/middle.cpp" />

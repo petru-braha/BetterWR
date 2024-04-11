@@ -195,7 +195,7 @@ void build_decoded(char s[], char text[])
     strcat(text, s);
 }
 
-char* lzw_decode_string(int* input)
+char* lzw_decode_string(int* input)///argumentul va fi un FILE*
 {
     dictionary D;
     char* decoded_text = new char[MAX]{0};
