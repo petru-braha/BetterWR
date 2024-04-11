@@ -1,6 +1,4 @@
 #include "middle/middle.h"
-#include <iostream>
-#include <cstring>
 void graphical_user_interface();
 
 int main(int argc, char** argv)

@@ -8,20 +8,18 @@
 const char typed_end_of_file[] = "\n\n*EOF_no_more_content_to_be_displayed*\n\n";
 const char typed_end_of_directory[] = "EOD_no_more_files_to_be_analysed_";
 
-
-
-void change_extension(char* file_path, const char* to_change) //are ca input un fisier tar corect
+void change_extension(char* file_path, const char* extension) //are ca input un fisier tar corect
 {
     std::filesystem::path f_p(file_path);
-    if(std::filesystem::is_directory(f_p) && to_change[0] == '.')
-        strcpy(strstr(path_output, "."), to_change);
+    if(std::filesystem::is_directory(f_p) && extension[0] == '.')
+        strcpy(strstr(path_output, "."), extension);
 }
 
-char* get_FILEname(char source_path[])
+char* get_file_name(char source_path[])
 {
     size_t length = strlen(source_path), index_context = 0;
     for(size_t i = 0; i < length - 1; i++)
-        if(source_path[i]=='/' || source_path[i] == 92)
+        if(source_path[i]=='/' || source_path[i] == 92) // '\' == 92
             index_context = i;
     return source_path + index_context + 1;
 }
@@ -81,15 +79,17 @@ void build_tar(short nr_paths, char** paths_input)
     fclose(p_bar);
 }
 
-void help_decompose(char line[], char destination[], FILE* p_bar, FILE* p_components, bool condition)
+void help_decompose_antet();
+void help_decompose_content();
+
+void help_decompose(FILE* p_bar, FILE* p_components, char* path_output, char line[], bool condition)
 {
-    char file_separator[MAX] = "*5EPArAToR*";
-    if (condition == 0)
+    if (condition == 0) // antet
     {
-        line[strlen(line) - 1] = '\0';
+        line[strlen(line) - 1] = '\0'; //delete '\n'
         while (line[0] == '\t')
             strcpy(line, line + 1);
-        if (line[strlen(line) - 1] == '/')//NUME FOLDER
+        if (line[strlen(line) - 1] == '/') // directory name
         {
             char previous_line[MAX];
             strcpy(previous_line, line);
@@ -108,7 +108,7 @@ void help_decompose(char line[], char destination[], FILE* p_bar, FILE* p_compon
             }
             return;
         }
-        else//NUME FISIER
+        else // file name
         {
             char new_destination[MAX];
             strcpy(new_destination, destination);
@@ -120,7 +120,7 @@ void help_decompose(char line[], char destination[], FILE* p_bar, FILE* p_compon
     }
     else///content
     {
-        p_components = fopen(destination, "w");
+        p_components = fopen(destination, "wb");
         if (p_components)
         {
             while (1)//adauga la final de fisier "\n\n"
@@ -145,25 +145,20 @@ void help_decompose(char line[], char destination[], FILE* p_bar, FILE* p_compon
 }
 void decompose_tar(char* path_output, char* output_name)
 {
-    char* path_input = "files/temp.txt";
+    char* final_path_output = strcat(path_output, output_name);
+    mkdir(final_path_output);
+    char* path_input = "files/temp.tar";
     FILE* p_bar = nullptr, * p_components = nullptr;
     p_bar = fopen(path_input, "rb");
     if (p_bar == nullptr)
     {
-        std::cout << "error - decomposition: the requested file is missing.\n";
+        std::cout << "error - decomposition: missing temp file.\n";
         return;
     }
 
-    path_output = strcat(path_output, output_name); //revision please
-    mkdir(path_output);
-
-    //prima oara citesteste calea, afisarea pana la intalnirea file_separator
     char line[MAX];
     while (fgets(line, MAX, p_bar))
-        help_decompose(line, path_output, p_bar, p_components, 0);
-    /*
-    0-NU STIU, prima linie
-    1-DACA FIX INAINTE A FOST ANUNTAT NUME DE CEVA
-    */
+        help_decompose(p_bar, p_components, final_path_output, line, 0);
+
     fclose(p_bar);
 }

@@ -1,5 +1,4 @@
 #pragma once
-#define MAX 300
 #define nr_input_paths 10
 const char temp_location[] = "files/temp.tar";
 

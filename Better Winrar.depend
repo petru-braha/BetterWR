@@ -253,7 +253,7 @@
 1712641464 source:a:\projects\done\portfolio\betterwr\usage\main gui\main gui.cpp
 	"../middle/middle.h"
 
-1712739123 a:\projects\done\portfolio\betterwr\usage\middle\middle.h
+1712749358 a:\projects\done\portfolio\betterwr\usage\middle\middle.h
 
 1712732187 source:a:\projects\done\portfolio\betterwr\usage\main cmd.cpp
 	"middle/middle.h"
@@ -270,4 +270,7 @@
 	"../../algorithms/lzw.h"
 
 1712687678 a:\projects\done\portfolio\betterwr\admin\packing_functions.h
+
+1712863605 source:a:\projects\done\portfolio\betterwr\usage\main gui.cpp
+	"middle/middle.h"
 

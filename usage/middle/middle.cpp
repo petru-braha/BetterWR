@@ -1,12 +1,12 @@
+#include <filesystem>
 #include <iostream>
 #include <cstring>
-#include <filesystem>
 
 #include "middle.h"
-#include "../../admin/packing_functions.h"
-#include "../../algorithms/huffman.h"
+#include "../../admin/pack.h"
+#include "../../algorithms/huf.h"
 #include "../../algorithms/lzw.h"
-
+#define MAX 300
 void show_saved_size(size_t originalSize, size_t encodedSize){
     size_t bytesSaved = originalSize - encodedSize;
     std::cout << "Original size: " << originalSize << " bits" << " (" << originalSize / 8 << " bytes).\n";
@@ -19,10 +19,6 @@ bool compress_huf(char* path_output, char* output_name) //the temp file is built
 {
     FILE* input = fopen(temp_location, "rb");
     FILE* output = fopen(strcat(path_output, output_name), "wb");
-    char buffer[K * K];
-    for (int i = 0; i < K * K; ++i)
-        buffer[i] = 0;
-    size_t bytesRead = fread(buffer, sizeof(char), K * K, input);
     if (input == nullptr)
     {
         printf("error - compress_huf : missing temp file.\n");
@@ -30,31 +26,32 @@ bool compress_huf(char* path_output, char* output_name) //the temp file is built
         return false;
     }
 
-    //from binary to ASCII
-    string binaryData(buffer, bytesRead);
-    node* root = buildHuffmanTree(binaryData);
-    string encodedString = "";
-    HuffmanEncode(root, binaryData, encodedString);
-    string textToOutput = writeEncodedDataToFile(encodedString);
+    ///let's assume that everything is in ASCII
+    char to_be_encoded[MAX] = { 0 };
+    size_t bytes_read = 0;
+    bool first_exe = true;
+    int* encoded_text = nullptr;
 
-    char treeInfo[MAX];
-    int treeFreq[MAX], treeSize = 0;
-    createTreeString(root, 1, treeInfo, treeFreq, treeSize);
+    string binaryData(to_be_encoded, bytes_read);
+    node* root = build_huf_tree(binaryData);
+    string encodedString = huf_encode_string(root, binaryData);
+    string output_text__ = write_encoded_ascii(encodedString); //cu info necesare
+
+    // write extra details
+    char treeInfo[MAX]; int treeFreq[MAX], treeSize = 0;
+    create_tree_string(root, 1, treeInfo, treeFreq, treeSize);
 
     fwrite(&treeSize, sizeof(int), 1, output);
-    for (int i = 1; i <= treeSize; ++i)
+    for(int i = 1; i <= treeSize; ++i)
         fwrite(&treeFreq[i], sizeof(int), 1, output);
     for (int i = 1; i <= treeSize; ++i)
         fwrite(&treeInfo[i], sizeof(char), 1, output);
-
     int bitlength = encodedString.size();
     fwrite(&bitlength, sizeof(int), 1, output);
+    ///write important part
     fwrite(textToOutput.c_str(), sizeof(char), textToOutput.size(), output);
 
-    size_t originalSize = bytesRead * 8;
-    size_t encodedSize = textToOutput.size() * 8;
-    savedSize(originalSize, encodedSize);
-
+    show_saved_size(bytes_read * 8, textToOutput.size() * 8);
     fclose(input);
     fclose(output);
     return true;
@@ -82,13 +79,13 @@ bool compress_lzw(char* path_output, char* output_name)
         memset(to_be_encoded, 0, MAX);
         bytes_read += fread(to_be_encoded, sizeof(char), MAX - 1, input);
 
-        encoded_text = lzw_encode(to_be_encoded, sizeof(to_be_encoded));
+        encoded_text = lzw_encode_string(to_be_encoded, sizeof(to_be_encoded));
         fwrite(encoded_text, sizeof(int*), MAX, output);
         delete[] encoded_text;
     }
 
     bytes_read += fread(to_be_encoded, sizeof(char), MAX - 1, input);
-    encoded_text = lzw_encode(to_be_encoded, sizeof(to_be_encoded));
+    encoded_text = lzw_encode_string(to_be_encoded, sizeof(to_be_encoded));
     fwrite(encoded_text, sizeof(int*), MAX, output);
     delete[] encoded_text;
     show_saved_size(bytes_read * 8, encoded_text_char.size() * 8;);
@@ -337,6 +334,6 @@ void very_last_step(char* operation, char* algorithm, short nr_paths, char** pat
         }
     }
 
-    //if(remove("files/temp.txt"))
+    //if(remove("files/temp.tar"))
         //std::cout<<"error: temporary file not deleted.\n";
 }

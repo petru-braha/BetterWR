@@ -3,83 +3,113 @@
 #include "lzw.h"
 #define MAX 300
 
-struct line {
-    char stored_value[MAX];
-    int new_value;  //ASCII incepand de la 256 inclusiv
-};
+///build
+///future patch: a way longer input paramenter!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+const char separator[MAX] = "*:is_indexed_at_the_number:*";
 
-struct dictionary {
-    int index;  //if == 0 then empty
-    line element[MAX];
-} D;
+dictionary::dictionary()
+{
+    this->temporary_codes = fopen(path_file_codes, "wb");
+    if(temporary_codes == nullptr)
+        std::cout << "error - lzw: failed to initialise codes.\n";
+    this->index = 256;
 
-// functie de convertire a sirului citit din fisier intr un vector de valori intregi
-void bufferToIntArray(const char* buffer, int bufferSize, int* intArray, int& arraySize) {
-    int currentNumber = 0;
-    bool inNumber = false;
-    int arrayIndex = 0;
-
-    for (int i = 0; i < bufferSize; ++i) {
-        char currentChar = buffer[i];
-
-        if (isdigit(currentChar)) {
-            currentNumber = currentNumber * 10 + (currentChar - '0');
-            inNumber = true;
-        }
-        else {
-            if (inNumber) {
-                // adadugam numarul in vector
-                intArray[arrayIndex++] = currentNumber;
-
-                // reset pentru urmatorul numar
-                currentNumber = 0;
-                inNumber = false;
-            }
-        }
+    for(unsigned long long i=0; i < this->index; i++)
+    {
+        char* ascii_character = new char{i};
+        fprintf(this->temporary_codes, "%s%s%llu\n" , ascii_character, separator, i);
+        delete ascii_character;
     }
-
-    // daca ultimul caracter face parte dintr un numar, il adaugam in vector
-    if (inNumber) {
-        intArray[arrayIndex++] = currentNumber;
-    }
-
-    // actualizam dimensiunea vectorului
-    arraySize = arrayIndex;
 }
 
-int Len(int a[], int size) {
+void dictionary::add(char sequence[])
+{
+    fprintf(this->temporary_codes, "%s%s%llu\n", sequence, separator, this->index);
+}
+
+bool dictionary::exist_string(char sequence[]) //normal sized string
+{
+    char element[MAX]={0};
+    fscanf(this->temporary_codes, "%s", element);
+    for(size_t i=0; i < strlen(sequence); i++) //we treat the case where string's size is maximum
+        if(sequence[i] != element[i])
+            return false;
+    return true;
+}
+
+ull convert_char(char* nr)
+{
+	ull p = 1, index = 0, result = 0;
+	while (nr[index])
+		index++;
+	index--;
+	while (index)
+	{
+		result = result + (nr[index] - '0') * p;
+		p *= 10;
+		index--;
+	}
+
+	if (nr[index] == '-')
+		return -1 * result;
+	return result + (nr[index] - '0') * p;
+}
+
+bool dictionary::exist_nr(ull value)
+{
+    char element[MAX]={0};
+    while(strstr(element, separator) == nullptr)
+        fscanf(this->temporary_codes, "%s", element);
+
+    strcpy(element, strstr(element, separator));
+    strcpy(element, element + strlen(separator));
+    if(strstr(element, "\n"))
+    {
+        size_t index_nl = strstr(element, "\n");
+        element[index_nl] = '\0';
+        rewind(this->temporary_codes);
+        if(value == convert_char(element))
+            return true;
+    }
+    else
+    {
+        char continue_element[MAX] = {0};
+        fscanf(this->temporary_codes, "%s", continue_element);
+        strcat(element, continue_element);
+        if(strstr(element, "\n") == 0)
+        {
+            std::cout << "error - lzw: failed to check if the code exists.\n";
+            return false;
+        }
+
+        element[strstr(element, "\n")] = '\0';
+        rewind(this->temporary_codes);
+        if(value == convert_char(element))
+            return true;
+    }
+
+    return false;
+}
+
+dictionary::~dictionary()
+{
+    fclose(this->temporary_codes);
+    if(remove(path_file_codes))
+        std::cout << "error - lzw: failed to delete codes.\n";
+}
+
+int array_len(int a[], int size) {
     int i = 0;
     while (i < size && a[i])
         i++;
     return i;
 }
 
-void initialize_dictionary()
-{
-    while (D.index < 256)
-    {
-        D.element[D.index].new_value = D.index;
-        D.element[D.index].stored_value[0] = (char)D.index;
-        D.index++;
-    }
-}
-bool is_in_dictionary(char s[])
-{
-    for (int i = 0; i < D.index; i++)
-        if (strcmp(D.element[i].stored_value, s) == 0)
-            return 1;
-    return 0;
-}
-void add_TOdictionary(char s[], int& ASCII_value)
-{
-    D.element[D.index].new_value = ASCII_value++;
-    strcpy(D.element[D.index++].stored_value, s);
-}
-
-void build_encoded(char s[],int *&encoded_text)
+///compress
+void build_encoded(dictionary D, char s[] ,int *encoded_text) // append code of to the pointer
 {
     if (strlen(s) == 1)
-        encoded_text[Len(encoded_text,MAX)] = s[0];
+        encoded_text[array_len(encoded_text, MAX)] = s[0];
     else
     {
         for (int i = 0; i < D.index; i++)
@@ -90,37 +120,24 @@ void build_encoded(char s[],int *&encoded_text)
             }
     }
 }
-///FUNCTII PENTRU DECODIFICARE, RESTUL SUNT PENTRU CODIFICARE SI DICTIONAR
-bool is_in_dictionaryENCODED(int next)
-{
-    if (next > D.index - 1)
-        return 0;
-    return 1;
-}
 
-void build_decoded(char s[],char text[])
-{
-    strcat(text, s);
-    text[strlen(text)] = '\0';
-}
-
-unsigned int* lzw_encode_string(char input[], int size)
+// present patch: make the alg work with big data
+unsigned int* lzw_encode_string(char input[])
 {
     /*
     - temp_before_LASTbuild mereu trebuie sa intre in output la codare
     - current <- ultima litera a cuvantului adaugat in dic
     - i -> current
     */
-    unsigned int* encoded_text = new int[MAX]{ 0 };
-    char temp[MAX], temp_before_LASTbuild[MAX], current;
+    dictionary D;
+    unsigned int* encoded_text = new unsigned int[MAX]{ 0 };
+    char temp[MAX] = {0}, temp_before_LASTbuild[MAX], current;
     int ASCII_value = 256, i = 0;
 
-    //initialise_temp
-    memset(temp, 0, sizeof temp);
     //build_variables
     current = input[i];
     temp[strlen(temp)] = current;
-    temp[strlen(temp)] = '\0';
+
     //next?
     i++;
     while (i < strlen(input))
@@ -128,7 +145,7 @@ unsigned int* lzw_encode_string(char input[], int size)
         while (is_in_dictionary(temp) && strlen(temp) > 1)
         {
             strcpy(temp_before_LASTbuild, temp);
-            if (i + 1 != strlen(input))
+            if (i + 1 != strlen(inputs))
             {
                 i++;
                 //build_variables
@@ -167,19 +184,20 @@ unsigned int* lzw_encode_string(char input[], int size)
         if (i == strlen(input))
             build_encoded(temp_before_LASTbuild,encoded_text);
     }
-    //sterg datele
-    memset(input, 0, size);
-    for (i = 0; i < D.index; i++)
-    {
-        memset(D.element[i].stored_value, 0, MAX);
-        D.element[i].new_value = 0;
-    }
-    D.index = 0;
+
+    delete D;
     return encoded_text;
+}
+
+///decompress
+void build_decoded(char s[], char text[])
+{
+    strcat(text, s);
 }
 
 char* lzw_decode_string(int* input)
 {
+    dictionary D;
     char* decoded_text = new char[MAX]{0};
     initialize_dictionary();
     int current = input[0], next, n = Len(input,MAX) - 1;
@@ -211,17 +229,6 @@ char* lzw_decode_string(int* input)
         D.index++;
         current = next;
     }
-
-    //sterg datele
-    n++;
-    for (int i = 0; i < n; i++)
-        input[i] = 0;
-
-    for (int i = 0; i < D.index; i++)
-    {
-        memset(D.element[i].stored_value, 0, MAX);
-        D.element[i].new_value = 0;
-    }
-    D.index = 0;
+    delete D;
     return decoded_text;
 }

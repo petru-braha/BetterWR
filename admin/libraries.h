@@ -2,9 +2,7 @@
 #include <iostream>
 #include <cstring>
 #include <fstream>
-#include <cstdio>
 #include <stdio.h>
-#include <stdlib.h>
 #include <graphics.h>
 #include <filesystem>
 
