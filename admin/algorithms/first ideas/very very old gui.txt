@@ -1,0 +1,641 @@
+void highlight(int x1, int y1, int x2, int y2)
+{
+    setcolor(15);
+    for(int i=0;i<10;i++)
+    {
+        x1++; y1++; x2--; y2--;
+        line(x1, y1, x2, y1);
+        line(x1, y1, x1, y2);
+        line(x1, y2, x2, y2);
+        line(x2, y1, x2, y2);
+    }
+}
+
+void graphics_MENUbuttons()
+{
+    setcolor(9);
+    int x1=60, y1=height/4, temp=60, y2=y1+temp, x2=x1+380;
+    settextstyle(DEFAULT_FONT, HORIZ_DIR, 4);
+    for(int i=0;i<3;i++)
+    {
+        switch (i)
+        {
+            case 0:
+                graphic_button(x1, y1, x2, y2);
+                outtextxy(x1+15, y1+15, "arhivare");
+                break;
+
+            case 1:
+                graphic_button(x1, y1, x2, y2);
+                outtextxy(x1+15, y1+15, "dezarhivare");
+                break;
+
+            case 2:
+                graphic_button(x1, y1, x2, y2);
+                outtextxy(x1+15, y1+15, "info++?");
+                break;
+
+            case 3:
+                graphic_button(x1, y1, x2, y2);
+                outtextxy(x1+15, y1+15, "test");
+                break;
+
+            default:
+                break;
+        }
+        coordo[i][0]=x1;
+        coordo[i][1]=y1;
+        coordo[i][2]=x2;
+        coordo[i][3]=y2;
+
+        y1=y2+10;
+        y2=y1+temp;
+    }
+}
+void graphics_GLOBALbuttons(int value)
+{
+    switch(value)
+    {
+    case 3:
+        setcolor(4);
+        settextstyle(DEFAULT_FONT, HORIZ_DIR, 3);
+        graphic_button(1350, 40, 1500, 100);
+        outtextxy(1375, 60, "STOP");
+        coordo[3][0]=1350;
+        coordo[3][1]=40;
+        coordo[3][2]=1500;
+        coordo[3][3]=100;
+        break;
+    case 4:
+        setcolor(9);
+        settextstyle(DEFAULT_FONT, 0, 2);
+        graphic_button(30, 880, 130, 930);
+        outtextxy(36, 895, "inapoi");
+        coordo[4][0]=30;
+        coordo[4][1]=880;
+        coordo[4][2]=130;
+        coordo[4][3]=930;
+        break;
+    case 5:
+        setcolor(4);
+        settextstyle(DEFAULT_FONT, HORIZ_DIR, 3);
+        graphic_button(1270, 840, 1470, 900);
+        outtextxy(1312, 860, "GATA!");
+        coordo[5][0]=1270;
+        coordo[5][1]=840;
+        coordo[5][2]=1470;
+        coordo[5][3]=900;
+        break;
+    }
+}
+void graphics_EXPLbuttons()
+{
+    setcolor(9);
+    settextstyle(SMALL_FONT, 0, 9);
+    int y=height/6;
+    //selectare
+    graphic_button(60, y-5, 180, y+35);
+    outtextxy(70, y, "Select");
+    coordo[6][0]=60;
+    coordo[6][1]=y-5;
+    coordo[6][2]=180;
+    coordo[6][3]=y+35;
+    y+=35;
+    ///accesarea se va face din doublu clic (folder/fisier)
+    //adauga folder
+    graphic_button(60, y-5, 180, y+35);
+    outtextxy(70, y, "Mkdir");
+    coordo[7][0]=60;
+    coordo[7][1]=y-5;
+    coordo[7][2]=180;
+    coordo[7][3]=y+35;
+    y+=35;
+    ///adauga fisier
+    graphic_button(60, y-5, 180, y+35);
+    outtextxy(70, y, "Fopen");
+    coordo[8][0]=60;
+    coordo[8][1]=y-5;
+    coordo[8][2]=180;
+    coordo[8][3]=y+35;
+    y+=35;
+    ///sterge
+    graphic_button(60, y-5, 180, y+35);
+    outtextxy(70, y, "Delete");
+    coordo[9][0]=60;
+    coordo[9][1]=y-5;
+    coordo[9][2]=180;
+    coordo[9][3]=y+35;
+}
+void graphics_ALGbuttons()
+{
+    setcolor(15);
+    settextstyle(SMALL_FONT, 0, 8);
+    graphic_button(50, 30, 125, 75);
+    outtextxy(58, 40, "HUF");
+    coordo[10][0]=50;
+    coordo[10][1]=30;
+    coordo[10][2]=125;
+    coordo[10][3]=75;
+    graphic_button(125, 30, 200, 75);
+    outtextxy(133, 40, "LZW");
+    coordo[11][0]=125;
+    coordo[11][1]=30;
+    coordo[11][2]=200;
+    coordo[11][3]=75;
+}
+bool click_on_button(int x, int y, int which_button)
+{
+    if(x>=coordo[which_button][0] && x<=coordo[which_button][2])
+        if(y>=coordo[which_button][1] && y<=coordo[which_button][3])
+            return 1;
+    return 0;
+}
+
+bool is_folder(char path[])
+{
+    if (filesystem::exists(filesystem::path(path)) && filesystem::path(path).extension() == "")
+        return 1;
+    return 0;
+}
+char* reverseArray(char arr[], int length)
+{
+    int start = 0;
+    int end = length - 1;
+
+    while (start < end) {
+        // Swap characters at start and end indices
+        char temp = arr[start];
+        arr[start] = arr[end];
+        arr[end] = temp;
+
+        // Move indices towards the center
+        start++;
+        end--;
+    }
+    return arr;
+}
+char file_name[MAX];
+void get_FILEname(char source_path[])
+{
+    memset(file_name, 0, sizeof file_name);
+    for (int i = strlen(source_path) - 1; i; i--)
+    {
+        if (source_path[i] == 47)
+        {
+            if (i != strlen(source_path) - 1)
+                break;
+        }
+        else
+            file_name[strlen(file_name)] = source_path[i];
+    }
+    file_name[strlen(file_name)] = '\0';
+    char* reversedArray = reverseArray(file_name, strlen(file_name));
+    strcpy(file_name, reversedArray);
+    file_name[strlen(file_name)] = '\0';
+}
+bool click_on_file(int x, int y, int which_button);
+
+bool last_step;
+char alg;
+short int file_nr_visible;
+short int file_coordo[MAX][4];
+char file_accessedPATH[MAX]="\0";
+char file_lastOPENED[MAX];
+char file_visible[MAX][MAX];
+
+void explorer(char mode[])
+{
+    //sterge highlight
+        setfillstyle(SOLID_FILL, 0);
+        bar(230, 143, 976, 920);
+
+    int y=0;
+    file_nr_visible=0;
+    settextstyle(SMALL_FONT, 0, 8);
+    if(strcmp(mode, "partitive")==0)
+    {
+        char last_partitive=0;
+        for(int i='C';i<='Z';i++)
+        {
+            char s[5]="\0";
+            s[0]=char(i);
+            s[1]=':';
+            s[2]='/';
+            s[3]='\0';
+            if(!is_folder(s))
+                break;
+            setcolor(15);
+            line(230, 143+y, 974, 143+y);
+
+            file_coordo[11+i-'C'][0]=230;
+            file_coordo[11+i-'C'][1]=143+y;
+            file_coordo[11+i-'C'][2]=974;
+
+            setcolor(9);
+            readimagefile("photos/folder2.jpg", 235, 150+y, 260, 150+y+25);
+            outtextxy(270, 150+y, s);
+            y+=40;
+
+            file_coordo[11+i-'C'][3]=143+y;
+            file_nr_visible++;
+
+            strcpy(file_visible[11+i-'C'], s);
+        }
+        setcolor(15);
+        line(230, 143+y, 974, 143+y);
+    }
+    else
+    {
+        if(strcmp(mode, "directory_iterator")==0)
+        {
+        //calea unde ai ajuns
+        graphic_button(320, 90, 900, 130);
+        setcolor(9);
+        settextstyle(SMALL_FONT, 0, 8);
+        outtextxy(330, 100, file_accessedPATH);
+        int index=0;
+        for(auto & p : filesystem::directory_iterator(file_accessedPATH))
+            if(index<19)
+            {//gen las sa se vada doar 15 elemente maxim
+                char s[MAX]="\0";
+                strcpy(s, p.path().string().c_str());
+
+                get_FILEname(s);
+                strcpy(file_visible[11+index++], file_name);
+                setcolor(15);
+                line(230, 143+y, 974, 143+y);
+
+                file_coordo[10+index][0]=230;
+                file_coordo[10+index][1]=143+y;
+                file_coordo[10+index][2]=974;
+
+                setcolor(9);
+                if(is_folder(s))
+                    readimagefile("photos/folder2.jpg", 235, 150+y, 260, 150+y+25);
+                else
+                    readimagefile("photos/txt2.jpg", 235, 150+y, 260, 150+y+25);
+                outtextxy(270, 150+y, file_visible[11+index-1]);
+                y+=40;
+
+                file_coordo[10+index][3]=143+y;
+                file_nr_visible++;
+            }
+        setcolor(15);
+        line(230, 143+y, 974, 143+y);
+        }
+    }
+}
+short int unit;
+int nr_selections;///fostul nr_files_for_tar;
+char selections_compress[MAX][MAX];//PRIMELE 11 POZ SUNT
+
+void file_explorer()
+{
+    cleardevice();
+    readimagefile("photos/file explorer.jpg", 0, 0, width, height);
+    graphics_EXPLbuttons();
+    explorer("partitive");
+    graphics_GLOBALbuttons(3);
+}
+
+void commands()
+{
+        ///CE OPERATIE
+        if(file_accessedPATH[0]==0)
+        {
+            if(which_button)
+            {
+                if(which_button==3)
+                {
+                    start_graphics();
+                    setcolor(15);
+                    settextstyle(DEFAULT_FONT, 0, 2);
+                    outtextxy(coordo[0][0], coordo[0][1], "Cititi fisierul: readME.txt");
+                    delay(1500);
+                    system("readME.txt");
+                }
+                else
+                {
+                    if(first)
+                    {
+                        file_explorer();
+                        first=0;
+                    }
+                    if(which_button==1)///arhivare
+                    {
+                        graphics_ALGbuttons();
+                    }
+                    else///dezarhivare
+                    {
+                        outtextxy(50, 50, "ALEGE DEZARHIVAREA");
+
+                    }
+                    graphics_GLOBALbuttons(5);
+                }
+                graphics_GLOBALbuttons(4);
+            }
+        }
+        ///JOACA IN FILESYSTEM
+        while(last_step==0)
+        {
+            getmouseclick(WM_LBUTTONDOWN, mouse.x, mouse.y);
+            if(mouse.x!=-1 && mouse.y!=-1)
+            {
+                //1. ESC
+                if(click_on_button(mouse.x, mouse.y, 3))
+                {
+                    highlight(coordo[3][0], coordo[3][1], coordo[3][2], coordo[3][3]);
+                    delay(100);
+                    closegraph();
+                    exit(0);
+                }
+                //2. go_back
+                if(file_accessedPATH[0])
+                {
+                    if(strlen(file_accessedPATH)<4)
+                    {
+                        if(click_on_button(mouse.x, mouse.y, 4))
+                        {
+                            highlight(coordo[4][0], coordo[4][1], coordo[4][2], coordo[4][3]);
+                            delay(100);
+                            graphics_GLOBALbuttons(4);
+                            strcpy(file_accessedPATH, "\0");
+                            strcpy(file_lastOPENED, "\0");
+                            file_explorer();
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        if(click_on_button(mouse.x, mouse.y, 4))
+                        {
+                            highlight(coordo[4][0], coordo[4][1], coordo[4][2], coordo[4][3]);
+                            delay(100);
+                            graphics_GLOBALbuttons(4);
+                            strcpy(strstr(file_accessedPATH, file_lastOPENED), "\0");
+                            get_FILEname(file_accessedPATH);
+                            strcpy(file_lastOPENED, file_name);
+                            cout<<file_accessedPATH<<'\n';
+                            explorer("directory_iterator");
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    if(click_on_button(mouse.x, mouse.y, 4))
+                    {
+                    highlight(coordo[4][0], coordo[4][1], coordo[4][2], coordo[4][3]);
+                    delay(100);
+                    which_button=0;
+                    first=1;
+                    start_graphics();
+                    graphics_MENUbuttons();
+                    break;
+                    }
+                }
+                //3. ALGORITM
+                if(which_button==1)
+                {
+                    if(click_on_button(mouse.x, mouse.y, 10))
+                    {
+                        alg='H';
+                        graphics_ALGbuttons();
+                        highlight(coordo[10][0], coordo[10][1], coordo[10][2], coordo[10][3]);
+                    }
+                    else
+                    {
+                        if(click_on_button(mouse.x, mouse.y, 11))
+                        {
+                            alg='L';
+                            graphics_ALGbuttons();
+                            highlight(coordo[11][0], coordo[11][1], coordo[11][2], coordo[11][3]);
+                        }
+                    }
+                }
+                //3.9 deselectare
+                for(int i=0;i<11;i++)
+                    if(click_on_file(mouse.x, mouse.y, i))
+                    {
+                        graphic_x(file_coordo[i][0], file_coordo[i][1], file_coordo[i][2], file_coordo[i][3]);
+                        strcpy(selections_compress[i], "\0");
+                        break;
+                    }
+                //4. gata
+                if(click_on_button(mouse.x, mouse.y, 5))
+                {
+                    if(nr_selections==0)
+                    {
+                        cout<<"error";
+                    }
+                    else
+                    {
+                        if(which_button==1)
+                        {
+                            if(alg=='H')
+                            {
+                                //build_tar();
+                                ///comrpimare huffman
+                            }
+                            if(alg=='L')
+                            {
+                                //build_tar();
+                                ///comprimare lempel
+                            }
+                        }
+                        else
+                        {
+                            ///decomprimare
+                        }
+                    }
+                    last_step=1;
+                }
+                //5. butoane file_explorer
+                for(int i=6;i<10;i++)
+                {
+                    if(click_on_button(mouse.x, mouse.y, i))
+                    {
+                        highlight(coordo[i][0], coordo[i][1], coordo[i][2], coordo[i][3]);
+                        delay(100);
+                        graphics_EXPLbuttons();
+                        switch(i)
+                        {
+                            case 6:
+                                //selected_file
+                                break;
+                            case 7:
+                                //annocement_button(mode de scris/mode de inchis)
+                                //numele foderului
+                                //mkdir(strcat(file_accesed, nume))
+                                //one more folder graphic
+                                break;
+                            case 8:
+                                //annocement_button(mode de scris/mode de inchis)
+                                //numele fisier.txt
+                                //fopen(strcat(file_accesed, nume), "w")
+                                //one more file graphic
+                                break;
+                            case 9:
+                                //remove(path)
+                                //actualizare
+                                break;
+                        }
+                        break;
+                    }
+                }
+                //6. folder
+                for(int i=11; i<11+file_nr_visible; i++)
+                    if(click_on_file(mouse.x, mouse.y, i))
+                    {
+                        highlight(file_coordo[i][0], file_coordo[i][1], file_coordo[i][2], file_coordo[i][3]);
+                        change_MYMIND:
+                        while(1)
+                        {
+                            bool ok=0, change_of_mind=0;
+                            getmouseclick(WM_LBUTTONDOWN, mouse.x, mouse.y);
+                            if(mouse.x!=-1 && mouse.y!=-1)
+                            {
+                                //se schimba input
+                                for(int j=11; j<11+file_nr_visible; j++)
+                                    if(click_on_file(mouse.x, mouse.y, j) && i!=j)
+                                    {
+                                        if(file_accessedPATH[0]==0)
+                                            explorer("partitive");
+                                        else
+                                            explorer("directory_iterator");
+                                        highlight(file_coordo[j][0], file_coordo[j][1], file_coordo[j][2], file_coordo[j][3]);
+                                        change_of_mind=1;
+                                        i=j;
+                                        break;
+                                    }
+                                if(change_of_mind)
+                                    goto change_MYMIND;
+                                if(click_on_button(mouse.x, mouse.y, 3))//stop
+                                {
+                                    highlight(coordo[3][0], coordo[3][1], coordo[3][2], coordo[3][3]);
+                                    delay(100);
+                                    closegraph();
+                                    exit(0);
+                                }
+                                if(click_on_button(mouse.x, mouse.y, 4))//inapoi
+                                {
+                                    highlight(coordo[4][0], coordo[4][1], coordo[4][2], coordo[4][3]);
+                                    delay(100);
+                                    graphics_GLOBALbuttons(4);
+                                    ok=1;
+                                    if(file_accessedPATH[0]==0)
+                                        explorer("partitive");
+                                    else
+                                        explorer("directory_iterator");
+                                }
+                                if(click_on_button(mouse.x, mouse.y, 6) && file_accessedPATH[0] && nr_selections<11)//selecteaza
+                                {
+                                    bool dir=0;
+                                    highlight(coordo[6][0], coordo[6][1], coordo[6][2], coordo[6][3]);
+                                    delay(100);
+                                    graphics_EXPLbuttons();
+
+                                    strcpy(file_lastOPENED, file_visible[i]);
+                                    char temp[MAX];
+                                    strcpy(temp, file_accessedPATH);
+                                    strcat(temp, file_lastOPENED);
+                                    if(is_folder(temp))
+                                    {
+                                        strcat(temp, "/");
+                                        dir=1;
+                                    }
+
+                                    strcpy(selections_compress[nr_selections++], temp);
+                                    get_FILEname(temp);
+                                    setcolor(15);
+
+                                    line(1040, 195+unit, 1440, 195+unit);
+                                    file_coordo[nr_selections-1][0]=1000;
+                                    file_coordo[nr_selections-1][1]=195+unit;
+                                    file_coordo[nr_selections-1][2]=1440;
+
+                                    settextstyle(SMALL_FONT, 0, 10);
+                                    outtextxy(1040, 200+unit, file_name);
+                                    if(dir)
+                                        readimagefile("photos/folder2.jpg", 1010, 200+unit, 1035, 235+unit);
+                                    else
+                                        readimagefile("photos/txt2.jpg", 1010, 200+unit, 1035, 235+unit);
+                                    unit+=45;
+                                    line(1040, 195+unit, 1440, 195+unit);
+                                    file_coordo[nr_selections-1][3]=195+unit;
+
+                                    explorer("directory_iterator");
+                                    ok=1;
+                                }
+                                if(click_on_file(mouse.x, mouse.y, i))//accesez calea
+                                {
+                                    ok=1;
+                                    strcpy(file_lastOPENED, file_visible[i]);
+                                    strcat(file_accessedPATH, file_lastOPENED);
+                                    if(is_folder(file_accessedPATH))
+                                    {
+                                        if(strlen(file_accessedPATH)>=4)
+                                            strcat(file_accessedPATH, "/");
+                                        cout<<file_accessedPATH<<'\n';
+                                        explorer("directory_iterator");
+                                    }
+                                    else
+                                    {
+                                        char exe[MAX];
+                                        strcpy(exe, file_accessedPATH);
+                                        strcpy(strstr(file_accessedPATH, file_lastOPENED), "\0");
+                                        get_FILEname(file_accessedPATH);
+                                        strcpy(file_lastOPENED, file_name);
+                                        cout<<file_accessedPATH<<'\n';
+                                        explorer("directory_iterator");
+                                        system(exe);
+                                    }
+                                }
+                            }
+                            if(ok)
+                                break;
+                        }
+                        break;//pt for
+                    }
+
+
+            }
+        }
+    }
+}
+int Display()
+{
+    initwindow(width, height, "", -3, -3);
+    start_graphics();
+    graphics_MENUbuttons();
+    commands();
+    getch();
+    closegraph();
+    return 0;
+}
+
+void start_graphics()
+{
+    //background
+    if(first_exe)
+        readimagefile("photos/2.jpg", 0, 0, width, height);
+    else
+        readimagefile("photos/1.jpg", 0, 0, width, height);
+    first_exe=1;
+    setcolor(9);
+
+    settextstyle(DEFAULT_FONT, HORIZ_DIR, 4);
+    outtextxy(1000, 200, "Algoritmi:");
+    settextstyle(DEFAULT_FONT, HORIZ_DIR, 3);
+    outtextxy(1050, 250, "-Huffman");
+    outtextxy(1050, 270, "-Lempel-Ziv-Welch");
+
+    graphics_GLOBALbuttons(3);
+}
+bool click_on_file(int x, int y, int which_button)
+{
+    if(x>=file_coordo[which_button][0] && x<=file_coordo[which_button][2])
+        if(y>=file_coordo[which_button][1] && y<=file_coordo[which_button][3])
+            return 1;
+    return 0;
+}

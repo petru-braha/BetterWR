@@ -5,7 +5,7 @@ int main(int argc, char** argv)
 {
     if(argc == 1)
     {
-        graphical_user_interface();
+        //graphical_user_interface();
         return 0;
     }
 
@@ -25,6 +25,6 @@ int main(int argc, char** argv)
     char* path_output = argv[argc - 2];
     char* output_name = argv[argc - 1];
 
-    very_last_step(operation, algorithm, nr_paths, paths_input, path_output, output_name);
+    //very_last_step(operation, algorithm, nr_paths, paths_input, path_output, output_name);
     return 0;
 }

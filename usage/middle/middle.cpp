@@ -4,19 +4,20 @@
 
 #include "middle.h"
 #include "../../admin/pack.h"
-#include "../../algorithms/huf.h"
-#include "../../algorithms/lzw.h"
+#include "../../admin/algorithms/huf.h"
+#include "../../admin/algorithms/lzw.h"
 #define MAX 300
 void show_saved_size(size_t originalSize, size_t encodedSize){
     size_t bytesSaved = originalSize - encodedSize;
     std::cout << "Original size: " << originalSize << " bits" << " (" << originalSize / 8 << " bytes).\n";
     std::cout << "Encoded size: " << encodedSize << " bits" << " (" << encodedSize / 8 << " bytes).\n";
     std::cout << "Bits saved: " << bytesSaved << " bits" << " (" << bytesSaved / 8 << " bytes).\n";
-    std::cout << endl;
+    std::cout << '\n';
 }
 
 bool compress_huf(char* path_output, char* output_name) //the temp file is built, ik its location => encoding, final output
 {
+    /*
     FILE* input = fopen(temp_location, "rb");
     FILE* output = fopen(strcat(path_output, output_name), "wb");
     if (input == nullptr)
@@ -55,10 +56,12 @@ bool compress_huf(char* path_output, char* output_name) //the temp file is built
     fclose(input);
     fclose(output);
     return true;
+    */
 }
 
 bool compress_lzw(char* path_output, char* output_name)
 {
+    /*
     FILE* input = fopen(temp_location, "rb"),* output = fopen(strcat(path_output, output_name), "wb");
     if (input == nullptr || output == nullptr)
     {
@@ -92,6 +95,7 @@ bool compress_lzw(char* path_output, char* output_name)
 
     fclose(input); fclose(output);
     return true;
+    */
 }
 
 bool decompress_huf(char* path_input, char* path_output, char* output_name)
@@ -316,7 +320,7 @@ void very_last_step(char* operation, char* algorithm, short nr_paths, char** pat
 {
     if (strcmp(operation, "compress") == 0)
     {
-        build_tar(nr_paths, paths_input);
+        //build_tar(nr_paths, paths_input);
         if (strcmp(algorithm, "HUF") == 0)
             compress_huf(path_output, output_name);
         if (strcmp(algorithm, "LZW") == 0)
@@ -330,7 +334,7 @@ void very_last_step(char* operation, char* algorithm, short nr_paths, char** pat
                 decompress_huf(paths_input[i], path_output, output_name);
             if (strcmp(algorithm, "LZW") == 0)
                 decompress_lzw(paths_input[i], path_output, output_name);
-            decompose_tar(path_output, output_name);
+            //decompose_tar(path_output, output_name);
         }
     }
 

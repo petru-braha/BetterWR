@@ -1,0 +1,71 @@
+# depslib dependency file v1.0
+1713041007 source:a:\projects\done\portfolio\betterwr\usage\main cmd.cpp
+	"middle/middle.h"
+
+1712872628 a:\projects\done\portfolio\betterwr\usage\middle\middle.h
+
+1713040985 source:a:\projects\done\portfolio\betterwr\usage\main gui.cpp
+	<graphics.h>
+	<wtypes.h>
+	"middle/middle.h"
+
+1712996899 source:a:\projects\done\portfolio\betterwr\usage\middle\middle.cpp
+	<filesystem>
+	<iostream>
+	<cstring>
+	"middle.h"
+	"../../admin/pack.h"
+	"../../admin/algorithms/huf.h"
+	"../../admin/algorithms/lzw.h"
+
+1712872628 a:\projects\done\portfolio\betterwr\admin\pack.h
+
+1712928716 a:\projects\done\portfolio\betterwr\admin\algorithms\huf.h
+	<string.h>
+
+1712928727 a:\projects\done\portfolio\betterwr\admin\algorithms\lzw.h
+	<stdio.h>
+
+1713040332 source:a:\projects\done\portfolio\betterwr\usage\gui\button\button.cpp
+	<graphics.h>
+	"button.h"
+	<direct.h>
+
+1713040287 a:\projects\done\portfolio\betterwr\usage\gui\button\button.h
+
+1713040791 source:a:\projects\done\portfolio\betterwr\usage\gui\display.cpp
+	"../../admin/libraries.h"
+	"constants.h"
+
+1713016443 a:\projects\done\portfolio\betterwr\admin\libraries.h
+	<iostream>
+	<cstring>
+	<fstream>
+	<stdio.h>
+	<graphics.h>
+	<filesystem>
+	"../usage/middle/middle.h"
+
+1713040233 a:\projects\done\portfolio\betterwr\usage\gui\constants.h
+	"button/button.h"
+
+1712928785 source:a:\projects\done\portfolio\betterwr\admin\algorithms\huf.cpp
+	<unordered_map>
+	<iostream>
+	<string>
+	<queue>
+	<vector>
+	<bitset>
+	"huf.h"
+
+1712996798 source:a:\projects\done\portfolio\betterwr\admin\algorithms\lzw.cpp
+	<cstring>
+	"lzw.h"
+
+1712996838 source:a:\projects\done\portfolio\betterwr\admin\pack.cpp
+	<iostream>
+	<cstring>
+	<stdio.h>
+	<filesystem>
+	<direct.h>
+

@@ -6,6 +6,8 @@
 #include <bitset>
 #include "huf.h"
 
+using namespace std;
+
 ///build
 struct comparison { // order my queue
 	bool operator()(node* left, node* right)

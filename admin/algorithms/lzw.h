@@ -17,8 +17,8 @@ struct dictionary
 };
 
 int array_len(int a[], int size);
-void build_encoded(char s[], int*& encoded_text);
-void build_decoded(char s[],char text[]);
+//void build_encoded(char s[], int*& encoded_text);
+//void build_decoded(char s[],char text[]);
 
 unsigned int* lzw_encode_string(char* input);
 char*         lzw_decode_string(int*  input);

@@ -7,9 +7,9 @@ struct node {
 	node* left, * right;
 };
 
-node*  build_huf_tree(string str);
-string write_encoded_ascii(string& encodedText);
+node*  build_huf_tree(std::string str);
+std::string write_encoded_ascii(std::string& encodedText);
 void   create_tree_string(node* currentNode, int index, char* charset, int* freq, int& treeSize);
 
-string huf_encode_string(node* root, string str);
-string huf_dencode_string(node* root, string str);
+std::string huf_encode_string(node* root, std::string str);
+std::string huf_decode_string(node* root, std::string str);

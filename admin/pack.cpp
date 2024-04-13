@@ -4,7 +4,7 @@
 #include <filesystem>
 #include <direct.h>
 #define MAX 300
-
+/*
 const char typed_end_of_file[] = "\n\n*EOF_no_more_content_to_be_displayed*\n\n";
 const char typed_end_of_directory[] = "EOD_no_more_files_to_be_analysed_";
 
@@ -12,7 +12,7 @@ void change_extension(char* file_path, const char* extension) //are ca input un 
 {
     std::filesystem::path f_p(file_path);
     if(std::filesystem::is_directory(f_p) && extension[0] == '.')
-        strcpy(strstr(path_output, "."), extension);
+        strcpy(strstr(file_path, "."), extension);
 }
 
 char* get_file_name(char source_path[])
@@ -162,3 +162,4 @@ void decompose_tar(char* path_output, char* output_name)
 
     fclose(p_bar);
 }
+*/

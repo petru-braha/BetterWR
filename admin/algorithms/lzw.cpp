@@ -1,4 +1,4 @@
-#include <iostream>
+/*#include <iostream>
 #include <cstring>
 #include "lzw.h"
 #define MAX 300
@@ -124,11 +124,10 @@ void build_encoded(dictionary D, char s[] ,int *encoded_text) // append code of 
 // present patch: make the alg work with big data
 unsigned int* lzw_encode_string(char input[])
 {
-    /*
-    - temp_before_LASTbuild mereu trebuie sa intre in output la codare
-    - current <- ultima litera a cuvantului adaugat in dic
-    - i -> current
-    */
+//    - temp_before_LASTbuild mereu trebuie sa intre in output la codare
+//    - current <- ultima litera a cuvantului adaugat in dic
+//    - i -> current
+
     dictionary D;
     unsigned int* encoded_text = new unsigned int[MAX]{ 0 };
     char temp[MAX] = {0}, temp_before_LASTbuild[MAX], current;
@@ -232,3 +231,4 @@ char* lzw_decode_string(int* input)///argumentul va fi un FILE*
     delete D;
     return decoded_text;
 }
+*/

@@ -69,6 +69,13 @@ error
 
 ### 1. GUI
 
+- menu => explorer / info / test
+
+- explorer stages:
+  1. choose partition
+  2. choose files (displays: buttons, curent path, files, selected_files)
+  3. status box 
+
 - buttons:
 ```
 Index 		Name
@@ -86,9 +93,6 @@ Index 		Name
 11 		HUF
 12		LZW
 ```
-
-- file_coordo[0...10] == selected files
-- file_coordo[11...infinity] == visible_files
 
 ### 2. CMD
 
