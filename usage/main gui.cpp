@@ -1,31 +1,31 @@
 #include <graphics.h>
-#include <wtypes.h>
 #include "middle/middle.h"
 
-void visual_menu(short unit_x, short unit_y);
-void functional_menu();
+struct point
+{
+    short x, y;
+};
 
-void define_fullscreen(short& x, short& y){
-    RECT desktop;
-    const HWND hDesktop = GetDesktopWindow();
+void define_fullscreen(short& x, short& y);
+void visual_menu(point measure, short unit);
+void functional_menu(point measure, short unit);
 
-    GetWindowRect(hDesktop, &desktop);
-    x = desktop.right;
-    y = desktop.bottom;
-}
-
-void graphical_user_interface() // menu
+void graphical_user_interface()
 {
     //boot graphics
-    short screen_x = 0, screen_y = 0;
-    define_fullscreen(screen_x, screen_y);
-    if (screen_x == 0 || screen_y == 0)
-        exit(1);
-    initwindow(screen_x, screen_y, "", -3, -3);
-    readimagefile("constant files/media/layout/background.jpg", 0, 0, screen_x, screen_y);
+    point screen;
+    define_fullscreen(screen.x, screen.y);
+    initwindow(screen.x, screen.y, "", -3, -3);
+    readimagefile("constant files/media/layout/background.jpg", 0, 0, screen.x, screen.y);
 
-    short unit_x = screen_x / 19, unit_y = screen_y / 12;
-    visual_menu(unit_x, unit_y);
-    functional_menu();
+    point measure; measure.x = screen.x / 19; measure.y = screen.y / 12;
+
+    short unit = measure.y;
+    while(unit > 10)
+        unit /= 10;
+    if(unit > 5) unit /= 2;
+
+    visual_menu(measure, unit);
+    functional_menu(measure, unit);
     closegraph();
 }

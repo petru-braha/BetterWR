@@ -4,7 +4,8 @@
 struct point
 {
     short x, y;
-} mouse;
+    point():x(0), y(0){}
+};
 
 class button
 {
@@ -14,9 +15,9 @@ class button
     virtual void execute(); // if =0 => abstract => no instances => no singletons
 public:
     button();
-    void set_values(short xx, short xy, short yx, short yy, const char* name);
+    void set_values(short xx, short xy, short yx, short yy, char* name);
     virtual void visual(short unit);
-    bool functional(short mouse_x, short mouse_y); //highlight, execute, i love my wife<3
+    virtual bool functional(short mouse_x, short mouse_y, short unit); //highlight, execute, i love my wife<3
 
     //if panic
     point get_point(bool which_one);
@@ -26,7 +27,7 @@ public:
 class button_0 : public button
 {
     static button_0* instance;
-    button_0():button(){}
+    button_0();
     void execute();
 public:
     void visual(short unit);
@@ -41,8 +42,7 @@ public:
 class button_menu_0 : public button
 {
     static button_menu_0* instance;
-    button_menu_0():button(){}
-    void execute();
+    button_menu_0(){ this->set_values(0, 0, 0, 0, nullptr); }
 public:
     static button_menu_0* get_instance()
     {
@@ -55,8 +55,7 @@ public:
 class button_menu_1 : public button
 {
     static button_menu_1* instance;
-    button_menu_1():button(){}
-    void execute();
+    button_menu_1() { this->set_values(0, 0, 0, 0, nullptr); }
 public:
     static button_menu_1* get_instance()
     {
@@ -69,8 +68,7 @@ public:
 class button_menu_2 : public button
 {
     static button_menu_2* instance;
-    button_menu_2():button(){}
-    void execute();
+    button_menu_2(){ this->set_values(0, 0, 0, 0, nullptr); }
 public:
     static button_menu_2* get_instance()
     {
@@ -80,3 +78,13 @@ public:
     }
 };
 
+/*class button_expl_0 : public button
+{
+    static button_expl_0* instance;
+    button_expl_0(){ this->set_values(0, 0, 0, 0, nullptr); }
+    char* execute(); //return
+public:
+
+
+};
+*/

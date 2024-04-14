@@ -1,5 +1,15 @@
 #include "../../admin/libraries.h"
 #include "constants.h"
+#include <wtypes.h>
+
+void define_fullscreen(short& x, short& y){
+    RECT desktop;
+    const HWND hDesktop = GetDesktopWindow();
+
+    GetWindowRect(hDesktop, &desktop);
+    x = desktop.right;
+    y = desktop.bottom;
+}
 
 //extra function
 void print_box(short x1, short y1, short x2, short y2, const char* text, short unit, int color, int text_size)
@@ -16,10 +26,33 @@ void print_box(short x1, short y1, short x2, short y2, const char* text, short u
     outtextxy(x1 + unit, y1 + unit, (char*)text);
 }
 
-
-void visual_menu_explorer()
+void visual_menu_explorer(point measure, short unit)
 {
+    point screen;
+    define_fullscreen(screen.x, screen.y);
 
+    //readimagefile("constant files/media/layout/explorer layout.jpg", 0, 0, screen.x, screen.y);
+    readimagefile("constant files/media/layout/background.jpg", 0, 0, screen.x, screen.y);
+
+    print_box(2*measure.x, measure.y, 3*measure.x, 2*measure.y, "cps", unit, color_brown, expl_font_size);
+    print_box(3*measure.x, measure.y, 4*measure.x, 2*measure.y, "dcs", unit, color_brown, expl_font_size);
+
+    print_box(5*measure.x, measure.y, 6*measure.x, 2*measure.y, "huf", unit, color_brown, expl_font_size);
+    print_box(6*measure.x, measure.y, 7*measure.x, 2*measure.y, "lzw", unit, color_brown, expl_font_size);
+
+    print_box(10*measure.x, measure.y, 11*measure.x, 2*measure.y, "sel", unit, color_brown, expl_font_size);
+    print_box(12*measure.x, measure.y, 13*measure.x, 2*measure.y, "mkd", unit, color_brown, expl_font_size);
+    print_box(14*measure.x, measure.y, 15*measure.x, 2*measure.y, "fpn", unit, color_brown, expl_font_size);
+    print_box(16*measure.x, measure.y, 17*measure.x, 2*measure.y, "del", unit, color_brown, expl_font_size);
+
+    print_box(2*measure.x, 2*measure.y, 18*measure.x, 3*measure.y, "path", unit, color_brown, expl_font_size);
+    print_box(2*measure.x, 3*measure.y, 7*measure.x, 11*measure.y, "files", unit, color_brown, expl_font_size);
+    print_box(8*measure.x, 3*measure.y, 13*measure.x, 11*measure.y, "files", unit, color_brown, expl_font_size);
+
+    print_box(13*measure.x, 3*measure.y, 17*measure.x, 11*measure.y, "selected files", unit, color_brown, expl_font_size);
+
+    print_box(12*measure.x, 5*measure.y, 18*measure.x, 11*measure.y, "status box:", unit, color_dark_gray, menu_font_size - 3);
+    getch();
 }
 
 void functional_menu_explorer()
@@ -48,45 +81,48 @@ void functional_menu_test()
 }
 
 ///menu
-void visual_menu(short unit_x, short unit_y)
+void visual_menu(point measure, short unit)
 {
-    //define unit
-    short unit = unit_y;
-    while(unit > 10)
-        unit /= 10;
-    if(unit > 5)
-        unit /= 2;
+    //background
+    point screen;
+    define_fullscreen(screen.x, screen.y);
+    readimagefile("constant files/media/layout/background.jpg", 0, 0, screen.x, screen.y);
+    //readimagefile("constant files/media/layout/menu layout.jpg", 0, 0, screen.x, screen.y);
 
-    print_box(5*unit_x, 2*unit_y, 15*unit_x, 3*unit_y, "*data compression app1*", unit, color_white, menu_font_size);
+    //title
+    print_box(5*measure.x, 2*measure.y, 15*measure.x, 3*measure.y, "*data compression app1*", unit, color_white, menu_font_size);
 
-    b_set_values(unit_x, unit_y);
+    //buttons
+    b_set_values(measure.x, measure.y);
     B_STOP->visual(unit);
     B_EXPL->visual(unit);
     B_INFO->visual(unit);
     B_TEST->visual(unit);
 
-    print_box(12*unit_x, 5*unit_y, 18*unit_x, 11*unit_y, "status box:", unit, color_dark_gray, menu_font_size - 3);
+    //status box
+    print_box(12*measure.x, 5*measure.y, 18*measure.x, 11*measure.y, "status box:", unit, color_dark_gray, menu_font_size - 3);
 }
 
-void functional_menu()
+void functional_menu(point measure, short unit)
 {
+    point mouse;
     short menu_decision = -1;
     while(true)
     {
         //menu decision
-        //button* menu_buttons[3] = {B_EXPL, B_INFO, B_TEST};
+        button* menu_buttons[3] = {B_EXPL, B_INFO, B_TEST};
         while(menu_decision == -1)
         {
             getmouseclick(outside_left_click, (int&)mouse.x, (int&)mouse.y);
-            //for(int i=0; i<3; i++)
-                //if(menu_buttons[i]->functional(mouse.x, mouse.y))
-                    //menu_decision = i;
+            for(int i=0; i<3; i++)
+                if(menu_buttons[i]->functional(mouse.x, mouse.y, unit))
+                    menu_decision = i;
         }
 
         switch(menu_decision)
         {
         case 0:
-            visual_menu_explorer();
+            visual_menu_explorer(measure, unit);
             break;
         case 1:
             visual_menu_info();
@@ -98,7 +134,8 @@ void functional_menu()
             break;
         }
 
-
+        visual_menu(measure, unit);
+        menu_decision = -1;
     }
     //very_last_step(operation, algorithm, nr_paths, paths_input, path_output, output_name);
 }

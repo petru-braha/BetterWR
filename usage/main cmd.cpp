@@ -5,7 +5,7 @@ int main(int argc, char** argv)
 {
     if(argc == 1)
     {
-        //graphical_user_interface();
+        graphical_user_interface();
         return 0;
     }
 

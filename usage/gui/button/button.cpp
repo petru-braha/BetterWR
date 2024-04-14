@@ -48,15 +48,16 @@ button::button()
     this->top_left.y = 0;
     this->bottom_right.x = 0;
     this->bottom_right.y = 0;
+    this->text = nullptr;
 }
 
-void button::set_values(short xx, short xy, short yx, short yy, const char* name)
+void button::set_values(short xx, short xy, short yx, short yy, char* name)
 {
     top_left.x = xx;
     top_left.y = xy;
     bottom_right.x = yx;
     bottom_right.y = yy;
-    text = (char*)name;
+    text = name;
 }
 
 void button::visual(short unit)
@@ -73,12 +74,13 @@ void button::visual(short unit)
     outtextxy(top_left.x + unit, top_left.y + unit, text);
 }
 
-bool button::functional(short mouse_x, short mouse_y)
+bool button::functional(short mouse_x, short mouse_y, short unit)
 {
     if(mouse_x >= this->top_left.x && mouse_x <= this->bottom_right.x && mouse_x != -1)
         if(mouse_y >= this->top_left.y && mouse_y <= this->bottom_right.y)
         {
             highlight(this->top_left.x, this->top_left.y, this->bottom_right.x, this->bottom_right.y);
+            this->visual(unit);
             this->execute();
             return true;
         }
@@ -94,8 +96,11 @@ point button::get_point(bool which_one)
 
 ///actual buttons
 //exit button
-
 button_0* button_0::instance = nullptr;
+button_0::button_0()
+{
+    this->set_values(0, 0, 0, 0, nullptr);
+}
 void button_0::visual(short unit)
 {
     setcolor(color_dark_gray);
@@ -113,31 +118,14 @@ void button_0::visual(short unit)
     outtextxy(tl.x + unit, tl.y + unit, get_text());
 }
 
-void button_0::execute()
+void button_0::execute()// please remove files
 {
-    //remove("")
-    //remove(
+    //remove temp files + delete all new //prevent all memory leaks
     closegraph();
     exit(0);
 }
 
-//explorer button
+//menu buttons
 button_menu_0* button_menu_0::instance = nullptr;
-void button_menu_0::execute()
-{
-
-}
-
-//info button
 button_menu_1* button_menu_1::instance = nullptr;
-void button_menu_1::execute()
-{
-
-}
-
-//test button
 button_menu_2* button_menu_2::instance = nullptr;
-void button_menu_2::execute()
-{
-
-}

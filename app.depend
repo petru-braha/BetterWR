@@ -1,12 +1,11 @@
 # depslib dependency file v1.0
-1713041007 source:a:\projects\done\portfolio\betterwr\usage\main cmd.cpp
+1713043208 source:a:\projects\done\portfolio\betterwr\usage\main cmd.cpp
 	"middle/middle.h"
 
 1712872628 a:\projects\done\portfolio\betterwr\usage\middle\middle.h
 
-1713040985 source:a:\projects\done\portfolio\betterwr\usage\main gui.cpp
+1713086944 source:a:\projects\done\portfolio\betterwr\usage\main gui.cpp
 	<graphics.h>
-	<wtypes.h>
 	"middle/middle.h"
 
 1712996899 source:a:\projects\done\portfolio\betterwr\usage\middle\middle.cpp
@@ -26,16 +25,17 @@
 1712928727 a:\projects\done\portfolio\betterwr\admin\algorithms\lzw.h
 	<stdio.h>
 
-1713040332 source:a:\projects\done\portfolio\betterwr\usage\gui\button\button.cpp
+1713084285 source:a:\projects\done\portfolio\betterwr\usage\gui\button\button.cpp
 	<graphics.h>
 	"button.h"
 	<direct.h>
 
-1713040287 a:\projects\done\portfolio\betterwr\usage\gui\button\button.h
+1713084565 a:\projects\done\portfolio\betterwr\usage\gui\button\button.h
 
-1713040791 source:a:\projects\done\portfolio\betterwr\usage\gui\display.cpp
+1713086367 source:a:\projects\done\portfolio\betterwr\usage\gui\display.cpp
 	"../../admin/libraries.h"
 	"constants.h"
+	<wtypes.h>
 
 1713016443 a:\projects\done\portfolio\betterwr\admin\libraries.h
 	<iostream>
@@ -46,7 +46,7 @@
 	<filesystem>
 	"../usage/middle/middle.h"
 
-1713040233 a:\projects\done\portfolio\betterwr\usage\gui\constants.h
+1713085675 a:\projects\done\portfolio\betterwr\usage\gui\constants.h
 	"button/button.h"
 
 1712928785 source:a:\projects\done\portfolio\betterwr\admin\algorithms\huf.cpp

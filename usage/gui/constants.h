@@ -2,6 +2,7 @@
 const int text_font = 8;
 const int text_font_2 = 3;
 const int menu_font_size = 6;
+const int expl_font_size = 3;
 
 const int color_black   = 0;
 const int color_blue    = 1;
@@ -36,4 +37,3 @@ void b_set_values(short unit_x, short unit_y)
     B_INFO->set_values(unit_x, 6*unit_y, 7*unit_x, 7*unit_y, "+information");
     B_TEST->set_values(unit_x, 8*unit_y, 7*unit_x, 9*unit_y, "with strings");
 }
-
