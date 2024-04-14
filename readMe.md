@@ -7,26 +7,11 @@
    - HUF = Huffaman trees functions
    - LZW = Lempel-Ziv-Welch functions
 
-2. Map of execution:
+2. Map of execution pseudocode:
 ```
-Pseudocode:
-
 boot
    gui
-      fullscreen window
-      gui_commands
-         menu
-            check_stop
-            option (compress/decompress)
-	 explorer
-         third_step
-	    commands_STOP();
-            commands_go_back(which_button, first_command);
-            commands_alg(which_button);
-            commands_deselect();
-            commands_ready(which_button);
-            commands_sidebar();
-            commands_folder_manipulation();
+	menu
    complex bash commands   
       decide_option (compress / decompress)
       decide_algorithm (HUF / LZW)
@@ -72,11 +57,11 @@ error
 
 - buttons:
 ```
-###Index		Class		Name		What it does
+Index		Class		Name		What it does
 0 		button_0	exit		force the app to close
 1 		button_menu_0	stored files	opens the file explorer
 2 		button_menu_1   +information	print exemples and 
-3 		button_menu_2	test strings
+3 		button_menu_2	test strings	convert keyboard input into huf/lzw code
 ```
 
 ### 2. CMD
@@ -194,11 +179,8 @@ end_oF_element_1//
 ```
 
 ### 2. Zip format
-   A file with a .zip extension is an archive that can hold one or more files or directories. The archive may have compression applied to the included files to reduce the size of the ZIP file. The ZIP file format was made public as early as February 1989 by Phil Katz to achieve archiving of files and folders. The format was made part of the PKZIP utility, created by PKWARE, Inc. As soon as the then existing specifications were made available, many companies made the ZIP file format part of their software utilities, including Microsoft (since Windows 7), Apple (Mac OS X) and many others.
-   The file is a compressed archive that supports lossless data compression. It is often used to send zipped email attachments; this way the message cannot be blocked by email server filters. It can also be used to hide a file type or prevent it from being opened.
-    There are numerous other standards and formats that use "zip" as part of their name. Phil Katz stated that he wanted to allow the name "zip" for any type of archive. For example, zip is different from gzip, and the latter is defined in an IETF RFC (RFC 1952). Both zip and gzip primarily use the DEFLATE algorithm for compression. Likewise, the ZLIB format (IETF RFC 1950) also uses the DEFLATE compression algorithm, but specifies different error headers and consistency checking. Other similarly named formats and common programs with different native formats include 7-Zip, bzip2, and rzip.
-
-
+- .zip extension is an archive that can hold files. The archive may have compression applied to the included files. As soon as the then existing specifications were made available, many companies made the ZIP file format part of their software utilities, including Microsoft (since Windows 7), Apple (Mac OS X) and many others.
+- the file is a compressed archive that supports lossless data compression. It is often used to send zipped email attachments; this way the message cannot be blocked by email server filters. It can also be used to hide a file type or prevent it from being opened.
 - the order of events: firstly individual compression of the files then the unification
 - pros and cons:
   + you can view and unarchive only one archive item
@@ -207,21 +189,19 @@ end_oF_element_1//
 
 ### 3. Binary files 
 
-Images: jpg, png, gif, bmp.
-Videos: mp4, mkv, avi, mov.
-Audio: mp3, aac, wav, flac.
-Documents: pdf, doc, xls.
-Archive: zip, rar, 7z, tar.
-Database: mdb, sqlite.
-Executable: exe, dll, so.
+- images: jpg, png, gif, bmp.
+- videos: mp4, mkv, avi, mov.
+- audio: mp3, aac, wav, flac.
+- documents: pdf, doc, xls.
+- archive: zip, rar, 7z, tar.
+- executable: exe, dll, so.
 
 ### 4. Text files
 
-Web standards: html, xml, css, svg, json, ...
-Source code: c, cpp, h, cs, js, py, java, rb, pl, php, sh, ...
-Documents: txt, tex, markdown, asciidoc, rtf, ps, ...
-Configuration: ini, cfg, rc, reg, ...
-Tabular data: csv, tsv, ...
+- web standards: html, xml, css, svg, json, ...
+- source code: c, cpp, h, cs, js, py, java, rb, pl, php, sh, ...
+- documents: txt, tex, markdown, asciidoc, rtf, ps, ...
+- configuration: ini, cfg, rc, reg, ...
 
 [Source](https://www.nayuki.io/page/what-are-binary-and-text-files)
 
