@@ -25,12 +25,12 @@
 1712928727 a:\projects\done\portfolio\betterwr\admin\algorithms\lzw.h
 	<stdio.h>
 
-1713084285 source:a:\projects\done\portfolio\betterwr\usage\gui\button\button.cpp
+1713094596 source:a:\projects\done\portfolio\betterwr\usage\gui\button\button.cpp
 	<graphics.h>
 	"button.h"
 	<direct.h>
 
-1713084565 a:\projects\done\portfolio\betterwr\usage\gui\button\button.h
+1713093743 a:\projects\done\portfolio\betterwr\usage\gui\button\button.h
 
 1713086367 source:a:\projects\done\portfolio\betterwr\usage\gui\display.cpp
 	"../../admin/libraries.h"

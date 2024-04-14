@@ -17,7 +17,7 @@ public:
     button();
     void set_values(short xx, short xy, short yx, short yy, char* name);
     virtual void visual(short unit);
-    virtual bool functional(short mouse_x, short mouse_y, short unit); //highlight, execute, i love my wife<3
+    virtual bool functional(point mouse, short unit); //highlight, execute, i love my wife<3
 
     //if panic
     point get_point(bool which_one);

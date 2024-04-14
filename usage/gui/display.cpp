@@ -2,6 +2,9 @@
 #include "constants.h"
 #include <wtypes.h>
 
+//back button implementation: execution of
+//called in visual_test visual_info
+
 void define_fullscreen(short& x, short& y){
     RECT desktop;
     const HWND hDesktop = GetDesktopWindow();
@@ -115,7 +118,7 @@ void functional_menu(point measure, short unit)
         {
             getmouseclick(outside_left_click, (int&)mouse.x, (int&)mouse.y);
             for(int i=0; i<3; i++)
-                if(menu_buttons[i]->functional(mouse.x, mouse.y, unit))
+                if(menu_buttons[i]->functional(mouse, unit))
                     menu_decision = i;
         }
 

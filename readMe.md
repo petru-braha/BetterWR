@@ -37,39 +37,33 @@ error
 ```
 
 3. Data structures: 
+   - Heap
    - Binary trees 
    - Priority Queue
-   - Heap
    - Dictionary
    - Hash Table
 
-4. Folder structure:
-   - workspaces (all my work):
+4. Workspace:
      - `admin`
-     - `algorithms`
      - `usage`
-   - exemples: `files`
-   - execution:
-     - `bin`
-     - `obj`
-     - `photos`
+     - `constant files/test files` - exemples of execution
 
 5. Principles:
    - the path to a folder always contains at the end of the string "/"
-   - gui-function has two components: graphic method, backend method
+   - GUI-function has two components: visual method, functional method
    - object-oriented programming
 
 ## I. **Boot**:
 
 - two ways of running the program: 
-  - double-click on ".boot.exe" => opens GUI
+  - double-click on `boot.exe` => opens GUI
   - openning the folder in command prompt
     - type `./name_of_executable *arguments*` 
     - if no arguments provided => opens GUI
 
 ### 1. GUI
 
-- menu => explorer / info / test
+- menu => file explorer / more information / test algorithms with a string
 
 - explorer stages:
   1. choose partition
@@ -78,20 +72,11 @@ error
 
 - buttons:
 ```
-Index 		Name
-0 		compress
-1 		decompress
-2 		information
-3 		test_algorithm_string
-4 		stop
-5 		back
-6 		done
-7 		select
-8 		mkdir
-9 		fopen
-10 		delete
-11 		HUF
-12		LZW
+###Index		Class		Name		What it does
+0 		button_0	exit		force the app to close
+1 		button_menu_0	stored files	opens the file explorer
+2 		button_menu_1   +information	print exemples and 
+3 		button_menu_2	test strings
 ```
 
 ### 2. CMD
@@ -110,10 +95,14 @@ Index 		Name
 
 ### 1. HUF algorithm
 
-- encoding/decoding:
-```
-Pseudocode:
+- Huffman encoding involves computing the frequency for each unique character that appears in the initial string
+- each character and its corresponding frequency is stored in a map => build the Huffman tree 
+- Huffman tree necessary for both encoding and decoding
+- based on the tree, we convert the initial string into a string of binary values - grouped such that a byte(8 bits) can be created and converted into the corresponding ASCII character. 
+- finally, the resulting string is encoded and ready to be written to the output file. Also in this file we will keep the information needed to reconstruct the tree, i.e. each character together with its frequency plus the size of the tree. When we read the contents of the file to perform the decoding, we make sure that we first read the tree data correctly and then read the encoded string. Decoding will be done by traversing the reconstructed tree, and when the encoded value corresponding to a character is found, we will write it to our created decoding string.
 
+- encoding/decoding pseudocode:
+```
 Creation of a Priority Queue Q, which contains each character
 Sorting in ascending order of their frequencies 
 For all unique characters:
@@ -125,15 +114,20 @@ For all unique characters:
 return root
 ```
 
-   Huffman encoding involves computing the frequency for each unique character that appears in the initial string. Once we obtain the necessary information (each character and its corresponding frequency), we will store it in a map that will be used to build the Huffman tree, necessary for both encoding and decoding. Based on the tree, we convert the initial string into a string of binary values, which will then be grouped in groups of 8 to form a byte and converted into the corresponding ASCII character. Finally, the resulting string is encoded and ready to be written to the output file. Also in this file we will keep the information needed to reconstruct the tree, i.e. each character together with its frequency plus the size of the tree. When we read the contents of the file to perform the decoding, we make sure that we first read the tree data correctly and then read the encoded string. Decoding will be done by traversing the reconstructed tree, and when the encoded value corresponding to a character is found, we will write it to our created decoding string.
+### 2. LZW algorithm
 
-### 2. LZW algorithm (dictionary based)
+- Lempel-Ziv-Welch algorithm is a lossless data compression algorithm. Abraham Lempel, Jakob Ziv and Terry Welch are the scientists who developed it. Procedure: it scans a file for data patterns that occur multiple times, which are saved later in a dictionary and their references are placed in a compressed file whenever repetitive data occurs. In hardware implementations, the algorithm is simple and has the potential for very high throughput. Other usages: GIF image format, Unix file compression utility.
 
 - the dictinonary is initialised with all the char elements from 0 to 255. 
-- enconding:
-```
-Pseudocode:
+- dictionary's memory + compressed message's memory < uncompressed message's memory
+- dictionary is not send with the compressed message - you build the dictionary along the way (the receiver will constructor decoder alone)
+- ideal for repetitive and long strings
+- no prior information about the input data stream
+- compress the input stream in one single step
+- fast execution
 
+- enconding pseudocode:
+```
 repeat
 	repeat
 		if temp is in dictionary
@@ -148,10 +142,8 @@ until they reach the end of the input
 ```
 
 - basic principle: the first character is always in the dictionary and the second character if it is not, means it is a copy of the previous one
-- decode:
+- decode pseudocode:
 ```
-Pseudocode:
-
 repeat
     if not in dictionary next
 	    copy previous
@@ -162,32 +154,21 @@ repeat
 until final input
 ```
 
-   The Lempel-Ziv-Welch (LZW) algorithm is a lossless data, compression algorithm. Abraham Lempel, Jakob Ziv and Terry Welch are the scientists who developed it. Procedure: it scans a file for data patterns that occur multiple times, which are saved later in a dictionary and their references are placed in a compressed file whenever repetitive data occurs. In hardware implementations, the algorithm is simple and has the potential for very high throughput. Other usages: GIF image format, Unix file compression utility.
-
-- dictionary's memory + compressed message's memory < uncompressed message's memory
-- dictionary is not send with the compressed message - you build the dictionary along the way (the receiver will constructor decoder alone)
-- ideal for repetitive and long strings
-- no prior information about the input data stream
-- compress the input stream in one single step
-- fast execution
-
 ## III. **Packaging**:
 
 ### 1. Tar format (used in my case)
 
-   A tape archive file format is an UNIX-based utility used to package files together. It contains multiple files (tarballs) stored in an uncompressed format. They are often compressed with file compression utilities such as gzip or bzip2.
-   Each file object includes its data and a 512-byte record-anthet. Files' data is written unmodified, except that its length is rounded to a multiple of 512 bytes. At the end of the archive file there are two 512-byte blocks, filled with binary zeros, to mark the end of the file. To ensure portability between different architectures with different byte orderings, the information in the header record is encoded in ASCII. TAR files are fully compatible between UNIX and Windows systems because all header information is represented in ASCII.	
+- tape archive file format is an UNIX-based utility 
+- connects files (tarballs) without compression - often compressed with gzip or bzip2.
+- data encoded in ASCII
+- each file object includes its data and a 512-byte record-anthet. Files' data is written unmodified, except that its length is rounded to a multiple of 512 bytes. At the end of the archive file there are two 512-byte blocks, filled with binary zeros, to mark the end of the file. To ensure portability between different architectures with different byte orderings, the information in the header record is encoded in ASCII. TAR files are fully compatible between UNIX and Windows systems because all header information is represented in ASCII.	
 
-On short terms:
-- connects files without compression
-- the information is encoded in in ASCII
-- the order of events: first is the unification of files then we should apply the compression technique
-Pros and cons:
-+ we can use any compression algorithm after the unification
-+ deletes doubled information
-- can lose metadata of files (index of files)
+- Pros and cons:
+  + we can use any compression algorithm after the unification
+  + deletes doubled information (files)
+  - can lose metadata of files (index of files)
 
-how content of the tar file will look like:
+- how content of the `tar.bin` file will look like:
 ```
 element_1//
 	forth.txt
@@ -217,12 +198,12 @@ end_oF_element_1//
    The file is a compressed archive that supports lossless data compression. It is often used to send zipped email attachments; this way the message cannot be blocked by email server filters. It can also be used to hide a file type or prevent it from being opened.
     There are numerous other standards and formats that use "zip" as part of their name. Phil Katz stated that he wanted to allow the name "zip" for any type of archive. For example, zip is different from gzip, and the latter is defined in an IETF RFC (RFC 1952). Both zip and gzip primarily use the DEFLATE algorithm for compression. Likewise, the ZLIB format (IETF RFC 1950) also uses the DEFLATE compression algorithm, but specifies different error headers and consistency checking. Other similarly named formats and common programs with different native formats include 7-Zip, bzip2, and rzip.
 
-On short terms:
+
 - the order of events: firstly individual compression of the files then the unification
-Pros and cons:
-+ you can view and unarchive only one archive item
-+ parallelize the archiving process on the CPU -> faster
-- compression ratio -- (join duplicates, something that is redundant)
+- pros and cons:
+  + you can view and unarchive only one archive item
+  + parallelize the archiving process on the CPU -> faster
+  - compression ratio -- (join duplicates, something that is redundant)
 
 ### 3. Binary files 
 
@@ -242,7 +223,7 @@ Documents: txt, tex, markdown, asciidoc, rtf, ps, ...
 Configuration: ini, cfg, rc, reg, ...
 Tabular data: csv, tsv, ...
 
-[Source] (https://www.nayuki.io/page/what-are-binary-and-text-files)
+[Source](https://www.nayuki.io/page/what-are-binary-and-text-files)
 
 ## IV **Limitations**:
 
@@ -260,16 +241,15 @@ Tabular data: csv, tsv, ...
 - [ ] french
 - [ ] german
 
-2. announcement box
+2. hover effect on visual buttons
 
 3. use `temp.tar` as a binary file s. t. binary files coud be read. !!!
 
-## VI **How to set up this project**
+## VI **How to set up this project in codeblocks**
 
 1. Have g++ follow al least the C++17 GNU C++ language standard (ISO C++ plus GNU extensions)
 
-2. Install a 32-bit compiler and set it up in your IDE as default
+2. Install a 32-bit compiler and set it up
 
 3. Install graphics.h
-
 - set up linker settings: `-lbgi -lgdi32 -lcomdlg32 -luuid -loleaut32 -lole32`

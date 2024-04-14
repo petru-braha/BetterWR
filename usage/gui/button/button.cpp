@@ -74,10 +74,10 @@ void button::visual(short unit)
     outtextxy(top_left.x + unit, top_left.y + unit, text);
 }
 
-bool button::functional(short mouse_x, short mouse_y, short unit)
+bool button::functional(point mouse, short unit)
 {
-    if(mouse_x >= this->top_left.x && mouse_x <= this->bottom_right.x && mouse_x != -1)
-        if(mouse_y >= this->top_left.y && mouse_y <= this->bottom_right.y)
+    if(mouse.x >= this->top_left.x && mouse.x <= this->bottom_right.x && mouse.x != -1)
+        if(mouse.y >= this->top_left.y && mouse.y <= this->bottom_right.y)
         {
             highlight(this->top_left.x, this->top_left.y, this->bottom_right.x, this->bottom_right.y);
             this->visual(unit);
