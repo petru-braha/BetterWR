@@ -1,0 +1,32 @@
+int 			2,147,483,647
+unsigned int		4,294,967,295
+usigned long long int	18,446,744,073,709,551,615 (the only one i need)
+
+question 1:
+256^n == the number of all possible n-length codes 
+
+let's assume the there exists a file large enough, that includes all possible combinations of ascii codes up to the length of four characters
+
+256 + 256^2  + 256^3 + 256^4 		+ 256^5		    + 256^6		  + 256^7		   + 256^8
+256 + 65.536 +	     + 4.294.967.296   	+
+which is >     	       2.147.483.647 (the maximum value of an int data type)
+
+this concludes that we should promote the index of the dictionary to a greater type
+
+					+ 1,099,511,627,776 + 281,474,976,710,656 + 900,47,497,671,065,600 + 9,004,749,767,106,560,000
+
+LIMITS:
+
+12300000000000000000000000000000000000000000
+
+- just one char per pos
+- vector<int> - fput("0")
+- string
+
+- 
+
+
+ for now just do it with ull
+
+
+question 3:
