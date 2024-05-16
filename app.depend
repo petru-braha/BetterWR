@@ -34,7 +34,7 @@
 1715294713 a:\projects\done\portfolio\betterwr\usage\gui\button\button.h
 	"../point.h"
 
-1715325071 source:a:\projects\done\portfolio\betterwr\usage\gui\display.cpp
+1715788845 source:a:\projects\done\portfolio\betterwr\usage\gui\display.cpp
 	<iostream>
 	<fstream>
 	<stdio.h>
@@ -82,7 +82,7 @@
 
 1715161040 a:\projects\done\portfolio\betterwr\usage\gui\text_format.h
 
-1714989192 a:\projects\done\portfolio\betterwr\usage\gui\point.h
+1715786190 a:\projects\done\portfolio\betterwr\usage\gui\point.h
 	<wtypes.h>
 	<cstring>
 
@@ -98,7 +98,7 @@
 	<string>
 	"../../admin/pack.h"
 
-1715305912 source:a:\projects\done\portfolio\betterwr\usage\gui\expl_path\visual_path.cpp
+1715871509 source:a:\projects\done\portfolio\betterwr\usage\gui\expl_path\visual_path.cpp
 	<stdio.h>
 	<direct.h>
 	<graphics.h>
@@ -106,7 +106,7 @@
 	"../../../admin/pack.h"
 	"visual_path.h"
 
-1715303875 a:\projects\done\portfolio\betterwr\usage\gui\expl_path\visual_path.h
+1715871506 a:\projects\done\portfolio\betterwr\usage\gui\expl_path\visual_path.h
 	<string>
 	"../point.h"
 

@@ -23,7 +23,7 @@ choose option, algorithm and paths
    - Heap
    - Binary trees 
    - Priority Queue
-   - Dictionary0
+   - Dictionary
    - Hash Table
 
 4. Workspace:
@@ -63,11 +63,14 @@ choose option, algorithm and paths
 
 - buttons:
 ```
-Index		Class		Name		What it does
-0 		button_0	exit		force the app to close
-1 		button_menu_0	stored files	opens the file explorer
-2 		button_menu_1   +information	print exemples and 
-3 		button_menu_2	test strings	convert keyboard input into huf/lzw code
+Index		**Class**		**Name**	**What it does**
+0 		button_0		exit		force the app to close
+1 		button_menu_0		stored files	opens the file explorer
+2 		button_menu_1   	+information	print exemples and 
+3 		button_menu_2		test strings	convert keyboard input into huf/lzw code
+4		button_expl_static	option		compression / decompression
+5		button_expl_static	algorithm	HUF / LZW
+6		button_expl_0           select		prepare files for option
 ```
 
 ### 2. CMD
@@ -221,19 +224,24 @@ end_oF_element_1//
 
 ## V **Future improvements**:
 
+* first alpha version launch: 10 june 2024
+
 1. Add more languages:
 - [x] english
 - [ ] romanian
 - [ ] french
-- [ ] german
 
-2. hover effect on visual buttons
+2. use `temp.tar` as a binary file s. t. binary files coud be read. !!!
 
-3. use `temp.tar` as a binary file s. t. binary files coud be read. !!!
+3. concrete implementation of the following menu buttons:
+- "+information"
+- "with strings"
+
+4. navigation of the explorer with keyboard
 
 ## VI **How to set up this project in codeblocks**
 
-1. Have g++ follow al least the C++17 GNU C++ language standard (ISO C++ plus GNU extensions)
+1. Have g++ follow at least the C++17 GNU C++ language standard (ISO C++ plus GNU extensions)
 
 2. Install a 32-bit compiler and set it up
 

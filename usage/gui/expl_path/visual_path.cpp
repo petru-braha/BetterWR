@@ -95,6 +95,20 @@ screen_path::screen_path(screen_path* path_displayed_above, char* text)
     this->visual_text.set_values(this->top_left, this->bottom_right, visual_unit.x, 1);
 }
 
+// visual
+#define visual_text_max_len 25
+void print_text(screen_path* obj, short x1, short y1)
+{
+    char* new_text = new char[MAX];
+    strcpy(new_text, obj->text);
+    if(strlen(new_text) > visual_text_max_len)
+        strcpy(new_text + visual_text_max_len, "error\0");
+
+    outtextxy(x1, y1, new_text);
+    delete new_text;
+    settextstyle(text_font, HORIZ_DIR, expl_font_size);
+}
+
 void screen_path::visual()
 {
     setfillstyle(SOLID_FILL, color_black);
@@ -150,9 +164,7 @@ void screen_path::visual()
     settextstyle(text_font, HORIZ_DIR, expl_font_size - 2);
     x1 = this->visual_text.top_left.x;
     y1 = this->visual_text.top_left.y;
-    outtextxy(x1, y1, this->text);
-
-    settextstyle(text_font, HORIZ_DIR, expl_font_size);
+    print_text(this, x1, y1);
 }
 
 screen_path* screen_path::functional(point mouse, std::string & status)
@@ -221,4 +233,15 @@ bool selected_screen_path::functional(point mouse)
     delete temp;
 
     return true;
+}
+
+selected_screen_path::selected_screen_path(selected_screen_path* & from)
+{
+    this->top_left = from->top_left;
+    this->bottom_right = from->bottom_right;
+    this->text = new char[MAX];
+    strcpy(this->text, from->text);
+
+    this->visual_icon = from->visual_icon;
+    this->visual_text = from->visual_text;
 }

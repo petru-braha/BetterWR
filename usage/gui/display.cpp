@@ -39,7 +39,7 @@ void display_paths(point measure, short unit, std::string accessed_path)
         std::vector<std::string> drives = list_volumes();
         for(std::string current : drives)
         {
-            screen_path* previous = index == 0 ? nullptr : explorer_files[index - 1];
+            screen_path* previous = (index == 0 ? nullptr : explorer_files[index - 1]);
             explorer_files[index] = new screen_path(previous, (char*)current.c_str());
             explorer_files[index]->visual();
             index++;
@@ -152,15 +152,23 @@ void visual_delete_selected(point mouse, point measure, short unit)
     }
 
     if(i == max_nr_paths_selectedd)
+    {
         printf("error - visual: can not delete selected files.\n");
-    if(flag == nullptr) // no deleted
+        return;
+    }
+    if(flag == nullptr)
         return;
 
     // movement of the data !!!! TO DO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    selected_files[i] = nullptr;
-    for(short j = i + 1; selected_files[j]; j++){
-        memcpy(selected_files[j - 1], selected_files[j], sizeof(selected_files[j]));
+    for(short j = i; selected_files[j + 1]; j++)
+    {
+        delete selected_files[j];
+        selected_screen_path temp(selected_files[j + 1]);
+
+        selected_files[j] = & temp;
+        selected_files[j]->visual();
     }
+
     // display
     print_box(13*measure.x, 3*measure.y, 18*measure.x, 11*measure.y, "", unit, color_brown, expl_font_size);
     for(short i = 0; selected_files[i]; i++)
@@ -181,6 +189,9 @@ void functional_menu_explorer(point measure, short unit)
     {
         // global
         getmouseclick(outside_left_click, (int&)mouse.x, (int&)mouse.y);
+        if(mouse.x == -1)
+            getmouseclick(outside_double_click, (int&)mouse.x, (int&)mouse.y);
+
         B_STOP->functional(mouse, unit);
         B_OPTN->functional(mouse, unit);
         B_ALGO->functional(mouse, unit);

@@ -98,5 +98,3 @@ public:
         return instance;
     }
 };
-
-//class button_expl_123; //folder, read, del

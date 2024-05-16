@@ -33,6 +33,18 @@ struct point
         this->x = temp.x;
         this->y = temp.y;
     }
+
+    void operator = (point random)
+    {
+        this->x = random.x;
+        this->y = random.y;
+    }
+
+    void operator = (int value)
+    {
+        this->x = value;
+        this->y = value;
+    }
 };
 //measure - one block
 //short unit;

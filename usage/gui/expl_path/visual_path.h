@@ -13,6 +13,8 @@
 struct visual_element // icon and text
 {
     point top_left, bottom_right;
+    //visual_element(): top_left(zro), bottom_right(zro){}
+
     void set_values(point one, point two, short unit, bool iconORtext)
     {
         this->top_left.y = one.y + unit;
@@ -36,6 +38,12 @@ struct visual_element // icon and text
             break;
         }
     }
+
+    void operator = (visual_element value)
+    {
+        this->top_left = value.top_left;
+        this->bottom_right = value.bottom_right;
+    }
 };
 
 struct screen_path
@@ -58,6 +66,7 @@ struct selected_screen_path : public screen_path
 {
     char* full_path;
     selected_screen_path(selected_screen_path* previous, screen_path* & path, std::string full_path);
+    selected_screen_path(selected_screen_path* & from);
     bool functional(point mouse);
 };
 

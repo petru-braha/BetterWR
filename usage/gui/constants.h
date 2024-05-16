@@ -12,7 +12,6 @@ button_menu_2* B_TEST = button_menu_2::get_instance();
 
 button_expl_static* B_OPTN = new button_expl_static;
 button_expl_static* B_ALGO = new button_expl_static;
-
 button_expl_0* B_SLCT = button_expl_0::get_instance();
 
 void b_set_values(point measure)

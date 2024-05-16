@@ -3,6 +3,7 @@
 
 #include "button.h"
 #include "../text_format.h"
+void b_del_values();
 
 void highlight(int x1, int y1, int x2, int y2)
 {
@@ -77,6 +78,7 @@ void button_0::visual(short unit)
 void button_0::execute()// please remove files
 {
     //remove temp files + delete all new //prevent all memory leaks
+    b_del_values();
     closegraph();
     exit(0);
 }
