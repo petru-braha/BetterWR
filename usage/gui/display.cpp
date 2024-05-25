@@ -80,22 +80,17 @@ void visual_menu_explorer(point measure, short unit) // called just when "stored
     B_OPTN->visual(unit);
     B_ALGO->visual(unit);
 
-    //print_box(10*measure.x, measure.y, 11*measure.x, 2*measure.y, "sel", unit, color_brown, expl_font_size);
-    print_box(11*measure.x, measure.y, 12*measure.x, 2*measure.y, "mkd", unit, color_brown, expl_font_size);
-    print_box(12*measure.x, measure.y, 13*measure.x, 2*measure.y, "del", unit, color_brown, expl_font_size);
-    print_box(14*measure.x, measure.y, 15*measure.x, 2*measure.y, "fpn", unit, color_brown, expl_font_size);
-
     //print_box(2*measure.x, 3*measure.y, 7*measure.x, 11*measure.y, "files", unit, color_brown, expl_font_size);
     //print_box(8*measure.x, 3*measure.y, 13*measure.x, 11*measure.y, "files", unit, color_brown, expl_font_size);
-
-    print_box(13*measure.x, 3*measure.y, 18*measure.x, 11*measure.y, "", unit, color_brown, expl_font_size);
-    print_box(14*measure.x +4*unit, 10*measure.y, 16*measure.x - 4*unit, 11*measure.y - 4*unit, "action", unit, color_brown, expl_font_size);
+    print_box(13*measure.x, 3*measure.y, 18*measure.x, 11*measure.y, "", unit, 0, 0);
     //print_box(12*measure.x, 5*measure.y, 18*measure.x, 11*measure.y, "status box:", unit, color_dark_gray, menu_font_size - 3);
 
     B_STOP->visual(unit);
     B_BACK_MENU->visual(unit);
     B_BACK_EXPL->visual(unit);
+    setcolor(color_white);
     B_SLCT->visual(unit);
+    B_ACTN->visual(unit);
 }
 
 /// helpers for functional_menu_explorer
@@ -175,6 +170,7 @@ void visual_delete_selected(point mouse, point measure, short unit)
             selected_files[i]->visual();
 }
 
+/// functional_menu_explorer
 void functional_menu_explorer(point measure, short unit)
 {
     point mouse;
@@ -205,8 +201,6 @@ void functional_menu_explorer(point measure, short unit)
             display_paths(measure, unit, accessed_path);
         }
 
-        //mkdir del fopen
-
         // path manipulation
         path_manipulation(mouse, measure, unit, pressedd_file, accessed_path, status);
 
@@ -225,6 +219,13 @@ void functional_menu_explorer(point measure, short unit)
         visual_delete_selected(mouse, measure, unit);
 
         //action
+        if(B_ACTN->functional(mouse, unit))
+        {
+            // algorithms
+            // very_last_step(operation, algorithm, nr_paths, paths_input, path_output, output_name);
+            // condition = true;
+            // status_box este printat cu informatiile
+        }
     }
 }
 
@@ -287,6 +288,4 @@ void functional_menu(point measure, short unit)
         visual_menu(measure, unit);
         menu_decision = -1;
     }
-
-    //very_last_step(operation, algorithm, nr_paths, paths_input, path_output, output_name);
 }

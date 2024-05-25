@@ -47,7 +47,7 @@ choose option, algorithm and paths
 ## I. **Boot**:
 
 - two ways of running the program: 
-  - double-click on `boot.exe` => opens GUI
+  - double-click on `start.exe` => opens GUI
   - openning the folder in command prompt
     - type `./name_of_executable *arguments*` 
     - if no arguments provided => opens GUI
@@ -63,7 +63,8 @@ choose option, algorithm and paths
 
 - buttons:
 ```
-Index		**Class**		**Name**	**What it does**
+Index		Class			Name		What it does
+-------------------------------------------------------------------------------------------------
 0 		button_0		exit		force the app to close
 1 		button_menu_0		stored files	opens the file explorer
 2 		button_menu_1   	+information	print exemples and 
@@ -239,7 +240,7 @@ end_oF_element_1//
 
 4. navigation of the explorer with keyboard
 
-## VI **How to set up this project in codeblocks**
+## VI **How to set up this project in CodeBlocks**
 
 1. Have g++ follow at least the C++17 GNU C++ language standard (ISO C++ plus GNU extensions)
 

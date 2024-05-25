@@ -25,16 +25,16 @@
 	<stdio.h>
 	<string>
 
-1715297717 source:a:\projects\done\portfolio\betterwr\usage\gui\button\button.cpp
+1715934040 source:a:\projects\done\portfolio\betterwr\usage\gui\button\button.cpp
 	<graphics.h>
 	<direct.h>
 	"button.h"
 	"../text_format.h"
 
-1715294713 a:\projects\done\portfolio\betterwr\usage\gui\button\button.h
+1716016177 a:\projects\done\portfolio\betterwr\usage\gui\button\button.h
 	"../point.h"
 
-1715788845 source:a:\projects\done\portfolio\betterwr\usage\gui\display.cpp
+1715934645 source:a:\projects\done\portfolio\betterwr\usage\gui\display.cpp
 	<iostream>
 	<fstream>
 	<stdio.h>
@@ -54,7 +54,7 @@
 	<filesystem>
 	"../usage/middle/middle.h"
 
-1715300745 a:\projects\done\portfolio\betterwr\usage\gui\constants.h
+1715934782 a:\projects\done\portfolio\betterwr\usage\gui\constants.h
 	"text_format.h"
 	"button/button.h"
 	"expl_path/visual_path.h"
@@ -109,4 +109,106 @@
 1715871506 a:\projects\done\portfolio\betterwr\usage\gui\expl_path\visual_path.h
 	<string>
 	"../point.h"
+
+1713793883 source:a:\projects\3 done\portfolio\betterwr\admin\algorithms\huf.cpp
+	<unordered_map>
+	<iostream>
+	<string>
+	<queue>
+	<vector>
+	<bitset>
+	"huf.h"
+
+1713793898 a:\projects\3 done\portfolio\betterwr\admin\algorithms\huf.h
+	<string.h>
+
+1715126266 source:a:\projects\3 done\portfolio\betterwr\admin\algorithms\lzw.cpp
+	<iostream>
+	<cstring>
+	"lzw.h"
+
+1714981718 a:\projects\3 done\portfolio\betterwr\admin\algorithms\lzw.h
+	<stdio.h>
+	<string>
+
+1715011971 source:a:\projects\3 done\portfolio\betterwr\admin\detect volumes.cpp
+	<windows.h>
+	<iostream>
+	<string>
+	<vector>
+	<stdio.h>
+
+1713353557 source:a:\projects\3 done\portfolio\betterwr\admin\pack.cpp
+	<iostream>
+	<cstring>
+	<stdio.h>
+	<filesystem>
+	<direct.h>
+
+1715934040 source:a:\projects\3 done\portfolio\betterwr\usage\gui\button\button.cpp
+	<graphics.h>
+	<direct.h>
+	"button.h"
+	"../text_format.h"
+
+1716016177 a:\projects\3 done\portfolio\betterwr\usage\gui\button\button.h
+	"../point.h"
+
+1715786190 a:\projects\3 done\portfolio\betterwr\usage\gui\point.h
+	<wtypes.h>
+	<cstring>
+
+1715161040 a:\projects\3 done\portfolio\betterwr\usage\gui\text_format.h
+
+1715935254 source:a:\projects\3 done\portfolio\betterwr\usage\gui\display.cpp
+	<iostream>
+	<fstream>
+	<stdio.h>
+	<cstring>
+	<graphics.h>
+	<filesystem>
+	"constants.h"
+	"../middle/middle.h"
+	"../../admin/pack.h"
+
+1715934782 a:\projects\3 done\portfolio\betterwr\usage\gui\constants.h
+	"text_format.h"
+	"button/button.h"
+	"expl_path/visual_path.h"
+
+1715871506 a:\projects\3 done\portfolio\betterwr\usage\gui\expl_path\visual_path.h
+	<string>
+	"../point.h"
+
+1713791321 a:\projects\3 done\portfolio\betterwr\usage\middle\middle.h
+
+1712872628 a:\projects\3 done\portfolio\betterwr\admin\pack.h
+
+1715871509 source:a:\projects\3 done\portfolio\betterwr\usage\gui\expl_path\visual_path.cpp
+	<stdio.h>
+	<direct.h>
+	<graphics.h>
+	"../text_format.h"
+	"../../../admin/pack.h"
+	"visual_path.h"
+
+1715126007 source:a:\projects\3 done\portfolio\betterwr\usage\gui\path manipulator.cpp
+	<cstring>
+	<string>
+	"../../admin/pack.h"
+
+1715310005 source:a:\projects\3 done\portfolio\betterwr\usage\main cmd.cpp
+	"middle/middle.h"
+
+1714992554 source:a:\projects\3 done\portfolio\betterwr\usage\main gui.cpp
+	<graphics.h>
+	"middle/middle.h"
+	"gui/point.h"
+
+1714585962 source:a:\projects\3 done\portfolio\betterwr\usage\middle\middle.cpp
+	<filesystem>
+	<iostream>
+	<cstring>
+	"middle.h"
+	"../../admin/pack.h"
 

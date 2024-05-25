@@ -13,6 +13,7 @@ button_menu_2* B_TEST = button_menu_2::get_instance();
 button_expl_static* B_OPTN = new button_expl_static;
 button_expl_static* B_ALGO = new button_expl_static;
 button_expl_0* B_SLCT = button_expl_0::get_instance();
+button_expl_1* B_ACTN = button_expl_1::get_instance();
 
 void b_set_values(point measure)
 {
@@ -30,6 +31,7 @@ void b_set_values(point measure)
     B_ALGO->set_values(3*measure.x, measure.y, 4*measure.x, 2*measure.y, (char*)"huf"); B_ALGO->set_option((char*)"lzw");
 
     B_SLCT->set_values(10*measure.x, measure.y, 11*measure.x, 2*measure.y, (char*)"sel");
+    B_ACTN->set_values(14*measure.x +4*unit, 10*measure.y, 17*measure.x - 4*unit, 11*measure.y - 4*unit, (char*)"   action");
 }
 
 void b_del_values()
@@ -46,6 +48,7 @@ void b_del_values()
     delete B_ALGO;
 
     delete B_SLCT;
+    delete B_ACTN;
 }
 
 std::vector<std::string> list_volumes();

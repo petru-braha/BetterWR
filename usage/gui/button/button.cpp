@@ -106,6 +106,7 @@ button_menu_2* button_menu_2::instance = nullptr;
 
 //expl buttons
 button_expl_0* button_expl_0::instance = nullptr;
+button_expl_1* button_expl_1::instance = nullptr;
 void button_expl_static::execute()
 {
     setcolor(color_cyan);

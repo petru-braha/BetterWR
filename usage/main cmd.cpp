@@ -1,6 +1,6 @@
 #include "middle/middle.h"
 void graphical_user_interface();
-
+#include <graphics.h>
 int main(int argc, char** argv)
 {
     if(argc == 1)

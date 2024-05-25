@@ -98,3 +98,18 @@ public:
         return instance;
     }
 };
+
+class button_expl_1 : public button
+{
+    static button_expl_1* instance;
+    button_expl_1(){ this->set_values(0, 0, 0, 0, nullptr); }
+public:
+    static button_expl_1* get_instance()
+    {
+        if(instance == nullptr)
+            instance = new button_expl_1();
+        return instance;
+    }
+};
+
+class status_box;
