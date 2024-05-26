@@ -58,14 +58,18 @@ void delete_dir_accessed(std::string & str);
 screen_path* explorer_files[max_nr_paths_displayed];
 selected_screen_path* selected_files[max_nr_paths_selectedd];
 
-short add_to_selected_files(screen_path* path, std::string full_path)
+short add_to_selected_files(screen_path*& path, std::string full_path)
 {
+    path->selected = false;
     short i = 0;
     while(selected_files[i] && i < max_nr_paths_selectedd)
         i++;
 
-    if(i == max_nr_paths_selectedd - 1)
-        return -1; // full
+    if(i == max_nr_paths_selectedd)
+    {
+        printf("error - selection: the stack of selected files is full.\n");
+        return -1;
+    }
 
     selected_screen_path* previous = i > 0 ? selected_files[i - 1] : nullptr;
     selected_files[i] = new selected_screen_path(previous, path, full_path);

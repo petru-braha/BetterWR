@@ -34,13 +34,13 @@ struct point
         this->y = temp.y;
     }
 
-    void operator = (point random)
+    void operator = (const point& random)
     {
         this->x = random.x;
         this->y = random.y;
     }
 
-    void operator = (int value)
+    void operator = (const int& value)
     {
         this->x = value;
         this->y = value;

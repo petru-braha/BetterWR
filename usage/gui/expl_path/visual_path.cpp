@@ -195,8 +195,11 @@ const point border_sele_up(13*visual_measure.x + bigger_unit, 3*visual_measure.y
 
 selected_screen_path::selected_screen_path(selected_screen_path* previous, screen_path* & path, std::string full_path)
 {
-    this->full_path = (char*)full_path.c_str();
-    this->text = path->text;
+    this->full_path = new char[MAX];
+    strcpy(this->full_path, full_path.c_str());
+
+    this->text = new char[MAX];
+    strcpy(this->text, path->text);
     this->selected = false;
 
     if(previous == nullptr)
@@ -229,19 +232,12 @@ bool selected_screen_path::functional(point mouse)
 
     file_highlight(this->top_left.x, this->top_left.y, this->bottom_right.x, this->bottom_right.y, color_red);
     delay(100);
-    selected_screen_path* temp = this;
-    delete temp;
-
+    // the actual deletion will be done in a different function
     return true;
 }
 
-selected_screen_path::selected_screen_path(selected_screen_path* & from)
+void selected_screen_path::mmcpy(selected_screen_path* from)
 {
-    this->top_left = from->top_left;
-    this->bottom_right = from->bottom_right;
-    this->text = new char[MAX];
     strcpy(this->text, from->text);
-
-    this->visual_icon = from->visual_icon;
-    this->visual_text = from->visual_text;
+    strcpy(this->full_path, from->full_path);
 }

@@ -145,7 +145,7 @@
 	<filesystem>
 	<direct.h>
 
-1715934040 source:a:\projects\3 done\portfolio\betterwr\usage\gui\button\button.cpp
+1716701673 source:a:\projects\3 done\portfolio\betterwr\usage\gui\button\button.cpp
 	<graphics.h>
 	<direct.h>
 	"button.h"
@@ -154,13 +154,13 @@
 1716016177 a:\projects\3 done\portfolio\betterwr\usage\gui\button\button.h
 	"../point.h"
 
-1715786190 a:\projects\3 done\portfolio\betterwr\usage\gui\point.h
+1716668806 a:\projects\3 done\portfolio\betterwr\usage\gui\point.h
 	<wtypes.h>
 	<cstring>
 
-1715161040 a:\projects\3 done\portfolio\betterwr\usage\gui\text_format.h
+1716701705 a:\projects\3 done\portfolio\betterwr\usage\gui\text_format.h
 
-1715935254 source:a:\projects\3 done\portfolio\betterwr\usage\gui\display.cpp
+1716704100 source:a:\projects\3 done\portfolio\betterwr\usage\gui\display.cpp
 	<iostream>
 	<fstream>
 	<stdio.h>
@@ -171,20 +171,20 @@
 	"../middle/middle.h"
 	"../../admin/pack.h"
 
-1715934782 a:\projects\3 done\portfolio\betterwr\usage\gui\constants.h
+1716701152 a:\projects\3 done\portfolio\betterwr\usage\gui\constants.h
 	"text_format.h"
 	"button/button.h"
 	"expl_path/visual_path.h"
 
-1715871506 a:\projects\3 done\portfolio\betterwr\usage\gui\expl_path\visual_path.h
+1716704234 a:\projects\3 done\portfolio\betterwr\usage\gui\expl_path\visual_path.h
 	<string>
 	"../point.h"
 
 1713791321 a:\projects\3 done\portfolio\betterwr\usage\middle\middle.h
 
-1712872628 a:\projects\3 done\portfolio\betterwr\admin\pack.h
+1716701775 a:\projects\3 done\portfolio\betterwr\admin\pack.h
 
-1715871509 source:a:\projects\3 done\portfolio\betterwr\usage\gui\expl_path\visual_path.cpp
+1716704527 source:a:\projects\3 done\portfolio\betterwr\usage\gui\expl_path\visual_path.cpp
 	<stdio.h>
 	<direct.h>
 	<graphics.h>
@@ -197,7 +197,7 @@
 	<string>
 	"../../admin/pack.h"
 
-1715310005 source:a:\projects\3 done\portfolio\betterwr\usage\main cmd.cpp
+1716705260 source:a:\projects\3 done\portfolio\betterwr\usage\main cmd.cpp
 	"middle/middle.h"
 
 1714992554 source:a:\projects\3 done\portfolio\betterwr\usage\main gui.cpp

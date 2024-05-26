@@ -100,6 +100,8 @@ void path_manipulation(point mouse, point measure, short unit, screen_path*& pre
     {
         for(size_t i = 0; explorer_files[i] && pressedd_file == nullptr; i++)
             pressedd_file = explorer_files[i]->functional(mouse, status);
+        if(pressedd_file)
+            pressedd_file->selected = true;
         return;
     }
 
@@ -108,6 +110,7 @@ void path_manipulation(point mouse, point measure, short unit, screen_path*& pre
         temp = explorer_files[i]->functional(mouse, status);
     if(temp == pressedd_file) // double click
     {
+        pressedd_file->selected = false;
         accessed_path += status;
         if(std::filesystem::is_directory(accessed_path))
         {
@@ -126,7 +129,7 @@ void path_manipulation(point mouse, point measure, short unit, screen_path*& pre
         pressedd_file->visual(); // erase highlight
         pressedd_file->selected = false;
         pressedd_file = temp;
-        // ready for selection
+        pressedd_file->selected = true;
     }
 }
 
@@ -146,33 +149,29 @@ void visual_delete_selected(point mouse, point measure, short unit)
         }
     }
 
-    if(i == max_nr_paths_selectedd)
-    {
-        printf("error - visual: can not delete selected files.\n");
-        return;
-    }
-    if(flag == nullptr)
+    if(i == max_nr_paths_selectedd || flag == nullptr)
         return;
 
-    // movement of the data !!!! TO DO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    for(short j = i; selected_files[j + 1]; j++)
+    short j = i;
+    while(selected_files[j + 1])
     {
-        delete selected_files[j];
-        selected_screen_path temp(selected_files[j + 1]);
-
-        selected_files[j] = & temp;
-        selected_files[j]->visual();
+        selected_files[j]->mmcpy(selected_files[j + 1]);
+        j++;
     }
+    delete selected_files[j];
+    selected_files[j] = nullptr;
 
     // display
     print_box(13*measure.x, 3*measure.y, 18*measure.x, 11*measure.y, "", unit, color_brown, expl_font_size);
-    for(short i = 0; selected_files[i]; i++)
-            selected_files[i]->visual();
+    for(short i = 0; i < j; i++)
+        selected_files[i]->visual();
 }
 
 /// functional_menu_explorer
 void functional_menu_explorer(point measure, short unit)
 {
+    for(size_t i = 0; i < max_nr_paths_selectedd; i++)
+        selected_files[i] = nullptr;
     point mouse;
     std::string accessed_path = "";
 
@@ -201,16 +200,16 @@ void functional_menu_explorer(point measure, short unit)
             display_paths(measure, unit, accessed_path);
         }
 
-        // path manipulation
+        // path manipulation / execution
         path_manipulation(mouse, measure, unit, pressedd_file, accessed_path, status);
 
         // select
         if(pressedd_file && B_SLCT->functional(mouse, unit))
         {
-            pressedd_file->visual();
             add_to_selected_files(pressedd_file, accessed_path);
             for(size_t i = 0; selected_files[i]; i++)
                 selected_files[i]->visual();
+            pressedd_file->visual();
             pressedd_file->selected = false;
             pressedd_file = nullptr;
         }
@@ -222,9 +221,19 @@ void functional_menu_explorer(point measure, short unit)
         if(B_ACTN->functional(mouse, unit))
         {
             // algorithms
-            // very_last_step(operation, algorithm, nr_paths, paths_input, path_output, output_name);
-            // condition = true;
+            size_t nr_paths = 0;
+            for(; selected_files[nr_paths]; nr_paths++);
+
+            char** paths_input = new char*[nr_paths];
+            for(size_t i = 0; i < nr_paths; i++)
+                paths_input[i] = selected_files[i]->full_path;
+
+            char* path_output, *output_name;
+            // print box: choose output path, choose output name
+            very_last_step(B_ACTN->get_text(), B_ALGO->get_text(), nr_paths, paths_input, path_output, output_name);
+            condition = true;
             // status_box este printat cu informatiile
+            delete[] paths_input;
         }
     }
 }

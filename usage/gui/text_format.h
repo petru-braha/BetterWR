@@ -22,6 +22,28 @@ const int color_light_magenta = 13;
 const int color_yellow = 14;
 const int color_white  = 15;
 
+// navingation
 const int outside_left_click = WM_LBUTTONDOWN; //513
 const int outside_double_click = WM_LBUTTONDBLCLK;
-const int outside_tab = 0; //???
+/*
+// improved navigation
+const int outside_up = VK_UP; // up arrow key
+const int outside_down = VK_DOWN; // down arrow key
+const int outside_access = VK_RETURN; // enter
+const int outside_select = VK_TAB // tab key for selection
+
+/* later
+void improved_navigation(screen_path* maybe_selected)
+{
+    if(maybe_selected == nullptr)
+    {
+        // GetAsyncKeyState(outside_up);
+        GetAsyncKeyState(up
+    }
+
+    else
+    {
+
+    }
+}
+*/

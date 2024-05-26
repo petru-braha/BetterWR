@@ -1,6 +1,6 @@
 #include "middle/middle.h"
 void graphical_user_interface();
-#include <graphics.h>
+
 int main(int argc, char** argv)
 {
     if(argc == 1)
@@ -26,5 +26,6 @@ int main(int argc, char** argv)
     char* output_name = argv[argc - 1];
 
     very_last_step(operation, algorithm, nr_paths, paths_input, path_output, output_name);
+    delete[] paths_input;
     return 0;
 }

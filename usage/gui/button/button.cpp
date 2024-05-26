@@ -3,6 +3,7 @@
 
 #include "button.h"
 #include "../text_format.h"
+
 void b_del_values();
 
 void highlight(int x1, int y1, int x2, int y2)

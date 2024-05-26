@@ -15,7 +15,7 @@ struct visual_element // icon and text
     point top_left, bottom_right;
     //visual_element(): top_left(zro), bottom_right(zro){}
 
-    void set_values(point one, point two, short unit, bool iconORtext)
+    void set_values(const point& one, const point& two, short unit, bool iconORtext)
     {
         this->top_left.y = one.y + unit;
         this->bottom_right.y = two.y - unit;
@@ -39,7 +39,7 @@ struct visual_element // icon and text
         }
     }
 
-    void operator = (visual_element value)
+    void operator = (const visual_element& value)
     {
         this->top_left = value.top_left;
         this->bottom_right = value.bottom_right;
@@ -55,19 +55,20 @@ public:
     char* text;
     visual_element visual_icon, visual_text;
 
-    screen_path(){}
+    screen_path(){} // helps selected_screen_path to copy
     screen_path(screen_path* path_displayed_above, char* text);
     void visual(); // icon + text
     screen_path* functional(point mouse, std::string & status);
-    virtual ~screen_path(){ delete text; }
+    ~screen_path(){ delete[] text; }
 };
 
 struct selected_screen_path : public screen_path
 {
     char* full_path;
     selected_screen_path(selected_screen_path* previous, screen_path* & path, std::string full_path);
-    selected_screen_path(selected_screen_path* & from);
+    void mmcpy(selected_screen_path* from);
     bool functional(point mouse);
+    ~selected_screen_path(){ delete[] full_path; delete[] text; }
 };
 
 enum
@@ -79,4 +80,3 @@ enum
     lzw,
     txt
 };
-
