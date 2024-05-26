@@ -100,17 +100,17 @@ void path_manipulation(point mouse, point measure, short unit, screen_path*& pre
     {
         for(size_t i = 0; explorer_files[i] && pressedd_file == nullptr; i++)
             pressedd_file = explorer_files[i]->functional(mouse, status);
-        if(pressedd_file)
-            pressedd_file->selected = true;
         return;
     }
 
     screen_path* temp = nullptr;
     for(size_t i = 0; explorer_files[i] && temp == nullptr; i++)
         temp = explorer_files[i]->functional(mouse, status);
+    if(temp == nullptr)
+        return;
+
     if(temp == pressedd_file) // double click
     {
-        pressedd_file->selected = false;
         accessed_path += status;
         if(std::filesystem::is_directory(accessed_path))
         {
@@ -124,7 +124,7 @@ void path_manipulation(point mouse, point measure, short unit, screen_path*& pre
             system(execution_path.c_str());
         }
     }
-    else if(temp) // click on something else
+    else // click on something else
     {
         pressedd_file->visual(); // erase highlight
         pressedd_file->selected = false;
@@ -163,8 +163,42 @@ void visual_delete_selected(point mouse, point measure, short unit)
 
     // display
     print_box(13*measure.x, 3*measure.y, 18*measure.x, 11*measure.y, "", unit, color_brown, expl_font_size);
+    setcolor(color_white);
+    B_ACTN->visual(unit);
     for(short i = 0; i < j; i++)
         selected_files[i]->visual();
+}
+
+void action_button(point measure, short unit, bool & condition)
+{
+    // decide option, algorithm, paths_input
+    size_t nr_paths = 0;
+    for(; selected_files[nr_paths]; nr_paths++);
+
+    char** paths_input = new char*[nr_paths];
+    for(size_t i = 0; selected_files[i]; i++)
+        paths_input[i] = selected_files[i]->full_path;
+
+    // decide path_output
+    char* path_output;
+
+    // decide visual_limits
+    // 19 == 6 + 7 + 6
+    // 12 == 4 + 4 + 4
+
+    // decide name
+    char* output_name = nullptr;
+    const short x1 = 6*measure.x, y1 = 5*measure.y, x2 = 13*measure.x, y2 = 7*measure.y;
+    pop_up P(point(x1, y1), point(x2, y2));
+    P.functional();
+    output_name = P.text;
+
+    if(output_name == nullptr)
+        return;
+
+    very_last_step(B_ACTN->get_text(), B_ALGO->get_text(), nr_paths, paths_input, path_output, output_name);
+    condition = true;
+    delete[] paths_input;
 }
 
 /// functional_menu_explorer
@@ -214,28 +248,16 @@ void functional_menu_explorer(point measure, short unit)
             pressedd_file = nullptr;
         }
 
-        //delete selected
         visual_delete_selected(mouse, measure, unit);
 
-        //action
         if(B_ACTN->functional(mouse, unit))
-        {
-            // algorithms
-            size_t nr_paths = 0;
-            for(; selected_files[nr_paths]; nr_paths++);
-
-            char** paths_input = new char*[nr_paths];
-            for(size_t i = 0; i < nr_paths; i++)
-                paths_input[i] = selected_files[i]->full_path;
-
-            char* path_output, *output_name;
-            // print box: choose output path, choose output name
-            very_last_step(B_ACTN->get_text(), B_ALGO->get_text(), nr_paths, paths_input, path_output, output_name);
-            condition = true;
-            // status_box este printat cu informatiile
-            delete[] paths_input;
-        }
+            action_button(measure, unit, condition);
     }
+
+    for(size_t i = 0; explorer_files[i]; i++)
+        delete explorer_files[i];
+    for(size_t i = 0; selected_files[i]; i++)
+        delete selected_files[i];
 }
 
 ///menu
@@ -248,9 +270,6 @@ void visual_menu(point measure, short unit)
 
     //title
     print_box(5*measure.x, 2*measure.y, 15*measure.x, 3*measure.y, "*data compression app1*", unit, color_white, menu_font_size);
-
-    //status box
-    print_box(12*measure.x, 5*measure.y, 18*measure.x, 11*measure.y, "status box:", unit, color_dark_gray, menu_font_size - 3);
 
     //buttons
     settextstyle(text_font, HORIZ_DIR, menu_font_size);

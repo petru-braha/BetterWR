@@ -113,6 +113,7 @@ void screen_path::visual()
 {
     setfillstyle(SOLID_FILL, color_black);
     bar(this->top_left.x, this->top_left.y, this->bottom_right.x, this->bottom_right.y);
+
     // icon
     int index_context = 0;
     char character = this->text[strlen(this->text) - 1];
@@ -240,4 +241,80 @@ void selected_screen_path::mmcpy(selected_screen_path* from)
 {
     strcpy(this->text, from->text);
     strcpy(this->full_path, from->full_path);
+}
+
+/// status box
+pop_up::pop_up(const point& a, const point& b) // visual
+{
+    // define borders
+    this->top_left = a;
+    this->bottom_right = b;
+
+    this->title = new char[visual_text_max_len];
+    this->title = (char*)"POP_UP : name the output";
+
+    // print the box
+    point measure("square_measure");
+    short unit = point("unit").x;
+    print_box(a.x, a.y, b.x, b.y, title, unit, color_dark_gray, menu_font_size - 3);
+
+    // define elements
+    this->text = new char[visual_text_max_len]{0}; // updated on this->functional()
+    this->visual_text.set_values(point(a.x, a.y + measure.y), point(b.x - measure.x / 2, b.y), unit);
+    this->visual_exit.set_values(point(b.x - measure.x / 2, a.y), point(b.x, a.y + measure.y / 2), unit);
+    this->visual_redy.set_values(point(b.x - measure.x / 2, b.y - measure.y / 2), point(b.x, b.y), unit);
+
+    // print
+    this->visual_text.visual_print();
+    this->visual_exit.visual_print();
+    this->visual_redy.visual_print();
+}
+
+void pop_up::functional() // get text , print
+{
+    point mouse;
+    size_t index = 0;
+    bool escpe_enter = false;
+    while(GetAsyncKeyState(VK_RETURN) == 0 && GetAsyncKeyState(VK_ESCAPE) == 0 && index + 1 < 500) // no ENTER / ESC touched
+    {
+        // closing by mouse
+        getmouseclick(outside_left_click, (int&)mouse.x, (int&)mouse.y);
+        if(this->visual_exit.inside(mouse))
+        {
+            this->visual_exit.highlight();
+            break;
+        }
+        if(this->visual_redy.inside(mouse))
+        {
+            this->visual_redy.highlight();
+            break;
+        }
+
+        if(GetAsyncKeyState(VK_BACK) && index)
+        {
+            index-=2;
+            text[index] = '\0';
+            this->visual_text.visual_print();
+            delay(200);
+        }
+        else
+        {
+            char character = getch();
+            text[index++] = character;
+            text[index] = '\0';
+        }
+        printf("%s\n", text);
+        outtextxy(this->visual_text.top_left.x, this->visual_text.top_left.y, text);
+    }
+
+    while(true);
+    if(escpe_enter == false) // closed by escape
+        for(size_t i = 0; this->text[i]; i++)
+            this->text[i] = '\0';
+}
+
+pop_up::~pop_up()
+{
+    delete[] text;
+    delete[] title;
 }

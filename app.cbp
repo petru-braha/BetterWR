@@ -41,6 +41,7 @@
 		<Unit filename="admin/pack.h" />
 		<Unit filename="usage/gui/button/button.cpp" />
 		<Unit filename="usage/gui/button/button.h" />
+		<Unit filename="usage/gui/constant.cpp" />
 		<Unit filename="usage/gui/constants.h" />
 		<Unit filename="usage/gui/display.cpp" />
 		<Unit filename="usage/gui/expl_path/visual_path.cpp" />

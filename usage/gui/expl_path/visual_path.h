@@ -10,12 +10,22 @@
 #define path_measure_y 1
 #define MAX 500
 
+void print_box(short x1, short y1, short x2, short y2, const char* text, short unit, int color, int text_size);
+
 struct visual_element // icon and text
 {
     point top_left, bottom_right;
     //visual_element(): top_left(zro), bottom_right(zro){}
 
-    void set_values(const point& one, const point& two, short unit, bool iconORtext)
+    void set_values(const point& one, const point& two, const short& unit)
+    {
+        this->top_left.y = one.y + unit;
+        this->bottom_right.y = two.y - unit;
+        this->top_left.x = one.x + unit;
+        this->bottom_right.x = two.x - unit;
+    }
+
+    void set_values(const point& one, const point& two, const short& unit, bool iconORtext)
     {
         this->top_left.y = one.y + unit;
         this->bottom_right.y = two.y - unit;
@@ -43,6 +53,56 @@ struct visual_element // icon and text
     {
         this->top_left = value.top_left;
         this->bottom_right = value.bottom_right;
+    }
+
+    void visual_print()
+    {
+        short unit = point("unit").x;
+
+        const short x1 = top_left.x;
+        const short y1 = top_left.y;
+        const short x2 = bottom_right.x;
+        const short y2 = bottom_right.y;
+
+        setfillstyle(SOLID_FILL, color_blue);
+        bar(x1, y1, x2, y2);
+        setfillstyle(SOLID_FILL, color_light_blue);
+        bar(x1 + unit, y1 + unit, x2 - unit, y2 - unit); unit*=2;
+        setfillstyle(SOLID_FILL, color_black);
+        bar(x1 + unit, y1 + unit, x2 - unit, y2 - unit); unit*=2;
+    }
+
+    bool inside(const point& random)
+    {
+        if(random.x < top_left.x || random.x > bottom_right.x)
+            return false;
+        if(random.y < top_left.y || random.y > bottom_right.y)
+            return false;
+        return true;
+    }
+
+    void highlight()
+    {
+        short x1 = top_left.x;
+        short y1 = top_left.y;
+        short x2 = bottom_right.x;
+        short y2 = bottom_right.y;
+
+        setcolor(color_white);
+        for(int i=0; i < 3; i++)
+        {
+            x1++;
+            y1++;
+            x2--;
+            y2--;
+            line(x1, y1, x2, y1);
+            line(x1, y1, x1, y2);
+            line(x1, y2, x2, y2);
+            line(x2, y1, x2, y2);
+        }
+
+        delay(100);
+        this->visual_print();
     }
 };
 
@@ -79,4 +139,16 @@ enum
     huf,
     lzw,
     txt
+};
+
+class pop_up
+{
+    point top_left, bottom_right;
+public:
+    char* title, *text;
+    visual_element visual_text, visual_exit, visual_redy;
+
+    pop_up(const point& a, const point& b);
+    void functional();
+    ~pop_up();
 };

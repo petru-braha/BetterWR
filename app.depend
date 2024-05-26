@@ -145,13 +145,13 @@
 	<filesystem>
 	<direct.h>
 
-1716701673 source:a:\projects\3 done\portfolio\betterwr\usage\gui\button\button.cpp
+1716736988 source:a:\projects\3 done\portfolio\betterwr\usage\gui\button\button.cpp
 	<graphics.h>
 	<direct.h>
 	"button.h"
 	"../text_format.h"
 
-1716016177 a:\projects\3 done\portfolio\betterwr\usage\gui\button\button.h
+1716736681 a:\projects\3 done\portfolio\betterwr\usage\gui\button\button.h
 	"../point.h"
 
 1716668806 a:\projects\3 done\portfolio\betterwr\usage\gui\point.h
@@ -160,7 +160,7 @@
 
 1716701705 a:\projects\3 done\portfolio\betterwr\usage\gui\text_format.h
 
-1716704100 source:a:\projects\3 done\portfolio\betterwr\usage\gui\display.cpp
+1716759055 source:a:\projects\3 done\portfolio\betterwr\usage\gui\display.cpp
 	<iostream>
 	<fstream>
 	<stdio.h>
@@ -171,12 +171,12 @@
 	"../middle/middle.h"
 	"../../admin/pack.h"
 
-1716701152 a:\projects\3 done\portfolio\betterwr\usage\gui\constants.h
+1716739682 a:\projects\3 done\portfolio\betterwr\usage\gui\constants.h
 	"text_format.h"
 	"button/button.h"
 	"expl_path/visual_path.h"
 
-1716704234 a:\projects\3 done\portfolio\betterwr\usage\gui\expl_path\visual_path.h
+1716747418 a:\projects\3 done\portfolio\betterwr\usage\gui\expl_path\visual_path.h
 	<string>
 	"../point.h"
 
@@ -184,7 +184,7 @@
 
 1716701775 a:\projects\3 done\portfolio\betterwr\admin\pack.h
 
-1716704527 source:a:\projects\3 done\portfolio\betterwr\usage\gui\expl_path\visual_path.cpp
+1716759101 source:a:\projects\3 done\portfolio\betterwr\usage\gui\expl_path\visual_path.cpp
 	<stdio.h>
 	<direct.h>
 	<graphics.h>
@@ -197,7 +197,7 @@
 	<string>
 	"../../admin/pack.h"
 
-1716705260 source:a:\projects\3 done\portfolio\betterwr\usage\main cmd.cpp
+1716732799 source:a:\projects\3 done\portfolio\betterwr\usage\main cmd.cpp
 	"middle/middle.h"
 
 1714992554 source:a:\projects\3 done\portfolio\betterwr\usage\main gui.cpp
@@ -211,4 +211,105 @@
 	<cstring>
 	"middle.h"
 	"../../admin/pack.h"
+
+1713793883 source:c:\users\petru\desktop\betterwr\admin\algorithms\huf.cpp
+	<unordered_map>
+	<iostream>
+	<string>
+	<queue>
+	<vector>
+	<bitset>
+	"huf.h"
+
+1713793898 c:\users\petru\desktop\betterwr\admin\algorithms\huf.h
+	<string.h>
+
+1715126266 source:c:\users\petru\desktop\betterwr\admin\algorithms\lzw.cpp
+	<iostream>
+	<cstring>
+	"lzw.h"
+
+1714981718 c:\users\petru\desktop\betterwr\admin\algorithms\lzw.h
+	<stdio.h>
+	<string>
+
+1715011971 source:c:\users\petru\desktop\betterwr\admin\detect volumes.cpp
+	<windows.h>
+	<iostream>
+	<string>
+	<vector>
+	<stdio.h>
+
+1713353557 source:c:\users\petru\desktop\betterwr\admin\pack.cpp
+	<iostream>
+	<cstring>
+	<stdio.h>
+	<filesystem>
+	<direct.h>
+
+1716701673 source:c:\users\petru\desktop\betterwr\usage\gui\button\button.cpp
+	<graphics.h>
+	<direct.h>
+	"button.h"
+	"../text_format.h"
+
+1716016177 c:\users\petru\desktop\betterwr\usage\gui\button\button.h
+	"../point.h"
+
+1716668806 c:\users\petru\desktop\betterwr\usage\gui\point.h
+	<wtypes.h>
+	<cstring>
+
+1716701705 c:\users\petru\desktop\betterwr\usage\gui\text_format.h
+
+1716704527 source:c:\users\petru\desktop\betterwr\usage\gui\expl_path\visual_path.cpp
+	<stdio.h>
+	<direct.h>
+	<graphics.h>
+	"../text_format.h"
+	"../../../admin/pack.h"
+	"visual_path.h"
+
+1716701775 c:\users\petru\desktop\betterwr\admin\pack.h
+
+1716704234 c:\users\petru\desktop\betterwr\usage\gui\expl_path\visual_path.h
+	<string>
+	"../point.h"
+
+1715126007 source:c:\users\petru\desktop\betterwr\usage\gui\path manipulator.cpp
+	<cstring>
+	<string>
+	"../../admin/pack.h"
+
+1714992554 source:c:\users\petru\desktop\betterwr\usage\main gui.cpp
+	<graphics.h>
+	"middle/middle.h"
+	"gui/point.h"
+
+1713791321 c:\users\petru\desktop\betterwr\usage\middle\middle.h
+
+1714585962 source:c:\users\petru\desktop\betterwr\usage\middle\middle.cpp
+	<filesystem>
+	<iostream>
+	<cstring>
+	"middle.h"
+	"../../admin/pack.h"
+
+1716731551 source:c:\users\petru\desktop\betterwr\usage\gui\display.cpp
+	<iostream>
+	<fstream>
+	<stdio.h>
+	<cstring>
+	<graphics.h>
+	<filesystem>
+	"constants.h"
+	"../middle/middle.h"
+	"../../admin/pack.h"
+
+1716705395 c:\users\petru\desktop\betterwr\usage\gui\constants.h
+	"text_format.h"
+	"button/button.h"
+	"expl_path/visual_path.h"
+
+1716740156 source:a:\projects\3 done\portfolio\betterwr\usage\gui\constant.cpp
 

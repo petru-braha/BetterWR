@@ -111,5 +111,3 @@ public:
         return instance;
     }
 };
-
-class status_box;

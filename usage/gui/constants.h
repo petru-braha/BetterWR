@@ -57,13 +57,25 @@ void delete_dir_accessed(std::string & str);
 #include "expl_path/visual_path.h"
 screen_path* explorer_files[max_nr_paths_displayed];
 selected_screen_path* selected_files[max_nr_paths_selectedd];
-
 short add_to_selected_files(screen_path*& path, std::string full_path)
 {
+    if(full_path == "")
+    {
+        printf("error - selection: can not use partitions for an action.\n");
+        return -1;
+    }
+
     path->selected = false;
     short i = 0;
     while(selected_files[i] && i < max_nr_paths_selectedd)
+    {
+        if(strcmp(selected_files[i]->text, path->text) == 0)
+        {
+            printf("error - selection: can not add the same element twice.\n");
+            return -1;
+        }
         i++;
+    }
 
     if(i == max_nr_paths_selectedd)
     {
@@ -75,3 +87,10 @@ short add_to_selected_files(screen_path*& path, std::string full_path)
     selected_files[i] = new selected_screen_path(previous, path, full_path);
     return i;
 }
+
+/*
+#define visual_limitPOPUP.tl.x
+#define visual_limitPOPUP.tl.y
+#define visual_limitPOPUP.br.x
+#define visual_limitPOPUP.br.y
+*/
