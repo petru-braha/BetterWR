@@ -24,7 +24,7 @@ public:
 class button_0 : public button
 {
     static button_0* instance;
-    button_0() { this->set_values(0, 0, 0, 0, nullptr); }
+    button_0();
     void execute();
 public:
     void visual(short unit);
@@ -41,7 +41,7 @@ class button_1 : public button{ public: void visual(short unit); };
 class button_menu_0 : public button
 {
     static button_menu_0* instance;
-    button_menu_0(){ this->set_values(0, 0, 0, 0, nullptr); }
+    button_menu_0();
 public:
     static button_menu_0* get_instance()
     {
@@ -54,7 +54,7 @@ public:
 class button_menu_1 : public button
 {
     static button_menu_1* instance;
-    button_menu_1() { this->set_values(0, 0, 0, 0, nullptr); }
+    button_menu_1();
 public:
     static button_menu_1* get_instance()
     {
@@ -67,7 +67,7 @@ public:
 class button_menu_2 : public button
 {
     static button_menu_2* instance;
-    button_menu_2(){ this->set_values(0, 0, 0, 0, nullptr); }
+    button_menu_2();
 public:
     static button_menu_2* get_instance()
     {
@@ -89,7 +89,7 @@ public:
 class button_expl_0 : public button
 {
     static button_expl_0* instance;
-    button_expl_0(){ this->set_values(0, 0, 0, 0, nullptr); }
+    button_expl_0();
 public:
     static button_expl_0* get_instance()
     {
@@ -102,7 +102,7 @@ public:
 class button_expl_1 : public button
 {
     static button_expl_1* instance;
-    button_expl_1(){ this->set_values(0, 0, 0, 0, nullptr); }
+    button_expl_1();
 public:
     static button_expl_1* get_instance()
     {

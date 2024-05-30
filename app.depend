@@ -145,13 +145,13 @@
 	<filesystem>
 	<direct.h>
 
-1716736988 source:a:\projects\3 done\portfolio\betterwr\usage\gui\button\button.cpp
+1716920779 source:a:\projects\3 done\portfolio\betterwr\usage\gui\button\button.cpp
 	<graphics.h>
 	<direct.h>
 	"button.h"
 	"../text_format.h"
 
-1716736681 a:\projects\3 done\portfolio\betterwr\usage\gui\button\button.h
+1716920717 a:\projects\3 done\portfolio\betterwr\usage\gui\button\button.h
 	"../point.h"
 
 1716668806 a:\projects\3 done\portfolio\betterwr\usage\gui\point.h
@@ -160,7 +160,7 @@
 
 1716701705 a:\projects\3 done\portfolio\betterwr\usage\gui\text_format.h
 
-1716759055 source:a:\projects\3 done\portfolio\betterwr\usage\gui\display.cpp
+1716761153 source:a:\projects\3 done\portfolio\betterwr\usage\gui\display.cpp
 	<iostream>
 	<fstream>
 	<stdio.h>
@@ -170,8 +170,9 @@
 	"constants.h"
 	"../middle/middle.h"
 	"../../admin/pack.h"
+	"functional_help.h"
 
-1716739682 a:\projects\3 done\portfolio\betterwr\usage\gui\constants.h
+1716922008 a:\projects\3 done\portfolio\betterwr\usage\gui\constants.h
 	"text_format.h"
 	"button/button.h"
 	"expl_path/visual_path.h"
@@ -311,5 +312,14 @@
 	"button/button.h"
 	"expl_path/visual_path.h"
 
-1716740156 source:a:\projects\3 done\portfolio\betterwr\usage\gui\constant.cpp
+1716760389 source:a:\projects\3 done\portfolio\betterwr\usage\gui\constant.cpp
+	<filesystem>
+	<graphics.h>
+	<string>
+	<vector>
+	"point.h"
+	"text_format.h"
+	"expl_path/visual_path.h"
+
+1716921206 a:\projects\3 done\portfolio\betterwr\usage\gui\functional_help.h
 

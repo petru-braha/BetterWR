@@ -46,6 +46,7 @@
 		<Unit filename="usage/gui/display.cpp" />
 		<Unit filename="usage/gui/expl_path/visual_path.cpp" />
 		<Unit filename="usage/gui/expl_path/visual_path.h" />
+		<Unit filename="usage/gui/functional_help.h" />
 		<Unit filename="usage/gui/path manipulator.cpp" />
 		<Unit filename="usage/gui/point.h" />
 		<Unit filename="usage/gui/text_format.h" />

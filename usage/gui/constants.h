@@ -19,19 +19,11 @@ void b_set_values(point measure)
 {
     point temp("unit"); short unit = temp.x;
 
-    B_STOP->set_values(17*measure.x, 0 + 4*unit, 19*measure.x - 2*unit, measure.y, (char*)" exit");
     B_BACK_MENU->set_values(0 + 4*unit, 11*measure.y, 2*measure.x, 12*measure.y - 4*unit, (char*)" back");
     B_BACK_EXPL->set_values(0 + 4*unit, 11*measure.y, 2*measure.x, 12*measure.y - 4*unit, (char*)" back");
 
-    B_EXPL->set_values(measure.x, 4*measure.y, 7*measure.x, 5*measure.y, (char*)"stored files");
-    B_INFO->set_values(measure.x, 6*measure.y, 7*measure.x, 7*measure.y, (char*)"+information");
-    B_TEST->set_values(measure.x, 8*measure.y, 7*measure.x, 9*measure.y, (char*)"with strings");
-
     B_OPTN->set_values(2*measure.x, measure.y, 3*measure.x, 2*measure.y, (char*)"cpr"); B_OPTN->set_option((char*)"dcp");
     B_ALGO->set_values(3*measure.x, measure.y, 4*measure.x, 2*measure.y, (char*)"huf"); B_ALGO->set_option((char*)"lzw");
-
-    B_SLCT->set_values(10*measure.x, measure.y, 11*measure.x, 2*measure.y, (char*)"sel");
-    B_ACTN->set_values(14*measure.x +4*unit, 10*measure.y, 17*measure.x - 4*unit, 11*measure.y - 4*unit, (char*)"   action");
 }
 
 void b_del_values()
