@@ -2,6 +2,7 @@
 #include <fstream>
 #include <stdio.h>
 #include <cstring>
+#include <stdexcept>
 #include <graphics.h>
 #include <filesystem>
 #include "constants.h"
@@ -56,8 +57,7 @@ void functional_menu_explorer(point measure, short unit)
 
     std::string status = ""; // if status != "" => a dir has been accessed
     screen_path* pressedd_file = nullptr;
-    display_paths(measure, unit, ""); // partitions
-
+    display_paths(measure, unit, "", true); // partitions
     bool condition = false;
     while(condition == false) // when true back to menu
     {
@@ -76,7 +76,7 @@ void functional_menu_explorer(point measure, short unit)
         else if(B_BACK_EXPL->functional(mouse, unit))
         {
             delete_dir_accessed(accessed_path);
-            display_paths(measure, unit, accessed_path);
+            display_paths(measure, unit, accessed_path, false);
         }
 
         // path manipulation / execution
@@ -95,7 +95,7 @@ void functional_menu_explorer(point measure, short unit)
 
         visual_delete_selected(mouse, measure, unit);
 
-        if(B_ACTN->functional(mouse, unit))
+        if(B_ACTN->functional(mouse, unit));
             action_button(measure, unit, condition);
     }
 

@@ -1,12 +1,12 @@
 #ifndef FUNCTIONAL_HELP_H_INCLUDED
 #define FUNCTIONAL_HELP_H_INCLUDED
 
-void display_paths(point measure, short unit, std::string accessed_path)
+void display_paths(point measure, short unit, std::string accessed_path, bool first_execution)
 {
     //delete visual
     print_box(2*measure.x, 3*measure.y, 13*measure.x, 11*measure.y, "", unit, color_black, 0);
     //delete functional
-    for(size_t i = 0 ; i < max_nr_paths_displayed; i++)
+    for(size_t i = 0 ; i < max_nr_paths_displayed && first_execution == false; i++)
     {
         delete explorer_files[i];
         explorer_files[i] = nullptr;
@@ -68,7 +68,7 @@ void path_manipulation(point mouse, point measure, short unit, screen_path*& pre
         accessed_path += status;
         if(std::filesystem::is_directory(accessed_path))
         {
-            display_paths(measure, unit, accessed_path);
+            display_paths(measure, unit, accessed_path, false);
             pressedd_file = nullptr;
         }
         else // just txt and exe
@@ -123,6 +123,9 @@ void visual_delete_selected(point mouse, point measure, short unit)
         selected_files[i]->visual();
 }
 
+/// well implemented function, old library
+
+/*
 char* choose_output_path()
 {
     // init visual
@@ -181,6 +184,7 @@ char* choose_output_path()
     closegraph(new_window);
     return output_path;
 }
+*/
 
 void action_button(point measure, short unit, bool & condition)
 {
@@ -188,14 +192,22 @@ void action_button(point measure, short unit, bool & condition)
     size_t nr_paths = 0;
     for(; selected_files[nr_paths]; nr_paths++);
 
+    if(nr_paths == 0) return;
     char** paths_input = new char*[nr_paths];
     for(size_t i = 0; selected_files[i]; i++)
         paths_input[i] = selected_files[i]->full_path;
 
-    // decide path_output
-    char* path_output = choose_output_path();
-    if(path_output == nullptr)
+    //char* path_output = choose_output_path();
+    std::cout << "please type the desired location (absolute path) of the output :\n";
+    std::cout << "(if you changed your mind, press enter)\n";
+    char* path_output = new char[MAX]{0};
+    std::cin.getline(path_output, MAX);
+    if(strlen(path_output) == 0 || std::filesystem::exists(path_output) == 0)
+    {
+        system("cls");
+        delete[] path_output;
         return;
+    }
 
     // decide visual_limits
     // 19 == 6 + 7 + 6
@@ -209,12 +221,18 @@ void action_button(point measure, short unit, bool & condition)
     output_name = P.text;
 
     if(output_name == nullptr)
+    {
+        system("cls");
+        delete[] path_output;
         return;
+    }
 
-    very_last_step(B_ACTN->get_text(), B_ALGO->get_text(), nr_paths, paths_input, path_output, output_name);
     condition = true;
+    very_last_step(B_ACTN->get_text(), B_ALGO->get_text(), nr_paths, paths_input, path_output, output_name);
+
+    system("cls");
     delete[] paths_input;
-    delete path_output;
+    delete[] path_output;
 }
 
 #endif // FUNCTIONAL_HELP_H_INCLUDED

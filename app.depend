@@ -160,7 +160,7 @@
 
 1716701705 a:\projects\3 done\portfolio\betterwr\usage\gui\text_format.h
 
-1716761153 source:a:\projects\3 done\portfolio\betterwr\usage\gui\display.cpp
+1717320828 source:a:\projects\3 done\portfolio\betterwr\usage\gui\display.cpp
 	<iostream>
 	<fstream>
 	<stdio.h>
@@ -321,5 +321,5 @@
 	"text_format.h"
 	"expl_path/visual_path.h"
 
-1716921206 a:\projects\3 done\portfolio\betterwr\usage\gui\functional_help.h
+1717321086 a:\projects\3 done\portfolio\betterwr\usage\gui\functional_help.h
 
